@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>James Clemens Math Tournament</title>
+<meta name="description" content="The James Clemens Math Tournament (JCMT) is a math competition for elementary and middle school students at James Clemens High School in Madison, Alabama. Saturday, January 23, 2027.">
+<meta property="og:title" content="James Clemens Math Tournament">
+<meta property="og:description" content="A math competition for elementary and middle school students. Saturday, January 23, 2027, at James Clemens High School in Madison, Alabama.">
+<meta name="theme-color" content="#EDF2F8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Unbounded:wght@500;700;800&display=swap">
+<style>
+:root{
+  --navy:#1D3160; --ink:#172340; --paper:#EDF2F8; --soft:#51627f;
+  --tomato:#C53D22; --tomato-lip:#96301A;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Atkinson Hyperlegible Next",ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid #F6B72B;outline-offset:3px;border-radius:4px}
+
+/* ---------- frame ---------- */
+.app{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+.top{display:flex;align-items:center;gap:18px;padding:16px clamp(16px,4vw,40px) 0}
+.brand{margin:0;font-family:"Unbounded",sans-serif;font-weight:800;font-size:21px;color:var(--navy);display:flex;align-items:baseline;gap:12px;letter-spacing:-.02em;text-decoration:none}
+.brand small{font-family:"Atkinson Hyperlegible Next",sans-serif;font-weight:700;font-size:13px;color:var(--soft);letter-spacing:0}
+.when{margin-left:auto;font-family:"Unbounded",sans-serif;font-weight:500;font-size:13px;color:var(--navy);white-space:nowrap}
+.reg{font-family:"Unbounded",sans-serif;font-weight:700;font-size:13px;background:var(--tomato);color:#fff;text-decoration:none;padding:11px 18px;border-radius:12px;box-shadow:0 4px 0 var(--tomato-lip);transition:transform .15s,box-shadow .15s;white-space:nowrap}
+.reg:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--tomato-lip)}
+.reg:active{transform:translateY(3px);box-shadow:0 1px 0 var(--tomato-lip)}
+
+.main{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(16px,3vw,44px);padding-inline:clamp(16px,4vw,40px);min-height:0}
+.stage{position:relative;min-height:0}
+.stage svg{position:absolute;inset:0 0 30px 0;width:100%;height:calc(100% - 30px);overflow:visible;touch-action:none}
+.pc{cursor:grab;stroke:var(--paper);stroke-width:.05;stroke-linejoin:round}
+.pc:active{cursor:grabbing}
+.shp{fill:rgba(29,49,96,.16)}
+.tip{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:12.5px;color:#6f809b;margin:0}
+.tip button{font:inherit;border:0;background:none;color:var(--navy);font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:0 2px}
+
+/* copy column scrolls on its own so the art stays put */
+.copy{min-height:0;overflow-y:auto;display:flex;flex-direction:column;container-type:inline-size;scrollbar-width:thin;scrollbar-color:#c3cedd transparent}
+.copy-in{margin-block:auto;padding-block:20px 28px;max-width:500px;font-size:15.5px}
+.kick{font-family:"Unbounded",sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:0}
+.copy h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(24px,2.6vw,34px);line-height:1.1;margin:10px 0 18px;color:var(--navy);letter-spacing:-.03em;text-wrap:balance}
+
+.nav{display:flex;justify-content:center;gap:clamp(4px,1.2vw,14px);padding:8px 16px 16px;overflow-x:auto;scrollbar-width:none}
+.nav a{display:grid;justify-items:center;gap:5px;padding:10px 12px 8px;border-radius:14px;color:#72849f;min-width:86px;flex:none;text-decoration:none;transition:background .15s,color .15s,transform .15s}
+.nav a:hover{background:#fff;color:var(--navy);transform:translateY(-2px)}
+.nav a[aria-current="page"]{background:#fff;color:var(--acc);box-shadow:0 6px 18px rgba(29,49,96,.1)}
+.nav svg{width:48px;height:40px}
+.nav polygon{fill:currentColor;stroke:var(--paper);stroke-width:.09;stroke-linejoin:round}
+.nav a:hover polygon,.nav a[aria-current="page"] polygon{stroke:#fff}
+.nav span{font-size:12px;font-weight:700}
+
+/* ---------- page content ---------- */
+.sx p{margin:0 0 .95em;line-height:1.6}
+.sx a{text-underline-offset:3px}
+.sx a[href^="mailto:"]{overflow-wrap:anywhere}
+.facts{display:grid;grid-template-columns:max-content 1fr;gap:.55em 1.1em;margin:0 0 1.4em;padding:1em 1.1em;background:#fff;border-radius:14px;box-shadow:0 4px 16px rgba(29,49,96,.06)}
+.facts dt{font-family:"Unbounded",sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);padding-top:.3em}
+.facts dd{margin:0;line-height:1.45}
+.fine{font-size:.86em;color:var(--soft);line-height:1.5}
+.btn{display:inline-block;text-decoration:none;font-weight:700;padding:.8em 1.3em;border-radius:999px;background:var(--acc);color:#fff!important;transition:transform .15s;margin:.2em 0 .9em}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.97)}
+.steps{margin:0 0 1.2em;padding:0;list-style:none;counter-reset:s;display:grid;gap:.85em}
+.steps li{counter-increment:s;display:grid;grid-template-columns:2.1em 1fr;column-gap:.6em;line-height:1.5}
+.steps li::before{content:counter(s);grid-row:span 2;width:1.8em;height:1.8em;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--acc);color:#fff;font-size:.85em}
+
+.yr{margin:0 0 1.3em}
+.yr h3{font-family:"Unbounded",sans-serif;font-weight:800;font-size:20px;color:var(--navy);margin:0 0 .3em;letter-spacing:-.02em;display:flex;align-items:baseline;gap:.6em}
+.yr h3 small{font-family:"Atkinson Hyperlegible Next",sans-serif;font-size:13px;font-weight:700;color:var(--soft);letter-spacing:0}
+.drow{display:flex;flex-wrap:wrap;align-items:center;gap:.4em 1.3em;padding:.65em 0;border-bottom:1px solid rgba(23,35,64,.1)}
+.dn{flex:1 0 100%;font-weight:700}
+@container (min-width:430px){.dn{flex:0 0 7.2em}}
+.grp{display:flex;align-items:center;gap:.35em}
+.gl{font-size:.78em;font-weight:700;color:var(--soft);min-width:3.6em}
+.grp a{font-size:.84em;font-weight:700;text-decoration:none;padding:.28em .8em;border-radius:999px;border:1.5px solid rgba(23,35,64,.3);transition:background .15s,border-color .15s,transform .15s}
+.grp a:hover{border-color:var(--acc);transform:translateY(-1px)}
+.grp a.k{background:var(--acc);border-color:var(--acc);color:#fff}
+
+.times{list-style:none;margin:0 0 1.2em;padding:0}
+.times li{display:grid;grid-template-columns:6.4em 1fr;gap:.9em;padding:.6em 0;border-bottom:1px solid rgba(23,35,64,.1);line-height:1.45}
+.times b{font-variant-numeric:tabular-nums;color:var(--soft);font-weight:700}
+.times li.hl b{color:var(--acc)}
+.times li.hl span{font-weight:700}
+.times small{display:block;font-weight:400;font-size:.86em;color:var(--soft);margin-top:.3em;line-height:1.45}
+
+.group{font-family:"Unbounded",sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:1.4em 0 .4em}
+.person{border-bottom:1px solid rgba(23,35,64,.1)}
+.person summary{list-style:none;display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:.55em 0;cursor:pointer;border-radius:10px}
+.person summary::-webkit-details-marker{display:none}
+.person img{width:52px;height:52px;border-radius:50%;object-fit:cover;display:block;background:#dde5ef}
+.person b{display:block;line-height:1.2}
+.person .role{font-size:.85em;color:var(--soft)}
+.person summary::after{content:"";width:9px;height:9px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg);margin-right:6px;transition:transform .2s}
+.person[open] summary::after{transform:rotate(225deg)}
+.person summary:hover b{color:var(--acc)}
+.person ul{margin:0 0 .9em;padding:0 0 0 64px;list-style:none;display:grid;gap:.3em;font-size:.93em;line-height:1.45}
+.person ul li{position:relative;padding-left:1em}
+.person ul li::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:1px;background:var(--acc);transform:rotate(45deg)}
+.person[open] ul{animation:drop .3s ease-out}
+@keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ---------- phones ---------- */
+@media (max-width:780px){
+  body{overflow:auto}
+  .app{display:block;height:auto;min-height:100%}
+  .main{grid-template-columns:1fr}
+  .stage{height:44vh;min-height:270px}
+  .copy{overflow:visible}
+  .copy-in{padding-block:8px 24px}
+  .when,.brand small{display:none}
+  .top{justify-content:space-between}
+  .nav{justify-content:stretch;gap:2px;padding:6px 8px 10px;position:sticky;bottom:0;background:var(--paper);box-shadow:0 -8px 20px rgba(237,242,248,.9)}
+  .nav a{min-width:0;flex:1 1 0;padding:8px 2px 6px}
+  .nav svg{width:40px;height:34px}
+  .nav span{font-size:11px;white-space:nowrap}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="top">
+    <a class="brand" href="#home"><span>JCMT</span><small>James Clemens Math Tournament</small></a>
+    <div class="when">Sat · Jan 23 · 2027</div>
+    <a class="reg" href="#register">Register</a>
+  </header>
+  <main class="main">
+    <div class="stage">
+      <svg viewBox="-3.6 -2.75 7.2 5.5" role="img" aria-label="Seven tangram pieces">
+        <defs>
+          <pattern id="dots" x="-.25" y="-.25" width=".5" height=".5" patternUnits="userSpaceOnUse"><circle cx=".25" cy=".25" r=".022" fill="#1D3160" opacity=".22"/></pattern>
+          <radialGradient id="fade"><stop offset=".35" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+          <mask id="dotmask"><rect x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#fade)"/></mask>
+        </defs>
+        <rect x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#dots)" mask="url(#dotmask)"/>
+        <g id="shadows"></g>
+        <g id="pieces"></g>
+      </svg>
+      <p class="tip">Drag a piece to move it. Tap one to turn it. <button type="button" class="fix">Put them back</button></p>
+    </div>
+    <div class="copy"><div class="copy-in"></div></div>
+  </main>
+  <nav class="nav" aria-label="Pages"></nav>
+</div>
+
+<script>
+(() => {
+const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+const EMAIL = 'jamesclemensmathtournament@gmail.com';
+const FORM = 'https://forms.gle/i9eco9i8UjwBpwqg8';
+const ADDRESS = 'James Clemens High School, 11306 County Line Rd, Madison, AL 35756';
+const MAP = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(ADDRESS);
+const mail = `<a href="mailto:${EMAIL}">${EMAIL}</a>`;
+const place = `<a href="${MAP}" target="_blank" rel="noopener">James Clemens High School<br>11306 County Line Rd, Madison, AL 35756</a>`;
+
+const HOME = `
+<dl class="facts">
+  <dt>When</dt><dd>Saturday, January 23, 2027<br>8:00 to 4:00</dd>
+  <dt>Where</dt><dd>${place}</dd>
+  <dt>Divisions</dt><dd>4th grade, 5th grade, 6th grade, Pre-Algebra, and Algebra I</dd>
+  <dt>Register by</dt><dd>Friday, January 8, 2027</dd>
+</dl>
+<p>The James Clemens Math Tournament was created to help students of various skill levels compete in math. At its heart, the JCMT is less about winning, more about learning. The JCMT is a place where students can learn and grow, and grow enthusiastic towards math.</p>
+<p>Although we acknowledge that math is an extremely difficult subject, we encourage everyone to give their best effort in solving problems. In addition, in an attempt to help students learn, we have created a tournament that combines games and collaboration to foster the next generation of math enthusiasts.</p>
+<p>Thank you all for coming to the third edition of the James Clemens Math Tournament, and we hope we will see you all next year. In the meantime, this website can be used to learn more about the JCMT, and to view past tests and answer keys.</p>
+<p class="fine">Questions? Email ${mail}</p>`;
+
+const REGISTER = `
+<p>Teachers and coaches register their school as a sponsor using our registration form.</p>
+<ol class="steps">
+  <li><b>Fill out the registration form.</b><span>You'll need your school's name, address, and phone number, and how many students from each grade (4th through 8th) will compete.</span></li>
+  <li><b>Watch for our email.</b><span>We'll confirm your school's spot. Then send your student roster to ${mail} by Friday, January 8, 2027.</span></li>
+  <li><b>Check in on tournament day.</b><span>Coach registration is from 8:00 to 8:30 on Saturday, January 23, 2027.</span></li>
+</ol>
+<a class="btn" href="${FORM}" target="_blank" rel="noopener">Open the registration form ↗</a>
+<p class="fine">Registration is due <b>Friday, January 8, 2027</b>.<br>Questions? Email ${mail}</p>`;
+
+// Past tests live in tests/<year>/<division>-<written|team>[-key].pdf.
+// To add a year: put its PDFs in tests/<year>/ with those names and add a line at the top of TESTS.
+const DIVISIONS = { '4th-grade': '4th grade', '5th-grade': '5th grade', '6th-grade': '6th grade', 'pre-algebra': 'Pre-Algebra', 'algebra-1': 'Algebra I' };
+const TESTS = [
+  { year: 2026, divisions: ['4th-grade', '5th-grade', '6th-grade', 'pre-algebra', 'algebra-1'] },
+  { year: 2025, divisions: ['5th-grade', '6th-grade', 'pre-algebra', 'algebra-1'] },
+  { year: 2024, divisions: ['6th-grade', 'pre-algebra', 'algebra-1'] }
+];
+const pdf = (href, label, what) => `<a href="${href}" target="_blank" rel="noopener"${label === 'Key' ? ' class="k"' : ''} aria-label="${what} ${label === 'Key' ? 'answer key' : 'test'} (PDF)">${label}</a>`;
+const group = (year, div, kind) => {
+  const base = `tests/${year}/${div}-${kind}`, what = `${year} ${DIVISIONS[div]} ${kind}`;
+  return `<span class="grp"><span class="gl">${kind === 'written' ? 'Written' : 'Team'}</span>${pdf(base + '.pdf', 'Test', what)}${pdf(base + '-key.pdf', 'Key', what)}</span>`;
+};
+const PAST = `
+<p>Every written and team test from past tournaments, with answer keys. Each one opens as a PDF.</p>
+${TESTS.map(t => `<section class="yr"><h3>${t.year}</h3>${t.divisions.map(d => `<div class="drow"><span class="dn">${DIVISIONS[d]}</span>${group(t.year, d, 'written')}${group(t.year, d, 'team')}</div>`).join('')}</section>`).join('')}`;
+
+const SCHEDULE = [
+  ['8:00–8:30', 'Students arrive, registration (coaches)'],
+  ['8:50', 'Students go to written exam testing rooms.'],
+  ['9:00–10:30', 'Written exam', 'Note: 4th and 5th graders will return to the cafeteria at 10:00 because their exam takes only 1 hour.'],
+  ['10:30–11:00', 'Break'],
+  ['11:10', 'Students go to team exam testing rooms.'],
+  ['11:20–12:20', 'Team exam'],
+  ['12:30–2:30', 'Lunch on your own'],
+  ['2:30–3:00', 'Games'],
+  ['3:00–4:00', 'Awards ceremony'],
+  ['4:00', 'Departure']
+];
+const KEY_EVENTS = ['Written exam', 'Team exam', 'Games', 'Awards ceremony'];
+const DAY = `
+<p>Saturday, January 23, 2027, at <a href="${MAP}" target="_blank" rel="noopener">James Clemens High School</a> in Madison.</p>
+<ol class="times">${SCHEDULE.map(([t, e, note]) => `<li${KEY_EVENTS.includes(e) ? ' class="hl"' : ''}><b>${t}</b><span>${e}${note ? `<small>${note}</small>` : ''}</span></li>`).join('')}</ol>`;
+
+const CREW_GROUPS = [
+  ['Faculty sponsor', [
+    ['Kristin Hartland', 'Faculty Sponsor', 'kristin-hartland', ['PhD in Mathematics Education - MTSU', 'Masters in Mathematics- UMASS Lowell', 'Bachelor in Science in Mathematics, Minors in Physics & Secondary Education - UTEP', 'Avid Bowler for 26+ years, National Competitor', 'JCHS Head Bowling Coach', '2 Children, 1 at James Clemens HS and 1 at Liberty MS']]
+  ]],
+  ['Directors', [
+    ['Jeffrey Duan', 'Director', 'jeffrey-duan', ['Sophomore at James Clemens High School', 'Enjoys playing piano', '1-time American Invitational Mathematics Examination qualifier', '1-time National MATHCOUNTS qualifier']],
+    ['Eddie Wen', 'Director', 'eddie-wen', ['Sophomore at James Clemens High School', 'Enjoys watching anime and playing anime music', 'Has participated in math tournaments since 3rd grade', '2x Alabama State MATHCOUNTS Participant', 'Avid tennis player for 4-5 years and varsity State qualifier']]
+  ]],
+  ['Problem writers', [
+    ['Kriti Akarapu', 'Problem Writer', 'kriti-akarapu', ['Freshman at James Clemens High School', 'Has participated in math tournaments since 3rd grade', '2x Alabama State MATHCOUNTS Participant', 'Enjoys music and singing', 'Loves reading, anime, dancing, goofing around, and watching movies']],
+    ['Harshtha Chander', 'Problem Writer', 'harshtha-chander', ['Sophomore at James Clemens High School', 'Has participated in math tournaments since 3rd grade', '2024 AMC 8 Honor Roll', '2025 Alabama Statewide Math Contest 1st Place in Geometry', 'Avid Indian Classical Dancer for around 6 years', 'Enjoys reading and listening to music']],
+    ['Laya Gowder', 'Problem Writer', 'laya-gowder', ['Sophomore at James Clemens High School', 'Participated in Math Tournaments since 3rd grade', 'Avid dancer for more than 10 years', 'Loves art and fashion', '2024 James Clemens Math Tournament 4th Place', 'James Clemens Math Tournament Member for 2 years']],
+    ['Heidi Leonard', 'Problem Writer', 'heidi-leonard', ['Sophomore at James Clemens High School', 'Has participated in math tournaments since 8th grade', 'She loves reading, snow skiing, travel, and biology', 'Placed in local math competitions as both a middle and high school student']]
+  ]],
+  ['Alumni', [
+    ['Erik Wu', 'Founder', 'erik-wu', ['Stanford Class of 2029', 'Participated in Math Tournaments since 2nd grade', 'Avid Tennis Player for around 2 - 3 years', 'Loves playing piano and Korean pop music', '3x American Invitational Mathematics Examination Qualifier', '3rd Place Alabama Statewide High School Math Competition']],
+    ['Neyan Sezhian', 'Co-Founder', 'neyan-sezhian', ['Cornell Class of 2029', 'Participated in Math Tournaments since 1st grade', 'Avid Golf Player for around 6 years', 'Loves playing piano and going to the gym', '2x American Invitational Mathematics Examination Qualifier', 'Nickname is Nyan, the flying toaster pastry cat']],
+    ['Vineet Vadrevu', 'Former Problem Writer', 'vineet-vadrevu', ['Junior at James Clemens High School', '3 years of competitive math team experience', '5 years of experience playing flute', 'Enjoys playing Badminton', 'AMC 10 Participant and 2 year Beast Academy instructor']]
+  ]]
+];
+const CREW = `
+<p>The people behind the JCMT. Tap a name to read more.</p>
+${CREW_GROUPS.map(([g, people]) => `<p class="group">${g}</p>${people.map(([name, role, img, bio]) => `<details class="person"><summary><img src="img/${img}.jpg" alt="" width="52" height="52" loading="lazy"><span><b>${name}</b><span class="role">${role}</span></span></summary><ul>${bio.map(b => `<li>${b}</li>`).join('')}</ul></details>`).join('')}`).join('')}`;
+
+const PAGES = [
+  { slug: 'home',       fig: 'square',    shape: 'a square',          label: 'Start here', kick: 'The square',         acc: '#1D3160', title: 'Welcome to the JCMT',                     html: HOME },
+  { slug: 'register',   fig: 'house',     shape: 'a schoolhouse',     label: 'Register',   kick: 'The schoolhouse',    acc: '#B83A1F', title: 'Register your school',                    html: REGISTER },
+  { slug: 'past-tests', fig: 'arrow',     shape: 'a download arrow',  label: 'Past tests', kick: 'The download arrow', acc: '#17735A', title: 'Past tests and answer keys',              html: PAST },
+  { slug: 'schedule',   fig: 'hourglass', shape: 'an hourglass',      label: 'The day',    kick: 'The hourglass',      acc: '#8F5B00', title: 'The day, hour by hour',                   html: DAY },
+  { slug: 'committee',  fig: 'boat',      shape: 'a sailboat',        label: 'The crew',   kick: 'The sailboat',       acc: '#6A4BBE', title: 'The organizing committee',                html: CREW }
+];
+
+/* =========================================================
+   TANGRAM ENGINE
+   ========================================================= */
+const E = {
+  inOut: p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+  out: p => 1 - Math.pow(1 - p, 3),
+  back: p => { const c1 = 1.4, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); }
+};
+const tweens = [];
+const tween = o => { o.t0 = performance.now() + (reduce ? 0 : (o.delay || 0)); tweens.push(o); };
+function stepTweens(now) {
+  for (let i = tweens.length - 1; i >= 0; i--) {
+    const o = tweens[i], d = reduce ? 0 : o.dur;
+    if (now < o.t0) continue;
+    const p = d ? Math.min(1, (now - o.t0) / d) : 1;
+    o.set(o.from + (o.to - o.from) * (o.ease || E.inOut)(p), p);
+    if (p >= 1) { tweens.splice(i, 1); if (o.done) o.done(); }
+  }
+}
+
+const svg = $('.stage svg'), gS = $('#shadows'), gP = $('#pieces'), copy = $('.copy'), copyIn = $('.copy-in'), nav = $('.nav');
+const NS = 'http://www.w3.org/2000/svg';
+const IDS = ['LT1', 'LT2', 'MT', 'ST1', 'ST2', 'SQ', 'PG'];
+const COL = { LT1: '#1D3160', LT2: '#6FA8DC', MT: '#EE5A3C', ST1: '#F6B72B', ST2: '#23A07A', SQ: '#F3A6B8', PG: '#7A5AC8' };
+const TYPE = { LT1: 'tri', LT2: 'tri', MT: 'tri', ST1: 'tri', ST2: 'tri', SQ: 'sq', PG: 'pg' };
+const k2 = Math.SQRT1_2;
+const sq = { LT1: [[0,0],[4,0],[2,2]], LT2: [[0,0],[2,2],[0,4]], ST1: [[4,0],[4,2],[3,1]], SQ: [[2,2],[3,1],[4,2],[3,3]], ST2: [[2,2],[3,3],[1,3]], PG: [[0,4],[1,3],[3,3],[2,4]], MT: [[4,2],[4,4],[2,4]] };
+const RAW = {
+  square: Object.fromEntries(IDS.map(id => [id, sq[id].map(([x, y]) => [x * k2, y * k2])])),
+  house: { LT1: [[0,2],[2,2],[0,4]], LT2: [[2,2],[2,4],[0,4]], ST1: [[-1,2],[0,1],[0,2]], SQ: [[1,2],[0,2],[0,1],[1,1]], ST2: [[1,2],[1,1],[2,2]], PG: [[3,2],[2,2],[1,1],[2,1]], MT: [[0,1],[1,0],[2,1]] },
+  arrow: { LT1: [[2,2],[0,2],[2,0]], LT2: [[0,2],[0,0],[2,0]], ST1: [[3,2],[2,3],[2,2]], SQ: [[1,2],[2,2],[2,3],[1,3]], ST2: [[1,2],[1,3],[0,2]], PG: [[-1,2],[0,2],[1,3],[0,3]], MT: [[2,3],[1,4],[0,3]] },
+  hourglass: { ST1: [[3,0],[2,1],[2,0]], SQ: [[1,0],[2,0],[2,1],[1,1]], ST2: [[1,0],[1,1],[0,0]], PG: [[-1,0],[0,0],[1,1],[0,1]], MT: [[2,1],[1,2],[0,1]], LT1: [[1,2],[1,4],[-1,4]], LT2: [[1,2],[3,4],[1,4]] },
+  boat: { LT1: [[2,0],[2,2],[0,2]], LT2: [[2,0],[4,2],[2,2]], PG: [[-1,2],[0,2],[1,3],[0,3]], ST1: [[0,2],[1,2],[1,3]], SQ: [[1,2],[2,2],[2,3],[1,3]], ST2: [[2,2],[3,3],[2,3]], MT: [[2,2],[4,2],[3,3]] }
+};
+const A2 = v => { let s = 0; for (let i = 0; i < v.length; i++) { const a = v[i], b = v[(i + 1) % v.length]; s += a[0] * b[1] - b[0] * a[1]; } return s; };
+const cen = v => [v.reduce((s, p) => s + p[0], 0) / v.length, v.reduce((s, p) => s + p[1], 0) / v.length];
+function centerFig(f) {
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  IDS.forEach(id => f[id].forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }));
+  const mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
+  return Object.fromEntries(IDS.map(id => [id, f[id].map(([x, y]) => [x - mx, y - my])]));
+}
+function norm(type, v) {
+  v = v.map(p => p.slice());
+  if (type !== 'pg' && A2(v) < 0) v.reverse();
+  const rot = i => v.slice(i).concat(v.slice(0, i));
+  if (type === 'tri') for (let i = 0; i < 3; i++) {
+    const p = v[i], a = v[(i + 1) % 3], b = v[(i + 2) % 3];
+    if (Math.abs((a[0] - p[0]) * (b[0] - p[0]) + (a[1] - p[1]) * (b[1] - p[1])) < 1e-6) { v = rot(i); break; }
+  }
+  if (type === 'pg') { const L = i => Math.hypot(v[(i + 1) % 4][0] - v[i][0], v[(i + 1) % 4][1] - v[i][1]); if (L(0) > L(1) + 1e-6) v = rot(1); }
+  return v;
+}
+const FIG = Object.fromEntries(Object.keys(RAW).map(k => [k, centerFig(RAW[k])]));
+const BASE = Object.fromEntries(IDS.map(id => { const v = norm(TYPE[id], RAW.house[id]), c = cen(v); return [id, v.map(([x, y]) => [x - c[0], y - c[1]])]; }));
+function pose(id, target) {
+  const tv = norm(TYPE[id], target); let b = BASE[id], s = 1;
+  if (TYPE[id] === 'pg' && Math.sign(A2(b)) !== Math.sign(A2(tv))) { s = -1; b = b.map(([x, y]) => [-x, y]); }
+  const a1 = Math.atan2(b[1][1] - b[0][1], b[1][0] - b[0][0]), a2 = Math.atan2(tv[1][1] - tv[0][1], tv[1][0] - tv[0][0]);
+  const c = cen(tv);
+  return { x: c[0], y: c[1], r: (a2 - a1) * 180 / Math.PI, s };
+}
+const POSE = Object.fromEntries(Object.keys(FIG).map(f => [f, Object.fromEntries(IDS.map(id => [id, pose(id, FIG[f][id])]))]));
+
+const P = {};
+IDS.forEach(id => {
+  const pts = BASE[id].map(p => p.map(n => +n.toFixed(4)).join(',')).join(' ');
+  const sh = document.createElementNS(NS, 'polygon'); sh.setAttribute('points', pts); sh.setAttribute('class', 'shp'); gS.appendChild(sh);
+  const pg = document.createElementNS(NS, 'polygon'); pg.setAttribute('points', pts); pg.setAttribute('class', 'pc'); pg.setAttribute('fill', COL[id]); pg.dataset.id = id; gP.appendChild(pg);
+  P[id] = { sh, pg, x: (Math.random() * 2 - 1) * 2.9, y: (Math.random() * 2 - 1) * 2, r: Math.random() * 360, s: 1, lift: 0 };
+});
+
+let cur = -1, breathe = 0, breatheOn = false, dragP = null, copyTok = 0;
+function draw(t) {
+  breathe += ((breatheOn && !reduce ? 1 : 0) - breathe) * .06;
+  const br = breathe * (.5 - .5 * Math.cos(t * 1.3)) * .045;
+  IDS.forEach(id => {
+    const p = P[id], bx = p.x * (1 + br), by = p.y * (1 + br), sc = 1 + p.lift * .07, o = .05 + p.lift * .2;
+    p.pg.setAttribute('transform', `translate(${bx.toFixed(4)} ${by.toFixed(4)}) rotate(${p.r.toFixed(3)}) scale(${(p.s * sc).toFixed(4)} ${sc.toFixed(4)})`);
+    p.sh.setAttribute('transform', `translate(${(bx + o).toFixed(4)} ${(by + o * 1.3).toFixed(4)}) rotate(${p.r.toFixed(3)}) scale(${p.s.toFixed(4)} 1)`);
+  });
+}
+function morph(fig) {
+  breatheOn = false;
+  IDS.forEach((id, j) => {
+    const p = P[id], q = POSE[fig][id];
+    const fx = p.x, fy = p.y, fr = p.r, fs = p.s, dr = ((q.r - p.r) % 360 + 540) % 360 - 180;
+    tween({ from: 0, to: 1, dur: 950, delay: j * 70,
+      set: (v, pp) => { p.x = fx + (q.x - fx) * v; p.y = fy + (q.y - fy) * v; p.r = fr + dr * v; p.s = fs + (q.s - fs) * v; p.lift = Math.sin(Math.PI * pp); },
+      done: j === IDS.length - 1 ? () => { breatheOn = true; } : null });
+  });
+}
+function setCopy(pg, instant) {
+  const tok = ++copyTok;
+  const html = `<p class="kick">${pg.kick}</p><h2>${pg.title}</h2><div class="sx">${pg.html}</div>`;
+  const swap = () => { copyIn.innerHTML = html; copy.scrollTop = 0; };
+  if (reduce || instant) { swap(); return; }
+  copyIn.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-8px)' }], { duration: 180, easing: 'ease-in', fill: 'forwards' }).onfinish = () => {
+    if (tok !== copyTok) return;
+    swap();
+    copyIn.getAnimations().forEach(a => a.cancel());
+    Array.from(copyIn.children).forEach((el, i) => el.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 440, delay: 140 + i * 80, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
+  };
+}
+function show(i, first) {
+  if (i === cur) return;
+  cur = i;
+  const pg = PAGES[i];
+  document.documentElement.style.setProperty('--acc', pg.acc);
+  svg.setAttribute('aria-label', `Seven tangram pieces arranged as ${pg.shape}`);
+  $$('a', nav).forEach((a, j) => { if (j === i) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  document.title = i === 0 ? 'James Clemens Math Tournament' : `${pg.label} · James Clemens Math Tournament`;
+  setCopy(pg, first);
+  if (first) setTimeout(() => morph(pg.fig), reduce ? 0 : 450); else morph(pg.fig);
+  if (!first && innerWidth <= 780) scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+}
+const pageFromHash = () => Math.max(0, PAGES.findIndex(p => p.slug === decodeURIComponent(location.hash.slice(1))));
+
+PAGES.forEach(pg => {
+  const a = document.createElement('a'); a.href = '#' + pg.slug;
+  const F = FIG[pg.fig];
+  a.innerHTML = `<svg viewBox="-2.7 -2.25 5.4 4.5" aria-hidden="true">${IDS.map(id => `<polygon points="${F[id].map(p => p.map(n => +n.toFixed(3)).join(',')).join(' ')}"/>`).join('')}</svg><span>${pg.label}</span>`;
+  nav.appendChild(a);
+});
+// Links switch pages directly; the #slug in the address is kept in sync so pages can be shared and the back button works.
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]'); if (!a) return;
+  const i = PAGES.findIndex(p => '#' + p.slug === a.getAttribute('href')); if (i < 0) return;
+  e.preventDefault();
+  if (i === cur) { morph(PAGES[i].fig); return; }
+  show(i);
+  try { history.pushState(null, '', '#' + PAGES[i].slug); } catch (err) {}
+});
+window.addEventListener('popstate', () => show(pageFromHash()));
+window.addEventListener('hashchange', () => show(pageFromHash()));
+$('.fix').addEventListener('click', () => morph(PAGES[Math.max(0, cur)].fig));
+
+/* drag a piece, tap to turn it */
+function toSvg(e) { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const m = pt.matrixTransform(svg.getScreenCTM().inverse()); return { x: m.x, y: m.y }; }
+gP.addEventListener('pointerdown', e => {
+  const id = e.target.dataset && e.target.dataset.id; if (!id) return;
+  e.preventDefault();
+  const p = P[id]; gS.appendChild(p.sh); gP.appendChild(p.pg);
+  const m = toSvg(e); breatheOn = false; breathe = 0;
+  dragP = { id, dx: p.x - m.x, dy: p.y - m.y, moved: 0 };
+  p.lift = 1; e.target.setPointerCapture(e.pointerId);
+});
+gP.addEventListener('pointermove', e => {
+  if (!dragP) return;
+  const m = toSvg(e), p = P[dragP.id], nx = m.x + dragP.dx, ny = m.y + dragP.dy;
+  dragP.moved += Math.abs(nx - p.x) + Math.abs(ny - p.y);
+  p.x = nx; p.y = ny;
+});
+const endDrag = () => {
+  if (!dragP) return;
+  const p = P[dragP.id];
+  if (dragP.moved < .05) { const r0 = p.r; tween({ from: 0, to: 1, dur: 380, ease: E.back, set: v => p.r = r0 + 45 * v }); }
+  tween({ from: 1, to: 0, dur: 260, ease: E.out, set: v => p.lift = v });
+  dragP = null;
+};
+gP.addEventListener('pointerup', endDrag);
+gP.addEventListener('pointercancel', endDrag);
+
+function loop(now) { stepTweens(now); draw(now / 1000); requestAnimationFrame(loop); }
+draw(0);
+show(pageFromHash(), true);
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
