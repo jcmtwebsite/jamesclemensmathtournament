@@ -7,6 +7,13 @@
 <meta name="description" content="The James Clemens Math Tournament (JCMT) is a math competition for elementary and middle school students at James Clemens High School in Madison, Alabama. Saturday, January 23, 2027.">
 <meta property="og:title" content="James Clemens Math Tournament">
 <meta property="og:description" content="A math competition for elementary and middle school students. Saturday, January 23, 2027, at James Clemens High School in Madison, Alabama.">
+<meta property="og:type" content="website">
+<!-- Link preview image. Once the domain is live, make this a full address (https://your-domain/social-preview.png) and add og:url + a canonical link; see README. -->
+<meta property="og:image" content="social-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="James Clemens Math Tournament, Saturday, January 23, 2027, with a tangram square">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#EDF2F8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,15 +33,15 @@ a{color:inherit}
 
 /* ---------- frame ---------- */
 .app{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto}
-.top{display:flex;align-items:center;gap:18px;padding:16px clamp(16px,4vw,40px) 0}
-.brand{margin:0;font-family:"Unbounded",sans-serif;font-weight:800;font-size:21px;color:var(--navy);display:flex;align-items:baseline;gap:12px;letter-spacing:-.02em;text-decoration:none}
-.brand small{font-family:"Atkinson Hyperlegible Next",sans-serif;font-weight:700;font-size:13px;color:var(--soft);letter-spacing:0}
-.when{margin-left:auto;font-family:"Unbounded",sans-serif;font-weight:500;font-size:13px;color:var(--navy);white-space:nowrap}
+.top{display:flex;align-items:center;gap:20px;padding:20px clamp(16px,4vw,44px) 4px}
+.brand{margin:0;font-family:"Unbounded",sans-serif;font-weight:800;font-size:22px;color:var(--navy);display:flex;align-items:center;gap:14px;letter-spacing:-.02em;text-decoration:none}
+.brand small{font-family:"Atkinson Hyperlegible Next",sans-serif;font-weight:700;font-size:13.5px;color:var(--soft);letter-spacing:0;padding-left:14px;border-left:1.5px solid rgba(29,49,96,.18);line-height:1.1}
+.when{margin-left:auto;font-family:"Unbounded",sans-serif;font-weight:500;font-size:13px;color:var(--navy);white-space:nowrap;padding:9px 14px;border-radius:999px;background:#fff;box-shadow:0 2px 10px rgba(29,49,96,.06)}
 .reg{font-family:"Unbounded",sans-serif;font-weight:700;font-size:13px;background:var(--tomato);color:#fff;text-decoration:none;padding:11px 18px;border-radius:12px;box-shadow:0 4px 0 var(--tomato-lip);transition:transform .15s,box-shadow .15s;white-space:nowrap}
 .reg:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--tomato-lip)}
 .reg:active{transform:translateY(3px);box-shadow:0 1px 0 var(--tomato-lip)}
 
-.main{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(16px,3vw,44px);padding-inline:clamp(16px,4vw,40px);min-height:0}
+.main{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(16px,3vw,48px);padding-inline:clamp(16px,4vw,44px);min-height:0}
 .stage{position:relative;min-height:0}
 .stage svg{position:absolute;inset:0 0 30px 0;width:100%;height:calc(100% - 30px);overflow:visible;touch-action:none}
 .pc{cursor:grab;stroke:var(--paper);stroke-width:.05;stroke-linejoin:round}
@@ -44,43 +51,67 @@ a{color:inherit}
 .tip button{font:inherit;border:0;background:none;color:var(--navy);font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:0 2px}
 
 /* copy column scrolls on its own so the art stays put */
-.copy{min-height:0;overflow-y:auto;display:flex;flex-direction:column;container-type:inline-size;scrollbar-width:thin;scrollbar-color:#c3cedd transparent}
-.copy-in{margin-block:auto;padding-block:20px 28px;max-width:500px;font-size:15.5px}
+.copy{min-height:0;overflow-y:auto;display:flex;flex-direction:column;container-type:inline-size;scrollbar-width:thin;scrollbar-color:#c3cedd transparent;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 28px,#000 calc(100% - 36px),transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 28px,#000 calc(100% - 36px),transparent 100%)}
+.copy-in{margin-block:auto;padding-block:36px 48px;max-width:540px;font-size:16px}
 .kick{font-family:"Unbounded",sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:0}
-.copy h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(24px,2.6vw,34px);line-height:1.1;margin:10px 0 18px;color:var(--navy);letter-spacing:-.03em;text-wrap:balance}
+.copy h1{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,2.7vw,36px);line-height:1.1;margin:12px 0 20px;color:var(--navy);letter-spacing:-.03em;text-wrap:balance}
 
-.nav{display:flex;justify-content:center;gap:clamp(4px,1.2vw,14px);padding:8px 16px 16px;overflow-x:auto;scrollbar-width:none}
-.nav a{display:grid;justify-items:center;gap:5px;padding:10px 12px 8px;border-radius:14px;color:#72849f;min-width:86px;flex:none;text-decoration:none;transition:background .15s,color .15s,transform .15s}
+/* home: a real welcome, not just another page */
+.eyebrow{font-family:"Unbounded",sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tomato);margin:0}
+.copy h1.hero{font-size:clamp(38px,4.3vw,62px);line-height:1.02;letter-spacing:-.04em;margin:14px 0 18px}
+.lede{font-size:clamp(17px,1.35vw,19px);line-height:1.55;color:#34466a;margin:0 0 28px;max-width:34em}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 36px}
+.cta{font-family:"Unbounded",sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:14px 22px;border-radius:14px;transition:transform .15s,box-shadow .15s,background .15s}
+.cta.go{background:var(--tomato);color:#fff;box-shadow:0 4px 0 var(--tomato-lip)}
+.cta.go:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--tomato-lip)}
+.cta.go:active{transform:translateY(3px);box-shadow:0 1px 0 var(--tomato-lip)}
+.cta.alt{color:var(--navy);box-shadow:inset 0 0 0 2px var(--navy)}
+.cta.alt:hover{background:#fff;transform:translateY(-2px)}
+.cta.alt:active{transform:translateY(1px)}
+.section{display:flex;align-items:center;gap:14px;font-family:"Unbounded",sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);margin:48px 0 18px}
+.section::after{content:"";flex:1;height:1.5px;background:rgba(29,49,96,.14)}
+
+.nav{display:flex;justify-content:center;gap:clamp(6px,1.4vw,18px);padding:10px 16px 18px;overflow-x:auto;scrollbar-width:none}
+.nav a{display:grid;justify-items:center;gap:6px;padding:10px 14px 9px;border-radius:16px;color:#6b7d99;min-width:94px;flex:none;text-decoration:none;transition:background .15s,color .15s,transform .15s}
 .nav a:hover{background:#fff;color:var(--navy);transform:translateY(-2px)}
 .nav a[aria-current="page"]{background:#fff;color:var(--acc);box-shadow:0 6px 18px rgba(29,49,96,.1)}
-.nav svg{width:48px;height:40px}
+.nav svg{width:52px;height:42px}
 .nav polygon{fill:currentColor;stroke:var(--paper);stroke-width:.09;stroke-linejoin:round}
 .nav a:hover polygon,.nav a[aria-current="page"] polygon{stroke:#fff}
-.nav span{font-size:12px;font-weight:700}
+.nav span{font-size:12.5px;font-weight:700}
 
 /* ---------- page content ---------- */
-.sx p{margin:0 0 .95em;line-height:1.6}
+.sx p{margin:0 0 1.05em;line-height:1.65}
 .sx a{text-underline-offset:3px}
 .sx a[href^="mailto:"]{overflow-wrap:anywhere}
-.facts{display:grid;grid-template-columns:max-content 1fr;gap:.55em 1.1em;margin:0 0 1.4em;padding:1em 1.1em;background:#fff;border-radius:14px;box-shadow:0 4px 16px rgba(29,49,96,.06)}
-.facts dt{font-family:"Unbounded",sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);padding-top:.3em}
-.facts dd{margin:0;line-height:1.45}
-.fine{font-size:.86em;color:var(--soft);line-height:1.5}
-.btn{display:inline-block;text-decoration:none;font-weight:700;padding:.8em 1.3em;border-radius:999px;background:var(--acc);color:#fff!important;transition:transform .15s;margin:.2em 0 .9em}
+.facts{display:grid;grid-template-columns:1fr 1fr;margin:0;background:#fff;border-radius:18px;box-shadow:0 6px 24px rgba(29,49,96,.07);overflow:hidden}
+.facts div{padding:18px 20px}
+.facts div:nth-child(odd){border-right:1px solid rgba(29,49,96,.09)}
+.facts div:nth-child(-n+2){border-bottom:1px solid rgba(29,49,96,.09)}
+.facts dt{font-family:"Unbounded",sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tomato);margin:0 0 7px}
+.facts dd{margin:0;line-height:1.5;font-size:15px}
+@container (max-width:400px){
+  .facts{grid-template-columns:1fr}
+  .facts div:nth-child(odd){border-right:0}
+  .facts div:not(:last-child){border-bottom:1px solid rgba(29,49,96,.09)}
+}
+.fine{font-size:.88em;color:var(--soft);line-height:1.55}
+.btn{display:inline-block;text-decoration:none;font-weight:700;padding:.8em 1.3em;border-radius:999px;background:var(--acc);color:#fff!important;transition:transform .15s;margin:.3em 0 1em}
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(.97)}
 .steps{margin:0 0 1.2em;padding:0;list-style:none;counter-reset:s;display:grid;gap:.85em}
 .steps li{counter-increment:s;display:grid;grid-template-columns:2.1em 1fr;column-gap:.6em;line-height:1.5}
 .steps li::before{content:counter(s);grid-row:span 2;width:1.8em;height:1.8em;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--acc);color:#fff;font-size:.85em}
 
-.yr{margin:0 0 1.3em}
-.yr h3{font-family:"Unbounded",sans-serif;font-weight:800;font-size:20px;color:var(--navy);margin:0 0 .3em;letter-spacing:-.02em;display:flex;align-items:baseline;gap:.6em}
-.yr h3 small{font-family:"Atkinson Hyperlegible Next",sans-serif;font-size:13px;font-weight:700;color:var(--soft);letter-spacing:0}
-.drow{display:flex;flex-wrap:wrap;align-items:center;gap:.4em 1.3em;padding:.65em 0;border-bottom:1px solid rgba(23,35,64,.1)}
-.dn{flex:1 0 100%;font-weight:700}
-@container (min-width:430px){.dn{flex:0 0 7.2em}}
+.yr{margin:1.6em 0 0}
+.yr h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:20px;color:var(--navy);margin:0 0 .2em;letter-spacing:-.02em}
+/* each row: division, then written + team; the columns line up from row to row */
+.drow{display:grid;grid-template-columns:auto auto;justify-content:start;align-items:center;gap:.45em 1.6em;padding:.7em 0;border-bottom:1px solid rgba(23,35,64,.1)}
+.dn{grid-column:1/-1;font-weight:700}
+@container (min-width:470px){.drow{grid-template-columns:8.4em auto auto}.dn{grid-column:auto}}
 .grp{display:flex;align-items:center;gap:.35em}
-.gl{font-size:.78em;font-weight:700;color:var(--soft);min-width:3.6em}
+.gl{font-size:.78em;font-weight:700;color:var(--soft);min-width:3.9em}
 .grp a{font-size:.84em;font-weight:700;text-decoration:none;padding:.28em .8em;border-radius:999px;border:1.5px solid rgba(23,35,64,.3);transition:background .15s,border-color .15s,transform .15s}
 .grp a:hover{border-color:var(--acc);transform:translateY(-1px)}
 .grp a.k{background:var(--acc);border-color:var(--acc);color:#fff}
@@ -114,8 +145,12 @@ a{color:inherit}
   .app{display:block;height:auto;min-height:100%}
   .main{grid-template-columns:1fr}
   .stage{height:44vh;min-height:270px}
-  .copy{overflow:visible}
-  .copy-in{padding-block:8px 24px}
+  .copy{overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .copy-in{padding-block:8px 28px}
+  .copy h1.hero{font-size:clamp(34px,10vw,44px)}
+  .ctas{margin-bottom:28px}
+  .cta{flex:1 1 auto;text-align:center}
+  .section{margin-top:40px}
   .when,.brand small{display:none}
   .top{justify-content:space-between}
   .nav{justify-content:stretch;gap:2px;padding:6px 8px 10px;position:sticky;bottom:0;background:var(--paper);box-shadow:0 -8px 20px rgba(237,242,248,.9)}
@@ -171,13 +206,20 @@ const MAP = 'https://www.google.com/maps/search/?api=1&query=' + encodeURICompon
 const mail = `<a href="mailto:${EMAIL}">${EMAIL}</a>`;
 const place = `<a href="${MAP}" target="_blank" rel="noopener">James Clemens High School<br>11306 County Line Rd, Madison, AL 35756</a>`;
 
+const HOME_HERO = `
+<p class="eyebrow">James Clemens Math Tournament</p>
+<h1 class="hero">Welcome to the JCMT</h1>
+<p class="lede">A math tournament for elementary and middle school students, held at James Clemens High School in Madison, Alabama.</p>
+<div class="ctas"><a class="cta go" href="#register">Register your school</a><a class="cta alt" href="#past-tests">Practice with past tests</a></div>`;
+
 const HOME = `
 <dl class="facts">
-  <dt>When</dt><dd>Saturday, January 23, 2027<br>8:00 to 4:00</dd>
-  <dt>Where</dt><dd>${place}</dd>
-  <dt>Divisions</dt><dd>4th grade, 5th grade, 6th grade, Pre-Algebra, and Algebra I</dd>
-  <dt>Register by</dt><dd>Friday, January 8, 2027</dd>
+  <div><dt>When</dt><dd>Saturday, January 23, 2027<br>8:00 to 4:00</dd></div>
+  <div><dt>Register by</dt><dd>Friday, January 8, 2027</dd></div>
+  <div><dt>Where</dt><dd>${place}</dd></div>
+  <div><dt>Divisions</dt><dd>4th grade, 5th grade, 6th grade, Pre-Algebra, and Algebra I</dd></div>
 </dl>
+<h2 class="section">About the tournament</h2>
 <p>The James Clemens Math Tournament was created to help students of various skill levels compete in math. At its heart, the JCMT is less about winning, more about learning. The JCMT is a place where students can learn and grow, and grow enthusiastic towards math.</p>
 <p>Although we acknowledge that math is an extremely difficult subject, we encourage everyone to give their best effort in solving problems. In addition, in an attempt to help students learn, we have created a tournament that combines games and collaboration to foster the next generation of math enthusiasts.</p>
 <p>Thank you all for coming to the third edition of the James Clemens Math Tournament, and we hope we will see you all next year. In the meantime, this website can be used to learn more about the JCMT, and to view past tests and answer keys.</p>
@@ -208,7 +250,7 @@ const group = (year, div, kind) => {
 };
 const PAST = `
 <p>Every written and team test from past tournaments, with answer keys. Each one opens as a PDF.</p>
-${TESTS.map(t => `<section class="yr"><h3>${t.year}</h3>${t.divisions.map(d => `<div class="drow"><span class="dn">${DIVISIONS[d]}</span>${group(t.year, d, 'written')}${group(t.year, d, 'team')}</div>`).join('')}</section>`).join('')}`;
+${TESTS.map(t => `<section class="yr"><h2>${t.year}</h2>${t.divisions.map(d => `<div class="drow"><span class="dn">${DIVISIONS[d]}</span>${group(t.year, d, 'written')}${group(t.year, d, 'team')}</div>`).join('')}</section>`).join('')}`;
 
 const SCHEDULE = [
   ['8:00–8:30', 'Students arrive, registration (coaches)'],
@@ -252,7 +294,7 @@ const CREW = `
 ${CREW_GROUPS.map(([g, people]) => `<p class="group">${g}</p>${people.map(([name, role, img, bio]) => `<details class="person"><summary><img src="img/${img}.jpg" alt="" width="52" height="52" loading="lazy"><span><b>${name}</b><span class="role">${role}</span></span></summary><ul>${bio.map(b => `<li>${b}</li>`).join('')}</ul></details>`).join('')}`).join('')}`;
 
 const PAGES = [
-  { slug: 'home',       fig: 'square',    shape: 'a square',          label: 'Start here', kick: 'The square',         acc: '#1D3160', title: 'Welcome to the JCMT',                     html: HOME },
+  { slug: 'home',       fig: 'square',    shape: 'a square',          label: 'Start here', kick: 'The square',         acc: '#1D3160', title: 'Welcome to the JCMT',                     html: HOME, hero: HOME_HERO },
   { slug: 'register',   fig: 'house',     shape: 'a schoolhouse',     label: 'Register',   kick: 'The schoolhouse',    acc: '#B83A1F', title: 'Register your school',                    html: REGISTER },
   { slug: 'past-tests', fig: 'arrow',     shape: 'a download arrow',  label: 'Past tests', kick: 'The download arrow', acc: '#17735A', title: 'Past tests and answer keys',              html: PAST },
   { slug: 'schedule',   fig: 'hourglass', shape: 'an hourglass',      label: 'The day',    kick: 'The hourglass',      acc: '#8F5B00', title: 'The day, hour by hour',                   html: DAY },
@@ -353,15 +395,22 @@ function morph(fig) {
 }
 function setCopy(pg, instant) {
   const tok = ++copyTok;
-  const html = `<p class="kick">${pg.kick}</p><h2>${pg.title}</h2><div class="sx">${pg.html}</div>`;
-  const swap = () => { copyIn.innerHTML = html; copy.scrollTop = 0; };
-  if (reduce || instant) { swap(); return; }
-  copyIn.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-8px)' }], { duration: 180, easing: 'ease-in', fill: 'forwards' }).onfinish = () => {
-    if (tok !== copyTok) return;
-    swap();
-    copyIn.getAnimations().forEach(a => a.cancel());
-    Array.from(copyIn.children).forEach((el, i) => el.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 440, delay: 140 + i * 80, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
+  const head = pg.hero || `<p class="kick">${pg.kick}</p><h1>${pg.title}</h1>`;
+  const html = `${head}<div class="sx">${pg.html}</div>`;
+  if (reduce || instant) { copyIn.innerHTML = html; copy.scrollTop = 0; return; }
+  const out = copyIn.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-8px)' }], { duration: 180, easing: 'ease-in', fill: 'forwards' });
+  let swapped = false;
+  const swap = () => {
+    if (swapped || tok !== copyTok) return;
+    swapped = true;
+    out.cancel();
+    copyIn.innerHTML = html; copy.scrollTop = 0;
+    const ins = Array.from(copyIn.children).map((el, i) => el.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 440, delay: 60 + i * 70, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
+    // Never leave the text hidden if the browser pauses animations (background tabs, battery saver).
+    setTimeout(() => ins.forEach(a => a.finish()), 1300);
   };
+  out.onfinish = swap;
+  setTimeout(swap, 260);
 }
 function show(i, first) {
   if (i === cur) return;
