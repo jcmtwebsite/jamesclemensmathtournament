@@ -14,6 +14,38 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="James Clemens Math Tournament, Saturday, January 23, 2027, with a tangram square">
 <meta name="twitter:card" content="summary_large_image">
+<!-- Event details for search engines (Google can show the date and place in results).
+     Update the dates each year. Once the domain is live, add "url" and "image" with full addresses. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "James Clemens Math Tournament 2027",
+  "alternateName": "JCMT",
+  "description": "A math tournament for elementary and middle school students, held at James Clemens High School in Madison, Alabama. Divisions: 4th grade, 5th grade, 6th grade, Pre-Algebra, and Algebra I. Registration is due Friday, January 8, 2027.",
+  "startDate": "2027-01-23T08:00:00-06:00",
+  "endDate": "2027-01-23T16:00:00-06:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "James Clemens High School",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "11306 County Line Rd",
+      "addressLocality": "Madison",
+      "addressRegion": "AL",
+      "postalCode": "35756",
+      "addressCountry": "US"
+    }
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "James Clemens Math Tournament",
+    "email": "jamesclemensmathtournament@gmail.com"
+  }
+}
+</script>
 <meta name="theme-color" content="#EDF2F8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -185,7 +217,27 @@ a{color:inherit}
       </svg>
       <p class="tip">Drag a piece to move it. Tap one to turn it. <button type="button" class="fix">Put them back</button></p>
     </div>
-    <div class="copy"><div class="copy-in"></div></div>
+    <div class="copy"><div class="copy-in">
+      <!-- The home page text lives here so search engines and link previews can read it without
+           running any JavaScript. The script reuses this markup when you return to "Start here". -->
+      <p class="eyebrow">James Clemens Math Tournament</p>
+      <h1 class="hero">Welcome to the JCMT</h1>
+      <p class="lede">A math tournament for elementary and middle school students, held at James Clemens High School in Madison, Alabama.</p>
+      <div class="ctas"><a class="cta go" href="#register">Register your school</a><a class="cta alt" href="#past-tests">Practice with past tests</a></div>
+      <div class="sx">
+        <dl class="facts">
+          <div><dt>When</dt><dd>Saturday, January 23, 2027<br>8:00 to 4:00</dd></div>
+          <div><dt>Register by</dt><dd>Friday, January 8, 2027</dd></div>
+          <div><dt>Where</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=James%20Clemens%20High%20School%2C%2011306%20County%20Line%20Rd%2C%20Madison%2C%20AL%2035756" target="_blank" rel="noopener">James Clemens High School<br>11306 County Line Rd, Madison, AL 35756</a></dd></div>
+          <div><dt>Divisions</dt><dd>4th grade, 5th grade, 6th grade, Pre-Algebra, and Algebra I</dd></div>
+        </dl>
+        <h2 class="section">About the tournament</h2>
+        <p>The James Clemens Math Tournament was created to help students of various skill levels compete in math. At its heart, the JCMT is less about winning, more about learning. The JCMT is a place where students can learn and grow, and grow enthusiastic towards math.</p>
+        <p>Although we acknowledge that math is an extremely difficult subject, we encourage everyone to give their best effort in solving problems. In addition, in an attempt to help students learn, we have created a tournament that combines games and collaboration to foster the next generation of math enthusiasts.</p>
+        <p>Thank you all for coming to the third edition of the James Clemens Math Tournament, and we hope we will see you all next year. In the meantime, this website can be used to learn more about the JCMT, and to view past tests and answer keys.</p>
+        <p class="fine">Questions? Email <a href="mailto:jamesclemensmathtournament@gmail.com">jamesclemensmathtournament@gmail.com</a></p>
+      </div>
+    </div></div>
   </main>
   <nav class="nav" aria-label="Pages"></nav>
 </div>
@@ -204,26 +256,9 @@ const FORM = 'https://forms.gle/i9eco9i8UjwBpwqg8';
 const ADDRESS = 'James Clemens High School, 11306 County Line Rd, Madison, AL 35756';
 const MAP = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(ADDRESS);
 const mail = `<a href="mailto:${EMAIL}">${EMAIL}</a>`;
-const place = `<a href="${MAP}" target="_blank" rel="noopener">James Clemens High School<br>11306 County Line Rd, Madison, AL 35756</a>`;
 
-const HOME_HERO = `
-<p class="eyebrow">James Clemens Math Tournament</p>
-<h1 class="hero">Welcome to the JCMT</h1>
-<p class="lede">A math tournament for elementary and middle school students, held at James Clemens High School in Madison, Alabama.</p>
-<div class="ctas"><a class="cta go" href="#register">Register your school</a><a class="cta alt" href="#past-tests">Practice with past tests</a></div>`;
-
-const HOME = `
-<dl class="facts">
-  <div><dt>When</dt><dd>Saturday, January 23, 2027<br>8:00 to 4:00</dd></div>
-  <div><dt>Register by</dt><dd>Friday, January 8, 2027</dd></div>
-  <div><dt>Where</dt><dd>${place}</dd></div>
-  <div><dt>Divisions</dt><dd>4th grade, 5th grade, 6th grade, Pre-Algebra, and Algebra I</dd></div>
-</dl>
-<h2 class="section">About the tournament</h2>
-<p>The James Clemens Math Tournament was created to help students of various skill levels compete in math. At its heart, the JCMT is less about winning, more about learning. The JCMT is a place where students can learn and grow, and grow enthusiastic towards math.</p>
-<p>Although we acknowledge that math is an extremely difficult subject, we encourage everyone to give their best effort in solving problems. In addition, in an attempt to help students learn, we have created a tournament that combines games and collaboration to foster the next generation of math enthusiasts.</p>
-<p>Thank you all for coming to the third edition of the James Clemens Math Tournament, and we hope we will see you all next year. In the meantime, this website can be used to learn more about the JCMT, and to view past tests and answer keys.</p>
-<p class="fine">Questions? Email ${mail}</p>`;
+// The home page's text is written directly in the HTML above (inside .copy-in), not here.
+const HOME = document.querySelector('.copy-in').innerHTML;
 
 const REGISTER = `
 <p>Teachers and coaches register their school as a sponsor using our registration form.</p>
@@ -294,7 +329,7 @@ const CREW = `
 ${CREW_GROUPS.map(([g, people]) => `<p class="group">${g}</p>${people.map(([name, role, img, bio]) => `<details class="person"><summary><img src="img/${img}.jpg" alt="" width="52" height="52" loading="lazy"><span><b>${name}</b><span class="role">${role}</span></span></summary><ul>${bio.map(b => `<li>${b}</li>`).join('')}</ul></details>`).join('')}`).join('')}`;
 
 const PAGES = [
-  { slug: 'home',       fig: 'square',    shape: 'a square',          label: 'Start here', kick: 'The square',         acc: '#1D3160', title: 'Welcome to the JCMT',                     html: HOME, hero: HOME_HERO },
+  { slug: 'home',       fig: 'square',    shape: 'a square',          label: 'Start here', kick: 'The square',         acc: '#1D3160', title: 'Welcome to the JCMT',                     markup: HOME },
   { slug: 'register',   fig: 'house',     shape: 'a schoolhouse',     label: 'Register',   kick: 'The schoolhouse',    acc: '#B83A1F', title: 'Register your school',                    html: REGISTER },
   { slug: 'past-tests', fig: 'arrow',     shape: 'a download arrow',  label: 'Past tests', kick: 'The download arrow', acc: '#17735A', title: 'Past tests and answer keys',              html: PAST },
   { slug: 'schedule',   fig: 'hourglass', shape: 'an hourglass',      label: 'The day',    kick: 'The hourglass',      acc: '#8F5B00', title: 'The day, hour by hour',                   html: DAY },
@@ -395,8 +430,7 @@ function morph(fig) {
 }
 function setCopy(pg, instant) {
   const tok = ++copyTok;
-  const head = pg.hero || `<p class="kick">${pg.kick}</p><h1>${pg.title}</h1>`;
-  const html = `${head}<div class="sx">${pg.html}</div>`;
+  const html = pg.markup || `<p class="kick">${pg.kick}</p><h1>${pg.title}</h1><div class="sx">${pg.html}</div>`;
   if (reduce || instant) { copyIn.innerHTML = html; copy.scrollTop = 0; return; }
   const out = copyIn.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-8px)' }], { duration: 180, easing: 'ease-in', fill: 'forwards' });
   let swapped = false;
