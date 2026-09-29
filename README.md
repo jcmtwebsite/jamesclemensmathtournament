@@ -48,4 +48,4 @@ Push to GitHub and turn on Pages (Settings → Pages → Deploy from a branch �
    `<meta property="og:url" content="https://example.org/">` and
    `<link rel="canonical" href="https://example.org/">`.
 
-Note: `404.html` links to `index.html`, but has to be switched to '/' once the site is on its own domain.
+Note: `404.html` links to `index.html`, but has to be switched to `/` once the site is on its own domain.
