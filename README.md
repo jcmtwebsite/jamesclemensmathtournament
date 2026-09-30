@@ -4,7 +4,10 @@ A single-page site: `index.html` holds all the text, and each page (home, regist
 the day, the crew) is drawn from the same seven tangram pieces.
 
 ## Files
-- `index.html`: the whole site. All wording is in the `CONTENT` section of the script near the bottom.
+- `index.html`: the whole site. All wording is in the `CONTENT` section of the script near the bottom,
+   **except the home page's text**, which sits in the static HTML inside `.copy-in` so search engines can
+   read it without JavaScript. The script snapshots that markup into the `HOME` constant and reuses it
+   whenever you navigate back. Edit the HTML, not `HOME`.
 - `tests/<year>/`: past tests and answer keys as PDFs.
 - `img/`: committee photos (square JPEGs, about 400×400).
 - `404.html`: the page shown for any address that doesn't exist.
