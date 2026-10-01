@@ -41,8 +41,10 @@ then add the line at the **top** of `TESTS` (newest first). A division key that 
 console when you add one. Nothing validates that the PDFs actually exist, so a mismatched
 filename is still a dead link with no error; check the filenames by hand.
 
-**Committee:** edit `CREW_GROUPS`. Each person is `[name, role, photo-slug, [bio lines]]`;
-the photo is `img/<slug>.jpg`. Slug is the third element, not the name.
+**Committee:** edit `CREW_GROUPS`. Each person is `[name, role, [bio lines]]`; the photo
+`img/<slug>.jpg` is derived from the name, so there's no filename to keep in sync by hand. The
+derivation is ASCII-only — a name with an apostrophe or accent (`O'Neill`, `María`) needs the
+optional fourth element holding the real file name.
 
 **Dates: one source for the JS-rendered copy, a guard for the static rest.** `EVENT` at the top
 of the `CONTENT` section holds the tournament date and roster deadline, and drives `REGISTER` and

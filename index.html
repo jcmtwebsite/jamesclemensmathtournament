@@ -342,29 +342,32 @@ const DAY = `
 <p>${onDay.long}, at <a href="${MAP}" target="_blank" rel="noopener">James Clemens High School</a> in Madison.</p>
 <ol class="times">${SCHEDULE.map(([t, e, note]) => `<li${KEY_EVENTS.includes(e) ? ' class="hl"' : ''}><b>${t}</b><span>${e}${note ? `<small>${note}</small>` : ''}</span></li>`).join('')}</ol>`;
 
+// Each person is [name, role, [bio lines]]. The photo is img/<slug>.jpg, where the slug is derived
+// from the name - add a fourth element only when the name doesn't reduce to the photo file you have.
 const CREW_GROUPS = [
   ['Faculty sponsor', [
-    ['Kristin Hartland', 'Faculty Sponsor', 'kristin-hartland', ['PhD in Mathematics Education - MTSU', 'Masters in Mathematics- UMASS Lowell', 'Bachelor in Science in Mathematics, Minors in Physics & Secondary Education - UTEP', 'Avid Bowler for 26+ years, National Competitor', 'JCHS Head Bowling Coach', '2 Children, 1 at James Clemens HS and 1 at Liberty MS']]
+    ['Kristin Hartland', 'Faculty Sponsor', ['PhD in Mathematics Education - MTSU', 'Masters in Mathematics- UMASS Lowell', 'Bachelor in Science in Mathematics, Minors in Physics & Secondary Education - UTEP', 'Avid Bowler for 26+ years, National Competitor', 'JCHS Head Bowling Coach', '2 Children, 1 at James Clemens HS and 1 at Liberty MS']]
   ]],
   ['Directors', [
-    ['Jeffrey Duan', 'Director', 'jeffrey-duan', ['Sophomore at James Clemens High School', 'Enjoys playing piano', '1-time American Invitational Mathematics Examination qualifier', '1-time National MATHCOUNTS qualifier']],
-    ['Eddie Wen', 'Director', 'eddie-wen', ['Sophomore at James Clemens High School', 'Enjoys watching anime and playing anime music', 'Has participated in math tournaments since 3rd grade', '2x Alabama State MATHCOUNTS Participant', 'Avid tennis player for 4-5 years and varsity State qualifier']]
+    ['Jeffrey Duan', 'Director', ['Sophomore at James Clemens High School', 'Enjoys playing piano', '1-time American Invitational Mathematics Examination qualifier', '1-time National MATHCOUNTS qualifier']],
+    ['Eddie Wen', 'Director', ['Sophomore at James Clemens High School', 'Enjoys watching anime and playing anime music', 'Has participated in math tournaments since 3rd grade', '2x Alabama State MATHCOUNTS Participant', 'Avid tennis player for 4-5 years and varsity State qualifier']]
   ]],
   ['Problem writers', [
-    ['Kriti Akarapu', 'Problem Writer', 'kriti-akarapu', ['Freshman at James Clemens High School', 'Has participated in math tournaments since 3rd grade', '2x Alabama State MATHCOUNTS Participant', 'Enjoys music and singing', 'Loves reading, anime, dancing, goofing around, and watching movies']],
-    ['Harshtha Chander', 'Problem Writer', 'harshtha-chander', ['Sophomore at James Clemens High School', 'Has participated in math tournaments since 3rd grade', '2024 AMC 8 Honor Roll', '2025 Alabama Statewide Math Contest 1st Place in Geometry', 'Avid Indian Classical Dancer for around 6 years', 'Enjoys reading and listening to music']],
-    ['Laya Gowder', 'Problem Writer', 'laya-gowder', ['Sophomore at James Clemens High School', 'Participated in Math Tournaments since 3rd grade', 'Avid dancer for more than 10 years', 'Loves art and fashion', '2024 James Clemens Math Tournament 4th Place', 'James Clemens Math Tournament Member for 2 years']],
-    ['Heidi Leonard', 'Problem Writer', 'heidi-leonard', ['Sophomore at James Clemens High School', 'Has participated in math tournaments since 8th grade', 'She loves reading, snow skiing, travel, and biology', 'Placed in local math competitions as both a middle and high school student']]
+    ['Kriti Akarapu', 'Problem Writer', ['Freshman at James Clemens High School', 'Has participated in math tournaments since 3rd grade', '2x Alabama State MATHCOUNTS Participant', 'Enjoys music and singing', 'Loves reading, anime, dancing, goofing around, and watching movies']],
+    ['Harshtha Chander', 'Problem Writer', ['Sophomore at James Clemens High School', 'Has participated in math tournaments since 3rd grade', '2024 AMC 8 Honor Roll', '2025 Alabama Statewide Math Contest 1st Place in Geometry', 'Avid Indian Classical Dancer for around 6 years', 'Enjoys reading and listening to music']],
+    ['Laya Gowder', 'Problem Writer', ['Sophomore at James Clemens High School', 'Participated in Math Tournaments since 3rd grade', 'Avid dancer for more than 10 years', 'Loves art and fashion', '2024 James Clemens Math Tournament 4th Place', 'James Clemens Math Tournament Member for 2 years']],
+    ['Heidi Leonard', 'Problem Writer', ['Sophomore at James Clemens High School', 'Has participated in math tournaments since 8th grade', 'She loves reading, snow skiing, travel, and biology', 'Placed in local math competitions as both a middle and high school student']]
   ]],
   ['Alumni', [
-    ['Erik Wu', 'Founder', 'erik-wu', ['Stanford Class of 2029', 'Participated in Math Tournaments since 2nd grade', 'Avid Tennis Player for around 2 - 3 years', 'Loves playing piano and Korean pop music', '3x American Invitational Mathematics Examination Qualifier', '3rd Place Alabama Statewide High School Math Competition']],
-    ['Neyan Sezhian', 'Co-Founder', 'neyan-sezhian', ['Cornell Class of 2029', 'Participated in Math Tournaments since 1st grade', 'Avid Golf Player for around 6 years', 'Loves playing piano and going to the gym', '2x American Invitational Mathematics Examination Qualifier', 'Nickname is Nyan, the flying toaster pastry cat']],
-    ['Vineet Vadrevu', 'Former Problem Writer', 'vineet-vadrevu', ['Junior at James Clemens High School', '3 years of competitive math team experience', '5 years of experience playing flute', 'Enjoys playing Badminton', 'AMC 10 Participant and 2 year Beast Academy instructor']]
+    ['Erik Wu', 'Founder', ['Stanford Class of 2029', 'Participated in Math Tournaments since 2nd grade', 'Avid Tennis Player for around 2 - 3 years', 'Loves playing piano and Korean pop music', '3x American Invitational Mathematics Examination Qualifier', '3rd Place Alabama Statewide High School Math Competition']],
+    ['Neyan Sezhian', 'Co-Founder', ['Cornell Class of 2029', 'Participated in Math Tournaments since 1st grade', 'Avid Golf Player for around 6 years', 'Loves playing piano and going to the gym', '2x American Invitational Mathematics Examination Qualifier', 'Nickname is Nyan, the flying toaster pastry cat']],
+    ['Vineet Vadrevu', 'Former Problem Writer', ['Junior at James Clemens High School', '3 years of competitive math team experience', '5 years of experience playing flute', 'Enjoys playing Badminton', 'AMC 10 Participant and 2 year Beast Academy instructor']]
   ]]
 ];
+const slug = n => n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 const CREW = `
 <p>The people behind the JCMT. Tap a name to read more.</p>
-${CREW_GROUPS.map(([g, people]) => `<p class="group">${g}</p>${people.map(([name, role, img, bio]) => `<details class="person"><summary><img src="img/${img}.jpg" alt="" width="52" height="52" loading="lazy"><span><b>${name}</b><span class="role">${role}</span></span></summary><ul>${bio.map(b => `<li>${b}</li>`).join('')}</ul></details>`).join('')}`).join('')}`;
+${CREW_GROUPS.map(([g, people]) => `<p class="group">${g}</p>${people.map(([name, role, bio, photo]) => `<details class="person"><summary><img src="img/${photo || slug(name)}.jpg" alt="" width="52" height="52" loading="lazy"><span><b>${name}</b><span class="role">${role}</span></span></summary><ul>${bio.map(b => `<li>${b}</li>`).join('')}</ul></details>`).join('')}`).join('')}`;
 
 const PAGES = [
   { slug: 'home',       fig: 'square',    shape: 'a square',          label: 'Start here', kick: 'The square',         acc: '#1D3160', title: 'Welcome to the JCMT',                     markup: HOME },

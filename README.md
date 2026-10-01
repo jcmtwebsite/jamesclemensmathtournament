@@ -29,8 +29,11 @@ The register and day pages follow from it automatically. The same dates are also
 open the console and `verifyEvent()` names any that are stale.
 
 ## Updating the committee
-Edit `CREW_GROUPS` in `index.html`. Each person is `[name, role, photo file name, [bio lines]]`.
-Put their photo in `img/` as `<photo file name>.jpg`.
+Edit `CREW_GROUPS` in `index.html`. Each person is `[name, role, [bio lines]]`, and their photo is
+`img/<name>.jpg` with the name lowercased and every run of non-alphanumerics turned into a dash —
+"Kristin Hartland" looks for `img/kristin-hartland.jpg`. A name with an apostrophe or an accent won't
+reduce to the file name you have, so add the file name as a fourth element:
+`['Name', 'Role', [bio lines], 'photo-slug']`.
 
 ## Testing locally
 Open a terminal in this folder and run `python -m http.server 8000`, then visit http://localhost:8000.
