@@ -36,9 +36,10 @@ is not a bug: every rule that uses it (`.btn`, `.kick`, `.group`, `.grp a.k`, `.
 only the other variables. Adding `:root { --acc:#1D3160 }` is safe as a default if you want one.
 
 **Adding a year of tests:** put PDFs at `tests/<year>/<division>-<written|team>[-key].pdf`,
-then add the line at the **top** of `TESTS` (newest first). The division key must already
-exist in `DIVISIONS`, or it renders as `undefined`. Nothing validates the PDFs exist, so a
-mismatched filename becomes a dead link with no error — check the filenames by hand.
+then add the line at the **top** of `TESTS` (newest first). A division key that isn't in
+`DIVISIONS` is now dropped with a console warning instead of printing `undefined` — watch the
+console when you add one. Nothing validates that the PDFs actually exist, so a mismatched
+filename is still a dead link with no error; check the filenames by hand.
 
 **Committee:** edit `CREW_GROUPS`. Each person is `[name, role, photo-slug, [bio lines]]`;
 the photo is `img/<slug>.jpg`. Slug is the third element, not the name.

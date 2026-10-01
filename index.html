@@ -273,11 +273,16 @@ const REGISTER = `
 // Past tests live in tests/<year>/<division>-<written|team>[-key].pdf.
 // To add a year: put its PDFs in tests/<year>/ with those names and add a line at the top of TESTS.
 const DIVISIONS = { '4th-grade': '4th grade', '5th-grade': '5th grade', '6th-grade': '6th grade', 'pre-algebra': 'Pre-Algebra', 'algebra-1': 'Algebra I' };
+// A division that isn't in DIVISIONS would print the word "undefined" on the page, so skip it and say so.
 const TESTS = [
   { year: 2026, divisions: ['4th-grade', '5th-grade', '6th-grade', 'pre-algebra', 'algebra-1'] },
   { year: 2025, divisions: ['5th-grade', '6th-grade', 'pre-algebra', 'algebra-1'] },
   { year: 2024, divisions: ['6th-grade', 'pre-algebra', 'algebra-1'] }
-];
+].map(t => ({ ...t, divisions: t.divisions.filter(d => {
+  if (d in DIVISIONS) return true;
+  console.warn(`JCMT: TESTS lists "${d}" for ${t.year}, which isn't in DIVISIONS. Skipping it.`);
+  return false;
+}) }));
 const pdf = (href, label, what) => `<a href="${href}" target="_blank" rel="noopener"${label === 'Key' ? ' class="k"' : ''} aria-label="${what} ${label === 'Key' ? 'answer key' : 'test'} (PDF)">${label}</a>`;
 const group = (year, div, kind) => {
   const base = `tests/${year}/${div}-${kind}`, what = `${year} ${DIVISIONS[div]} ${kind}`;
