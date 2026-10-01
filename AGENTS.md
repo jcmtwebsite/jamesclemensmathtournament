@@ -44,12 +44,12 @@ filename is still a dead link with no error; check the filenames by hand.
 **Committee:** edit `CREW_GROUPS`. Each person is `[name, role, photo-slug, [bio lines]]`;
 the photo is `img/<slug>.jpg`. Slug is the third element, not the name.
 
-**Dates are duplicated ~14 times.** The event year is hardcoded across the `<meta
-description>`, `og:description`, `og:image:alt`, the JSON-LD `Event` block (`name`,
-`description`, `startDate`, `endDate`), the header `.when`, the home `.facts` list, the
-`REGISTER` copy, and the `DAY` copy. There is no single source of truth — for the annual
-rollover, grep for the old year and update every hit, including the "third edition" wording
-in the home copy.
+**Dates: one source for the JS-rendered copy, a guard for the static rest.** `EVENT` at the top
+of the `CONTENT` section holds the tournament date and roster deadline, and drives `REGISTER` and
+`DAY`. The `<head>` tags, the header `.when` chip, and the home `.facts` list are static HTML that
+JS can't rewrite, so they stay hand-edited — but `verifyEvent()` compares all ten against `EVENT`
+and logs the stale ones, so a year rollover can't half-land. `og:image:alt` deliberately carries no
+year; don't put one back. The "third edition" wording in the home copy is still manual.
 
 **Leave the custom-domain TODOs alone** unless the site is actually on its own domain.
 Three marked spots: `404.html`'s `href="index.html"`, `og:image` in `index.html` (relative),

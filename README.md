@@ -22,6 +22,12 @@ the day, the crew) is drawn from the same seven tangram pieces.
 2. In `index.html`, add a line at the top of `TESTS`, e.g.
    `{ year: 2027, divisions: ['4th-grade', '5th-grade', '6th-grade', 'pre-algebra', 'algebra-1'] },`
 
+## Updating the dates each year
+Set `EVENT` near the top of the script in `index.html` — the tournament date and the roster deadline.
+The register and day pages follow from it automatically. The same dates are also typed into the
+`<head>` and the home page, which JavaScript can't rewrite, so those still need editing by hand:
+open the console and `verifyEvent()` names any that are stale.
+
 ## Updating the committee
 Edit `CREW_GROUPS` in `index.html`. Each person is `[name, role, photo file name, [bio lines]]`.
 Put their photo in `img/` as `<photo file name>.jpg`.

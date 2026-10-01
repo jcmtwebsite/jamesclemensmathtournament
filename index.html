@@ -12,10 +12,11 @@
 <meta property="og:image" content="social-preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="James Clemens Math Tournament, Saturday, January 23, 2027, with a tangram square">
+<meta property="og:image:alt" content="James Clemens Math Tournament with a tangram square">
 <meta name="twitter:card" content="summary_large_image">
 <!-- Event details for search engines (Google can show the date and place in results).
-     Update the dates each year. Once the domain is live, add "url" and "image" with full addresses. -->
+     Keep these dates in step with EVENT in the script below; verifyEvent() checks them and names any
+     that are stale in the console. Once the domain is live, add "url" and "image" with full addresses. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -257,6 +258,38 @@ const ADDRESS = 'James Clemens High School, 11306 County Line Rd, Madison, AL 35
 const MAP = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(ADDRESS);
 const mail = `<a href="mailto:${EMAIL}">${EMAIL}</a>`;
 
+// The event dates. Change them here and the register/day copy below follows along. The same dates are
+// typed into the <head>, the header chip and the home facts list, which JavaScript can't rewrite -
+// verifyEvent() checks those against this object and names any that are stale.
+const EVENT = { date: '2027-01-23', regDue: '2027-01-08' };
+const pretty = iso => {
+  const d = new Date(iso + 'T12:00:00');
+  return {
+    long: d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }),
+    chip: d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).replace(', ', ' · ') + ' · ' + iso.slice(0, 4)
+  };
+};
+const onDay = pretty(EVENT.date), dueDay = pretty(EVENT.regDue);
+
+function verifyEvent() {
+  const bad = [];
+  const meta = s => ($(s) || {}).content || '';
+  const dd = $$('.facts dd');
+  const ld = JSON.parse($('script[type="application/ld+json"]').textContent);
+  const chk = (what, ok) => { if (!ok) bad.push(what); };
+  chk('meta description', meta('meta[name="description"]').includes(onDay.long));
+  chk('og:description', meta('meta[property="og:description"]').includes(onDay.long));
+  chk('og:image:alt (the year must come out of it)', !/\d{4}/.test(meta('meta[property="og:image:alt"]')));
+  chk('JSON-LD name', ld.name.includes(EVENT.date.slice(0, 4)));
+  chk('JSON-LD description', ld.description.includes(dueDay.long));
+  chk('JSON-LD startDate', ld.startDate.startsWith(EVENT.date));
+  chk('JSON-LD endDate', ld.endDate.startsWith(EVENT.date));
+  chk('header date chip', $('.when').textContent.trim() === onDay.chip);
+  chk('home facts "When"', !!dd[0] && dd[0].textContent.includes(onDay.long));
+  chk('home facts "Register by"', !!dd[1] && dd[1].textContent.includes(dueDay.long));
+  if (bad.length) console.warn(`JCMT: EVENT is set to ${EVENT.date}. These still need changing by hand:`, bad);
+}
+
 // The home page's text is written directly in the HTML above (inside .copy-in), not here.
 const HOME = document.querySelector('.copy-in').innerHTML;
 
@@ -264,11 +297,11 @@ const REGISTER = `
 <p>Teachers and coaches register their school as a sponsor using our registration form.</p>
 <ol class="steps">
   <li><b>Fill out the registration form.</b><span>You'll need your school's name, address, and phone number, and how many students from each grade (4th through 8th) will compete.</span></li>
-  <li><b>Watch for our email.</b><span>We'll confirm your school's spot. Then send your student roster to ${mail} by Friday, January 8, 2027.</span></li>
-  <li><b>Check in on tournament day.</b><span>Coach registration is from 8:00 to 8:30 on Saturday, January 23, 2027.</span></li>
+  <li><b>Watch for our email.</b><span>We'll confirm your school's spot. Then send your student roster to ${mail} by ${dueDay.long}.</span></li>
+  <li><b>Check in on tournament day.</b><span>Coach registration is from 8:00 to 8:30 on ${onDay.long}.</span></li>
 </ol>
 <a class="btn" href="${FORM}" target="_blank" rel="noopener">Open the registration form ↗</a>
-<p class="fine">Registration is due <b>Friday, January 8, 2027</b>.<br>Questions? Email ${mail}</p>`;
+<p class="fine">Registration is due <b>${dueDay.long}</b>.<br>Questions? Email ${mail}</p>`;
 
 // Past tests live in tests/<year>/<division>-<written|team>[-key].pdf.
 // To add a year: put its PDFs in tests/<year>/ with those names and add a line at the top of TESTS.
@@ -306,7 +339,7 @@ const SCHEDULE = [
 ];
 const KEY_EVENTS = ['Written exam', 'Team exam', 'Games', 'Awards ceremony'];
 const DAY = `
-<p>Saturday, January 23, 2027, at <a href="${MAP}" target="_blank" rel="noopener">James Clemens High School</a> in Madison.</p>
+<p>${onDay.long}, at <a href="${MAP}" target="_blank" rel="noopener">James Clemens High School</a> in Madison.</p>
 <ol class="times">${SCHEDULE.map(([t, e, note]) => `<li${KEY_EVENTS.includes(e) ? ' class="hl"' : ''}><b>${t}</b><span>${e}${note ? `<small>${note}</small>` : ''}</span></li>`).join('')}</ol>`;
 
 const CREW_GROUPS = [
@@ -513,6 +546,7 @@ gP.addEventListener('pointercancel', endDrag);
 function loop(now) { stepTweens(now); draw(now / 1000); requestAnimationFrame(loop); }
 draw(0);
 show(pageFromHash(), true);
+verifyEvent();
 requestAnimationFrame(loop);
 })();
 </script>
