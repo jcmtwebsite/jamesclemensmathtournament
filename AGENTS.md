@@ -104,3 +104,35 @@ Only relevant if you're changing the figures, but the wiring is not guessable:
   hardcoded polygons in `404.html`). Adding or renaming a piece means touching all of them.
 - `show()` morphs by tweening position/rotation/scale; there is no per-piece collision or
   layout logic, so pieces overlap freely.
+
+## Intro animation
+
+Once per session, on a cold load of the home page: the pieces scatter across the viewport, gather
+into the square at the centre of the screen, then slide into the stage and the copy fades in. The
+wiring is split across three places, which is the part that isn't guessable:
+
+- **`<html class="intro">` is the single switch.** A small `<script>` in `<head>` adds it before
+  the first paint and `finishIntro()` removes it again. The head script also arms a 3.5s safety
+  timer that removes it, so a throw in the main script can't leave the home copy hidden.
+  `html.intro .copy-in{opacity:0}` is the *only* thing that hides the copy, and it's deliberately
+  a class-gated rule rather than a plain stylesheet rule — visitors without JavaScript must still
+  see the text. Don't move that hiding into an unconditional selector.
+- **The head script decides, the main script obeys.** It arms the class only when motion isn't
+  reduced, the URL carries no hash (or `#home`), and `sessionStorage['jcmt-intro-seen']` is unset.
+  The main script reads the class once into `introActive` instead of re-deriving those conditions,
+  so the two can't drift.
+- **`camX`/`camY` is a camera offset added to every piece in `draw()`.** Every figure is authored
+  centred on the SVG origin, so the square would naturally form at the *stage* centre. The intro
+  instead scatters pieces in screen coordinates and parks the camera at the screen centre, so the
+  square forms there, then tweens the camera back to 0. This leans on `.stage svg{overflow:visible}`
+  — remove that and pieces scattered outside the stage are clipped away.
+- **`morph(fig, onDone)` and `show(i, first, skipMorph)` grew optional arguments** so the intro can
+  chain its slide after the square forms, and can suppress the usual first-load morph.
+- **`finishIntro()` empties the whole `tweens` array.** That is only safe because on a cold load
+  the intro is the only thing animating. Don't call it where other tweens may be running.
+- **The `780` in `runIntro()` must stay in step with the CSS breakpoint.** Below it the layout is
+  stacked, so there is no "side" to slide to and the slide phase is skipped; the square converges
+  in place instead.
+- Reduced motion skips all of it. There is no automated test — check it by eye over
+  `python -m http.server`, and note that a second load in the same tab will not replay it
+  (that is `sessionStorage`, not a bug).
