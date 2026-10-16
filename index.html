@@ -87,7 +87,11 @@ a{color:inherit}
 .copy{min-height:0;overflow-y:auto;display:flex;flex-direction:column;container-type:inline-size;scrollbar-width:thin;scrollbar-color:#c3cedd transparent;
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 28px,#000 calc(100% - 36px),transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 28px,#000 calc(100% - 36px),transparent 100%)}
 .copy-in{margin-block:auto;padding-block:36px 48px;max-width:540px;font-size:16px}
-html.intro .copy-in{opacity:0}
+/* The opening animation runs against an empty screen: the frame, the copy and the stage's dotted
+   backdrop stay hidden until the pieces are in place, then fade back. Gated on a class that only
+   JavaScript adds, and done with opacity so nothing reflows while the intro is measuring. */
+html.intro .top,html.intro .nav,html.intro .tip,html.intro .copy,html.intro .dotbg{opacity:0;pointer-events:none}
+.top,.nav,.tip,.copy,.dotbg{transition:opacity .5s ease}
 .kick{font-family:"Unbounded",sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:0}
 .copy h1{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,2.7vw,36px);line-height:1.1;margin:12px 0 20px;color:var(--navy);letter-spacing:-.03em;text-wrap:balance}
 
@@ -197,16 +201,17 @@ html.intro .copy-in{opacity:0}
 }
 </style>
 <script>
-/* The opening animation has to hide the home copy before the first paint, so the class is set
-   here rather than in the stylesheet — with scripting off it is never added and the text stays
-   visible. Skipped for reduced motion, deep links, and repeat visits in the same session. */
+/* The opening animation plays on an empty screen, so the page content has to be hidden before the
+   first paint. The class is set here rather than in the stylesheet — with scripting off it is never
+   added and everything stays visible. Skipped for reduced motion, deep links, and repeat visits in
+   the same session. */
 (function () {
   try {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (location.hash && location.hash !== '#home') return;
     if (sessionStorage.getItem('jcmt-intro-seen')) return;
     document.documentElement.classList.add('intro');
-    // Safety net: if the main script never runs, or throws partway, don't leave the copy hidden.
+    // Safety net: if the main script never runs, or throws partway, don't leave the page blank.
     setTimeout(function () { document.documentElement.classList.remove('intro'); }, 3500);
   } catch (e) {}
 })();
@@ -228,7 +233,7 @@ html.intro .copy-in{opacity:0}
           <radialGradient id="fade"><stop offset=".35" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
           <mask id="dotmask"><rect x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#fade)"/></mask>
         </defs>
-        <rect x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#dots)" mask="url(#dotmask)"/>
+        <rect class="dotbg" x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#dots)" mask="url(#dotmask)"/>
         <g id="shadows"></g>
         <g id="pieces"></g>
       </svg>
@@ -518,11 +523,12 @@ function show(i, first, skipMorph) {
 }
 const pageFromHash = () => Math.max(0, PAGES.findIndex(p => p.slug === decodeURIComponent(location.hash.slice(1))));
 
-/* Opening animation. The pieces start scattered across the whole viewport, gather into the
-   square at the centre of the screen, then slide into place in the stage. `camX/camY` is a
-   camera offset added to every piece in draw(), which lets the square form anywhere on screen
-   and still settle at the origin in the end. The stacked layout has no "side" to slide to, so
-   it converges in place and skips the slide. */
+/* Opening animation. Nothing else is on screen while it plays: the pieces start scattered across
+   the whole viewport, gather into the square at the centre of the screen, then slide into place in
+   the stage, at which point the frame and copy fade back in. `camX/camY` is a camera offset added
+   to every piece in draw(), which lets the square form anywhere on screen and still settle at the
+   origin in the end. The stacked layout has no "side" to slide to, so it converges in place and
+   skips the slide. */
 let introActive = document.documentElement.classList.contains('intro');
 function runIntro() {
   const centre = toSvgPt(innerWidth / 2, innerHeight / 2);
@@ -541,29 +547,22 @@ function runIntro() {
   try { sessionStorage.setItem('jcmt-intro-seen', '1'); } catch (e) {}
   setTimeout(() => morph('square', () => {
     if (!introActive) return;
-    if (stacked) { finishIntro(80); return; }
+    if (stacked) { finishIntro(); return; }
     tween({ from: 0, to: 1, dur: 650, ease: E.inOut,
       set: v => { camX = centre.x * (1 - v); camY = centre.y * (1 - v); },
-      done: () => finishIntro(450) });
+      done: () => finishIntro() });
   }), 250);
 }
-function finishIntro(dur) {
+function finishIntro() {
   if (!introActive) return;
   introActive = false;
   tweens.length = 0;                                  // on a cold load only the intro is in flight
   IDS.forEach(id => { const p = P[id], q = POSE.square[id]; p.x = q.x; p.y = q.y; p.r = q.r; p.s = q.s; p.lift = 0; });
   camX = 0; camY = 0; breatheOn = true;
-  // If the <head> safety net already revealed the copy, fade it in from where it is, not from 0.
-  const wasHidden = document.documentElement.classList.contains('intro');
-  document.documentElement.classList.remove('intro');
-  if (!dur || !wasHidden) return;
-  const a = copyIn.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: dur, easing: 'cubic-bezier(.2,.8,.2,1)' });
-  const done = () => { try { a.cancel(); } catch (e) {} };
-  a.onfinish = done;
-  // Never leave the copy hidden if the browser pauses animations (background tabs, battery saver).
-  setTimeout(done, dur + 400);
+  document.documentElement.classList.remove('intro');   // the frame and copy fade back in via CSS
 }
-['keydown', 'wheel', 'touchstart', 'click'].forEach(ev => window.addEventListener(ev, () => finishIntro(160), { passive: true, once: true }));
+// Only a deliberate keypress or click skips it - not a scroll, which a trackpad nudge can fire.
+['keydown', 'click'].forEach(ev => window.addEventListener(ev, () => finishIntro(), { passive: true, once: true }));
 
 PAGES.forEach(pg => {
   const a = document.createElement('a'); a.href = '#' + pg.slug;
@@ -576,20 +575,20 @@ document.addEventListener('click', e => {
   const a = e.target.closest('a[href^="#"]'); if (!a) return;
   const i = PAGES.findIndex(p => '#' + p.slug === a.getAttribute('href')); if (i < 0) return;
   e.preventDefault();
-  if (introActive) finishIntro(0);
+  if (introActive) finishIntro();
   if (i === cur) { morph(PAGES[i].fig); return; }
   show(i);
   try { history.pushState(null, '', '#' + PAGES[i].slug); } catch (err) {}
 });
 window.addEventListener('popstate', () => show(pageFromHash()));
 window.addEventListener('hashchange', () => show(pageFromHash()));
-$('.fix').addEventListener('click', () => { if (introActive) { finishIntro(0); return; } morph(PAGES[Math.max(0, cur)].fig); });
+$('.fix').addEventListener('click', () => { if (introActive) { finishIntro(); return; } morph(PAGES[Math.max(0, cur)].fig); });
 
 /* drag a piece, tap to turn it */
 function toSvgPt(x, y) { const pt = svg.createSVGPoint(); pt.x = x; pt.y = y; const m = pt.matrixTransform(svg.getScreenCTM().inverse()); return { x: m.x, y: m.y }; }
 const toSvg = e => toSvgPt(e.clientX, e.clientY);
 gP.addEventListener('pointerdown', e => {
-  if (introActive) { finishIntro(160); return; }
+  if (introActive) { finishIntro(); return; }
   const id = e.target.dataset && e.target.dataset.id; if (!id) return;
   e.preventDefault();
   const p = P[id]; gS.appendChild(p.sh); gP.appendChild(p.pg);

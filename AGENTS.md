@@ -113,10 +113,13 @@ wiring is split across three places, which is the part that isn't guessable:
 
 - **`<html class="intro">` is the single switch.** A small `<script>` in `<head>` adds it before
   the first paint and `finishIntro()` removes it again. The head script also arms a 3.5s safety
-  timer that removes it, so a throw in the main script can't leave the home copy hidden.
-  `html.intro .copy-in{opacity:0}` is the *only* thing that hides the copy, and it's deliberately
-  a class-gated rule rather than a plain stylesheet rule — visitors without JavaScript must still
-  see the text. Don't move that hiding into an unconditional selector.
+  timer that removes it, so a throw in the main script can't leave the page blank.
+  `html.intro .top/.nav/.tip/.copy/.dotbg{opacity:0}` is the *only* thing that empties the screen:
+  the header, the bottom nav, the drag hint, the copy column, and the stage's dotted backdrop. The
+  pieces themselves stay visible and are the whole animation. Keep it class-gated rather than a
+  plain stylesheet rule, so visitors without JavaScript still see the page, and keep it on
+  `opacity` rather than `display` so nothing reflows while the intro measures the stage.
+  Everything fades back in together when `finishIntro()` removes the class.
 - **The head script decides, the main script obeys.** It arms the class only when motion isn't
   reduced, the URL carries no hash (or `#home`), and `sessionStorage['jcmt-intro-seen']` is unset.
   The main script reads the class once into `introActive` instead of re-deriving those conditions,
@@ -133,6 +136,9 @@ wiring is split across three places, which is the part that isn't guessable:
 - **The `780` in `runIntro()` must stay in step with the CSS breakpoint.** Below it the layout is
   stacked, so there is no "side" to slide to and the slide phase is skipped; the square converges
   in place instead.
+- **Only a keypress or a click skips it.** `wheel` and `touchstart` are deliberately not in that
+  list: a trackpad nudge fires `wheel`, which used to end the intro by accident. A tap still works
+  because touch generates a click.
 - Reduced motion skips all of it. There is no automated test — check it by eye over
   `python -m http.server`, and note that a second load in the same tab will not replay it
   (that is `sessionStorage`, not a bug).
