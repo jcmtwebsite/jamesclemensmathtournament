@@ -108,8 +108,8 @@ Only relevant if you're changing the figures, but the wiring is not guessable:
 ## Intro animation
 
 Once per session, on a cold load of the home page: the pieces scatter across the viewport, gather
-into the square at the centre of the screen, then slide into the stage and the copy fades in. The
-wiring is split across three places, which is the part that isn't guessable:
+into the square at the centre of the screen, then slide into the stage and the copy reveals line by
+line. The wiring is split across three places, which is the part that isn't guessable:
 
 - **`<html class="intro">` is the single switch.** A small `<script>` in `<head>` adds it before
   the first paint and `finishIntro()` removes it again. The head script also arms a 3.5s safety
@@ -119,7 +119,14 @@ wiring is split across three places, which is the part that isn't guessable:
   pieces themselves stay visible and are the whole animation. Keep it class-gated rather than a
   plain stylesheet rule, so visitors without JavaScript still see the page, and keep it on
   `opacity` rather than `display` so nothing reflows while the intro measures the stage.
-  Everything fades back in together when `finishIntro()` removes the class.
+  Everything comes back when `finishIntro()` removes the class: the frame fades, and the copy is
+  handed to `revealCopy()`.
+- **`revealCopy()` is shared with page changes.** It is the per-child fade-and-lift that `setCopy()`
+  runs after swapping markup, and the intro calls the same function rather than its own copy, so
+  arriving on a page looks identical however you got there. Change one and you change both.
+  `fill:'backwards'` is load-bearing: without it each child stays visible through its own delay and
+  pops in instead of revealing. `.copy` is deliberately *not* in the frame's `transition` list — a
+  fade on the column would race the per-child reveal and wash it out.
 - **The head script decides, the main script obeys.** It arms the class only when motion isn't
   reduced, the URL carries no hash (or `#home`), and `sessionStorage['jcmt-intro-seen']` is unset.
   The main script reads the class once into `introActive` instead of re-deriving those conditions,

@@ -88,10 +88,12 @@ a{color:inherit}
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 28px,#000 calc(100% - 36px),transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 28px,#000 calc(100% - 36px),transparent 100%)}
 .copy-in{margin-block:auto;padding-block:36px 48px;max-width:540px;font-size:16px}
 /* The opening animation runs against an empty screen: the frame, the copy and the stage's dotted
-   backdrop stay hidden until the pieces are in place, then fade back. Gated on a class that only
-   JavaScript adds, and done with opacity so nothing reflows while the intro is measuring. */
+   backdrop stay hidden until the pieces are in place. Gated on a class that only JavaScript adds,
+   and done with opacity so nothing reflows while the intro is measuring. When the class goes the
+   frame fades back in; the copy is left to revealCopy(), the same staggered reveal a page change
+   uses, so arriving either way looks the same. Only the frame fades, hence the short list. */
 html.intro .top,html.intro .nav,html.intro .tip,html.intro .copy,html.intro .dotbg{opacity:0;pointer-events:none}
-.top,.nav,.tip,.copy,.dotbg{transition:opacity .5s ease}
+.top,.nav,.tip,.dotbg{transition:opacity .5s ease}
 .kick{font-family:"Unbounded",sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:0}
 .copy h1{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,2.7vw,36px);line-height:1.1;margin:12px 0 20px;color:var(--navy);letter-spacing:-.03em;text-wrap:balance}
 
@@ -502,12 +504,18 @@ function setCopy(pg, instant) {
     swapped = true;
     out.cancel();
     copyIn.innerHTML = html; copy.scrollTop = 0;
-    const ins = Array.from(copyIn.children).map((el, i) => el.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 440, delay: 60 + i * 70, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
-    // Never leave the text hidden if the browser pauses animations (background tabs, battery saver).
-    setTimeout(() => ins.forEach(a => a.finish()), 1300);
+    revealCopy();
   };
   out.onfinish = swap;
   setTimeout(swap, 260);
+}
+// Line-by-line fade-and-lift for the copy. Shared by a page change and by the end of the intro, so
+// arriving on a page looks the same however you got there. `fill:'backwards'` matters: without it
+// each child would sit visible through its own delay and pop rather than reveal.
+function revealCopy() {
+  const ins = Array.from(copyIn.children).map((el, i) => el.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 440, delay: 60 + i * 70, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
+  // Never leave the text hidden if the browser pauses animations (background tabs, battery saver).
+  setTimeout(() => ins.forEach(a => a.finish()), 1300);
 }
 function show(i, first, skipMorph) {
   if (i === cur) return;
@@ -525,10 +533,10 @@ const pageFromHash = () => Math.max(0, PAGES.findIndex(p => p.slug === decodeURI
 
 /* Opening animation. Nothing else is on screen while it plays: the pieces start scattered across
    the whole viewport, gather into the square at the centre of the screen, then slide into place in
-   the stage, at which point the frame and copy fade back in. `camX/camY` is a camera offset added
-   to every piece in draw(), which lets the square form anywhere on screen and still settle at the
-   origin in the end. The stacked layout has no "side" to slide to, so it converges in place and
-   skips the slide. */
+   the stage, at which point the frame fades back in and the copy reveals line by line. `camX/camY`
+   is a camera offset added to every piece in draw(), which lets the square form anywhere on screen
+   and still settle at the origin in the end. The stacked layout has no "side" to slide to, so it
+   converges in place and skips the slide. */
 let introActive = document.documentElement.classList.contains('intro');
 function runIntro() {
   const centre = toSvgPt(innerWidth / 2, innerHeight / 2);
@@ -559,7 +567,10 @@ function finishIntro() {
   tweens.length = 0;                                  // on a cold load only the intro is in flight
   IDS.forEach(id => { const p = P[id], q = POSE.square[id]; p.x = q.x; p.y = q.y; p.r = q.r; p.s = q.s; p.lift = 0; });
   camX = 0; camY = 0; breatheOn = true;
-  document.documentElement.classList.remove('intro');   // the frame and copy fade back in via CSS
+  // Removing the class fades the frame back in; the copy gets its own reveal, the same one a page
+  // change uses, rather than a fade that would race it.
+  document.documentElement.classList.remove('intro');
+  revealCopy();
 }
 // Only a deliberate keypress or click skips it - not a scroll, which a trackpad nudge can fire.
 ['keydown', 'click'].forEach(ev => window.addEventListener(ev, () => finishIntro(), { passive: true, once: true }));
