@@ -69,10 +69,10 @@ found while reviewing the site and is recorded nowhere else:
 - **Link previews are broken until that cutover, on purpose.** With a relative `og:image`,
   Slack, iMessage and Discord render a bare text row with no image. Highest-impact item —
   sharing is how parents hear about this tournament — and it resolves in the cutover above.
-- **`social-preview.png` may have the event date rendered into it.** Unverifiable from the
-  repo: no text metadata, and the date lives in pixels. Confirm it before the next annual
-  rollover. If the date is baked in, regenerating the image becomes an extra yearly task that
-  `verifyEvent()` cannot see, because it only checks HTML.
+- **`social-preview.png` is date-free by design.** It used to carry the event date painted
+  top-left in the tomato red; that was removed, so the image no longer needs regenerating each
+  year. Keep it that way — `verifyEvent()` only reads HTML, so a date baked back into pixels
+  would be invisible to it.
 - **No analytics.** Nothing measures whether anyone visits. Worth treating as a decision
   rather than a default: a third-party tag on what is effectively a children's event site has
   a real privacy cost, and the site is run by students. Registration counts are a reasonable
