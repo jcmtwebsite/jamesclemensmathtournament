@@ -59,6 +59,34 @@ and the missing `og:url` + `<link rel="canonical">`. The 404 one is not cosmetic
 Pages serves `404.html` at the *requested* URL, so a relative `index.html` resolves wrong for
 any missing asset under a subdirectory. `README.md` has the full cutover steps.
 
+## Pending: once the site has a real domain
+
+The three cutover edits already live in `README.md` → "Connecting the custom domain": make
+`og:image` an absolute address, add `og:url` + `<link rel="canonical">`, and switch
+`404.html`'s link from `index.html` to `/`. Don't duplicate them here. Everything below was
+found while reviewing the site and is recorded nowhere else:
+
+- **Link previews are broken until that cutover, on purpose.** With a relative `og:image`,
+  Slack, iMessage and Discord render a bare text row with no image. Highest-impact item —
+  sharing is how parents hear about this tournament — and it resolves in the cutover above.
+- **`social-preview.png` is date-free by design.** It used to carry the event date painted
+  top-left in the tomato red; that was removed, so the image no longer needs regenerating each
+  year. Keep it that way — `verifyEvent()` only reads HTML, so a date baked back into pixels
+  would be invisible to it.
+- **No analytics.** Nothing measures whether anyone visits. Worth treating as a decision
+  rather than a default: a third-party tag on what is effectively a children's event site has
+  a real privacy cost, and the site is run by students. Registration counts are a reasonable
+  substitute for page views.
+- **No `robots.txt` and no `sitemap.xml`.** Both absent. Nearly free if wanted, low value
+  for a site that is one crawlable page.
+- **Only the home page is crawlable.** Register, Past tests, The day and The crew are built
+  at runtime, so search engines never see them. The structured data covers the date but not
+  the schedule or the registration deadline. The fix is to move those four pages into static
+  HTML and have JavaScript enhance rather than generate — a real architectural change,
+  deliberately parked, not cutover work.
+- **No touch icon.** `favicon.svg` is the only icon, so iOS adds no home-screen image.
+  Cosmetic; skip unless asked.
+
 ## Tangram engine
 
 Only relevant if you're changing the figures, but the wiring is not guessable:
@@ -76,3 +104,48 @@ Only relevant if you're changing the figures, but the wiring is not guessable:
   hardcoded polygons in `404.html`). Adding or renaming a piece means touching all of them.
 - `show()` morphs by tweening position/rotation/scale; there is no per-piece collision or
   layout logic, so pieces overlap freely.
+
+## Intro animation
+
+Once per session, on a cold load of the home page: the pieces scatter across the viewport, gather
+into the square at the centre of the screen, then slide into the stage and the copy reveals line by
+line. The wiring is split across three places, which is the part that isn't guessable:
+
+- **`<html class="intro">` is the single switch.** A small `<script>` in `<head>` adds it before
+  the first paint and `finishIntro()` removes it again. The head script also arms a 3.5s safety
+  timer that removes it, so a throw in the main script can't leave the page blank.
+  `html.intro .top/.nav/.tip/.copy/.dotbg{opacity:0}` is the *only* thing that empties the screen:
+  the header, the bottom nav, the drag hint, the copy column, and the stage's dotted backdrop. The
+  pieces themselves stay visible and are the whole animation. Keep it class-gated rather than a
+  plain stylesheet rule, so visitors without JavaScript still see the page, and keep it on
+  `opacity` rather than `display` so nothing reflows while the intro measures the stage.
+  Everything comes back when `finishIntro()` removes the class: the frame fades, and the copy is
+  handed to `revealCopy()`.
+- **`revealCopy()` is shared with page changes.** It is the per-child fade-and-lift that `setCopy()`
+  runs after swapping markup, and the intro calls the same function rather than its own copy, so
+  arriving on a page looks identical however you got there. Change one and you change both.
+  `fill:'backwards'` is load-bearing: without it each child stays visible through its own delay and
+  pops in instead of revealing. `.copy` is deliberately *not* in the frame's `transition` list — a
+  fade on the column would race the per-child reveal and wash it out.
+- **The head script decides, the main script obeys.** It arms the class only when motion isn't
+  reduced, the URL carries no hash (or `#home`), and `sessionStorage['jcmt-intro-seen']` is unset.
+  The main script reads the class once into `introActive` instead of re-deriving those conditions,
+  so the two can't drift.
+- **`camX`/`camY` is a camera offset added to every piece in `draw()`.** Every figure is authored
+  centred on the SVG origin, so the square would naturally form at the *stage* centre. The intro
+  instead scatters pieces in screen coordinates and parks the camera at the screen centre, so the
+  square forms there, then tweens the camera back to 0. This leans on `.stage svg{overflow:visible}`
+  — remove that and pieces scattered outside the stage are clipped away.
+- **`morph(fig, onDone)` and `show(i, first, skipMorph)` grew optional arguments** so the intro can
+  chain its slide after the square forms, and can suppress the usual first-load morph.
+- **`finishIntro()` empties the whole `tweens` array.** That is only safe because on a cold load
+  the intro is the only thing animating. Don't call it where other tweens may be running.
+- **The `780` in `runIntro()` must stay in step with the CSS breakpoint.** Below it the layout is
+  stacked, so there is no "side" to slide to and the slide phase is skipped; the square converges
+  in place instead.
+- **Only a keypress or a click skips it.** `wheel` and `touchstart` are deliberately not in that
+  list: a trackpad nudge fires `wheel`, which used to end the intro by accident. A tap still works
+  because touch generates a click.
+- Reduced motion skips all of it. There is no automated test — check it by eye over
+  `python -m http.server`, and note that a second load in the same tab will not replay it
+  (that is `sessionStorage`, not a bug).
