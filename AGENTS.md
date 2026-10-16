@@ -59,6 +59,34 @@ and the missing `og:url` + `<link rel="canonical">`. The 404 one is not cosmetic
 Pages serves `404.html` at the *requested* URL, so a relative `index.html` resolves wrong for
 any missing asset under a subdirectory. `README.md` has the full cutover steps.
 
+## Pending: once the site has a real domain
+
+The three cutover edits already live in `README.md` → "Connecting the custom domain": make
+`og:image` an absolute address, add `og:url` + `<link rel="canonical">`, and switch
+`404.html`'s link from `index.html` to `/`. Don't duplicate them here. Everything below was
+found while reviewing the site and is recorded nowhere else:
+
+- **Link previews are broken until that cutover, on purpose.** With a relative `og:image`,
+  Slack, iMessage and Discord render a bare text row with no image. Highest-impact item —
+  sharing is how parents hear about this tournament — and it resolves in the cutover above.
+- **`social-preview.png` may have the event date rendered into it.** Unverifiable from the
+  repo: no text metadata, and the date lives in pixels. Confirm it before the next annual
+  rollover. If the date is baked in, regenerating the image becomes an extra yearly task that
+  `verifyEvent()` cannot see, because it only checks HTML.
+- **No analytics.** Nothing measures whether anyone visits. Worth treating as a decision
+  rather than a default: a third-party tag on what is effectively a children's event site has
+  a real privacy cost, and the site is run by students. Registration counts are a reasonable
+  substitute for page views.
+- **No `robots.txt` and no `sitemap.xml`.** Both absent. Nearly free if wanted, low value
+  for a site that is one crawlable page.
+- **Only the home page is crawlable.** Register, Past tests, The day and The crew are built
+  at runtime, so search engines never see them. The structured data covers the date but not
+  the schedule or the registration deadline. The fix is to move those four pages into static
+  HTML and have JavaScript enhance rather than generate — a real architectural change,
+  deliberately parked, not cutover work.
+- **No touch icon.** `favicon.svg` is the only icon, so iOS adds no home-screen image.
+  Cosmetic; skip unless asked.
+
 ## Tangram engine
 
 Only relevant if you're changing the figures, but the wiring is not guessable:
