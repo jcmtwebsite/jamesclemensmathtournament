@@ -412,13 +412,15 @@ const E = {
 const tweens = [];
 const tween = o => { o.t0 = performance.now() + (reduce ? 0 : (o.delay || 0)); tweens.push(o); };
 function stepTweens(now) {
-  for (let i = tweens.length - 1; i >= 0; i--) {
-    const o = tweens[i], d = reduce ? 0 : o.dur;
+  const finished = [];                                  // a done callback may empty `tweens`
+  for (let i = tweens.length - 1; i >= 0; i--) {         // (finishIntro does), so collect them
+    const o = tweens[i], d = reduce ? 0 : o.dur;         // and run them after the walk
     if (now < o.t0) continue;
     const p = d ? Math.min(1, (now - o.t0) / d) : 1;
     o.set(o.from + (o.to - o.from) * (o.ease || E.inOut)(p), p);
-    if (p >= 1) { tweens.splice(i, 1); if (o.done) o.done(); }
+    if (p >= 1) { tweens.splice(i, 1); if (o.done) finished.push(o); }
   }
+  finished.forEach(o => o.done());
 }
 
 const svg = $('.stage svg'), gS = $('#shadows'), gP = $('#pieces'), copy = $('.copy'), copyIn = $('.copy-in'), nav = $('.nav');

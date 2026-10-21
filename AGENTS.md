@@ -140,6 +140,16 @@ line. The wiring is split across three places, which is the part that isn't gues
   chain its slide after the square forms, and can suppress the usual first-load morph.
 - **`finishIntro()` empties the whole `tweens` array.** That is only safe because on a cold load
   the intro is the only thing animating. Don't call it where other tweens may be running.
+- **`stepTweens()` runs `done` callbacks after the walk, not inside it.** The loop reads
+  `tweens[i]` for the length it saw when it started, so a callback that empties the array
+  (that is exactly what `finishIntro()` does) would make the next read `undefined` and throw.
+  The throw escapes `loop()`, which means `requestAnimationFrame(loop)` never re-registers — the
+  whole engine goes dead and nothing redraws again, not drags, not "Put them back", not page
+  changes. Nothing but a refresh recovers. Normally each morph tween matures on its own frame so
+  only one is left when it finishes, but a stalled tab collapses them into a single frame: `rAF`
+  stops while hidden and every pending tween is due at once on return. Only the stacked/mobile
+  branch is exposed, because it calls `finishIntro()` straight from the morph callback while the
+  desktop branch starts a camera tween instead. Keep the callbacks deferred if you touch this.
 - **The `780` in `runIntro()` must stay in step with the CSS breakpoint.** Below it the layout is
   stacked, so there is no "side" to slide to and the slide phase is skipped; the square converges
   in place instead.
