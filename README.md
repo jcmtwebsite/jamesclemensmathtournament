@@ -8,9 +8,13 @@ the day, the crew) is drawn from the same seven tangram pieces.
    **except the home page's text**, which sits in the static HTML inside `.copy-in` so search engines can
    read it without JavaScript. The script snapshots that markup into the `HOME` constant and reuses it
    whenever you navigate back. Edit the HTML, not `HOME`.
+- `theme.css`: fonts (the Google Fonts `@import`), colour tokens, and the two font stacks. Change a
+   font or a colour here, not in the pages.
+- `tangram.js`: the shared tangram geometry and piece colours, used by both `index.html` and `404.html`.
 - `tests/<year>/`: past tests and answer keys as PDFs.
 - `img/`: committee photos (square JPEGs, about 400×400).
-- `404.html`: the page shown for any address that doesn't exist.
+- `404.html`: the page shown for any address that doesn't exist — on GitHub Pages. The local dev
+   server has its own plain 404 instead; preview ours at `http://localhost:8000/404.html`.
 - `social-preview.png`: the image shown when the link is shared in a text, email, or post (1200×630).
 - `favicon.svg`: the browser-tab icon.
 - `.nojekyll`: tells GitHub Pages to publish the files as-is.
@@ -60,4 +64,7 @@ Push to GitHub and turn on Pages (Settings → Pages → Deploy from a branch �
    `<meta property="og:url" content="https://example.org/">` and
    `<link rel="canonical" href="https://example.org/">`.
 
-Note: `404.html` links to `index.html`, but has to be switched to `/` once the site is on its own domain.
+6. **Fix `404.html`'s relative paths:** GitHub Pages serves that file at the *requested* URL, so
+   `href="index.html"`, `href="theme.css"` and `src="tangram.js"` all resolve against the missing
+   page instead of the site root. Once the site is on its own domain, switch them to
+   `/`, `/theme.css` and `/tangram.js`.

@@ -1,0 +1,11 @@
+/* Shared design tokens for index.html and 404.html.
+   Change a font family or a colour here, not in the pages. */
+
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;700&family=Unbounded:wght@500;700;800&display=swap");
+
+:root{
+  --navy:#1D3160; --ink:#172340; --paper:#EDF2F8; --soft:#51627f;
+  --tomato:#C53D22; --tomato-lip:#96301A;
+  --font-display:"Unbounded",sans-serif;
+  --font-body:"Jost",ui-sans-serif,system-ui,sans-serif;
+}

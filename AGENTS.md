@@ -13,15 +13,31 @@ python -m http.server 8000     # then http://localhost:8000
 Opening `index.html` via `file://` mostly works, but PDFs and photos only behave realistically
 over HTTP. This is the whole verification story — there is no other.
 
+`python -m http.server` never serves `404.html` itself — it answers a missing path with its own
+plain 404. Preview ours directly at `http://localhost:8000/404.html`, where its relative
+`theme.css` / `tangram.js` resolve correctly (they only misresolve on GitHub Pages, at depth).
+
 ## Layout
 
-Everything is in `index.html`: hand-written CSS in one `<style>` block, one vanilla IIFE
+`index.html` holds the site: hand-written CSS in one `<style>` block, one vanilla IIFE
 `<script>`. The five "pages" (home, register, past tests, the day, the crew) are hash routes
 driven by the `PAGES` array, not separate documents.
 
-`404.html` is a **separate hand-maintained file**, not generated from `index.html`. It
-re-declares the fonts, color variables, and tangram coordinates by hand. Any visual or
-geometry change in `index.html` must be copied over or the two will drift.
+Two small files are shared with `404.html`, so there is one source of truth for the things that
+used to be copied by hand:
+
+- `theme.css` — the Google Fonts `@import`, the colour tokens, and the two font stacks
+  (`--font-display`, `--font-body`). **Change a font or a colour here, not in the pages.** Swapping
+  a family is now one line in this file.
+- `tangram.js` — sets `window.JCMT_TANGRAM` (`IDS`, `COL`, `TYPE`, `sq`, `RAW`). `index.html`'s
+  engine destructures it; `404.html` draws its single figure from it.
+
+`404.html` is still hand-maintained, but it no longer copies fonts, colours or coordinates. It
+keeps its own layout CSS and its own knock-apart offsets, and builds its tangram from
+`tangram.js` with a few lines of script — so without JavaScript it shows the text and the link
+but no figure. Both pages now hard-depend on those two files: if `theme.css` fails the page is
+unstyled (every colour and font comes from a `var()`), and if `tangram.js` fails `index.html`
+throws on the guard.
 
 ## Traps
 
@@ -54,17 +70,21 @@ and logs the stale ones, so a year rollover can't half-land. `og:image:alt` deli
 year; don't put one back. The "third edition" wording in the home copy is still manual.
 
 **Leave the custom-domain TODOs alone** unless the site is actually on its own domain.
-Three marked spots: `404.html`'s `href="index.html"`, `og:image` in `index.html` (relative),
-and the missing `og:url` + `<link rel="canonical">`. The 404 one is not cosmetic — GitHub
-Pages serves `404.html` at the *requested* URL, so a relative `index.html` resolves wrong for
-any missing asset under a subdirectory. `README.md` has the full cutover steps.
+Marked spots: `404.html`'s `href="index.html"` plus its relative `theme.css` and `tangram.js`,
+`og:image` in `index.html` (relative), and the missing `og:url` + `<link rel="canonical">`.
+The 404 ones are not cosmetic — GitHub Pages serves `404.html` at the *requested* URL, so a
+relative path resolves against the missing page: a deep 404 loads no stylesheet and no geometry
+(it still reads, but unstyled and figureless). `index.html` is always at the root, so its
+relative `theme.css` / `tangram.js` links are correct as they are. `README.md` has the full
+cutover steps.
 
 ## Pending: once the site has a real domain
 
-The three cutover edits already live in `README.md` → "Connecting the custom domain": make
+The cutover edits already live in `README.md` → "Connecting the custom domain": make
 `og:image` an absolute address, add `og:url` + `<link rel="canonical">`, and switch
-`404.html`'s link from `index.html` to `/`. Don't duplicate them here. Everything below was
-found while reviewing the site and is recorded nowhere else:
+`404.html`'s three relative paths (`index.html`, `theme.css`, `tangram.js`) to root-absolute.
+Don't duplicate them here. Everything below was found while reviewing the site and is recorded
+nowhere else:
 
 - **Link previews are broken until that cutover, on purpose.** With a relative `og:image`,
   Slack, iMessage and Discord render a bare text row with no image. Highest-impact item —
@@ -100,8 +120,10 @@ Only relevant if you're changing the figures, but the wiring is not guessable:
   spin the wrong way during the morph.
 - The parallelogram (`PG`) is the one piece that can't be rotated into place — `pose()`
   returns `s: -1` to mirror it via `scale(-1, 1)`.
-- `IDS` is referenced from several parallel structures (`sq`, `RAW`, `COL`, `TYPE`, and the
-  hardcoded polygons in `404.html`). Adding or renaming a piece means touching all of them.
+- `IDS` is referenced from several parallel structures (`sq`, `RAW`, `COL`, `TYPE`) — all of them
+  in `tangram.js` — and from the draw order in `404.html`, whose handful of lines look up
+  `JCMT_TANGRAM.sq[id]` and `JCMT_TANGRAM.COL[id]`. Adding or renaming a piece means touching all
+  of them, and a piece missing from `404.html`'s ORDER table is silently not drawn.
 - `show()` morphs by tweening position/rotation/scale; there is no per-piece collision or
   layout logic, so pieces overlap freely.
 

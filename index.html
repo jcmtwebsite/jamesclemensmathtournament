@@ -51,29 +51,24 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&family=Unbounded:wght@500;700;800&display=swap">
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Unbounded:wght@700;800&display=swap">
+<link rel="stylesheet" href="theme.css">
 
 <style>
-:root{
-  --navy:#1D3160; --ink:#172340; --paper:#EDF2F8; --soft:#51627f;
-  --tomato:#C53D22; --tomato-lip:#96301A;
-}
+/* Palette, fonts and the font stacks live in theme.css. */
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:"Jost",ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased;overflow:hidden}
 a{color:inherit}
 :focus-visible{outline:3px solid #F6B72B;outline-offset:3px;border-radius:4px}
 
 /* ---------- frame ---------- */
 .app{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto}
 .top{display:flex;align-items:center;gap:20px;padding:20px clamp(16px,4vw,44px) 4px}
-.brand{margin:0;font-family:"Unbounded",sans-serif;font-weight:800;font-size:22px;color:var(--navy);display:flex;align-items:center;gap:14px;letter-spacing:-.02em;text-decoration:none}
-.brand small{font-family:"Jost",sans-serif;font-weight:700;font-size:13.5px;color:var(--soft);letter-spacing:0;padding-left:14px;border-left:1.5px solid rgba(29,49,96,.18);line-height:1.1}
-.when{margin-left:auto;font-family:"Unbounded",sans-serif;font-weight:500;font-size:13px;color:var(--navy);white-space:nowrap;padding:9px 14px;border-radius:999px;background:#fff;box-shadow:0 2px 10px rgba(29,49,96,.06)}
-.reg{font-family:"Unbounded",sans-serif;font-weight:700;font-size:13px;background:var(--tomato);color:#fff;text-decoration:none;padding:11px 18px;border-radius:12px;box-shadow:0 4px 0 var(--tomato-lip);transition:transform .15s,box-shadow .15s;white-space:nowrap}
+.brand{margin:0;font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--navy);display:flex;align-items:center;gap:14px;letter-spacing:-.02em;text-decoration:none}
+.brand small{font-family:var(--font-body);font-weight:700;font-size:13.5px;color:var(--soft);letter-spacing:0;padding-left:14px;border-left:1.5px solid rgba(29,49,96,.18);line-height:1.1}
+.when{margin-left:auto;font-family:var(--font-display);font-weight:500;font-size:13px;color:var(--navy);white-space:nowrap;padding:9px 14px;border-radius:999px;background:#fff;box-shadow:0 2px 10px rgba(29,49,96,.06)}
+.reg{font-family:var(--font-display);font-weight:700;font-size:13px;background:var(--tomato);color:#fff;text-decoration:none;padding:11px 18px;border-radius:12px;box-shadow:0 4px 0 var(--tomato-lip);transition:transform .15s,box-shadow .15s;white-space:nowrap}
 .reg:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--tomato-lip)}
 .reg:active{transform:translateY(3px);box-shadow:0 1px 0 var(--tomato-lip)}
 
@@ -97,22 +92,22 @@ a{color:inherit}
    uses, so arriving either way looks the same. Only the frame fades, hence the short list. */
 html.intro .top,html.intro .nav,html.intro .tip,html.intro .copy,html.intro .dotbg{opacity:0;pointer-events:none}
 .top,.nav,.tip,.dotbg{transition:opacity .5s ease}
-.kick{font-family:"Unbounded",sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:0}
-.copy h1{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,2.7vw,36px);line-height:1.1;margin:12px 0 20px;color:var(--navy);letter-spacing:-.03em;text-wrap:balance}
+.kick{font-family:var(--font-display);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:0}
+.copy h1{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,2.7vw,36px);line-height:1.1;margin:12px 0 20px;color:var(--navy);letter-spacing:-.03em;text-wrap:balance}
 
 /* home: a real welcome, not just another page */
-.eyebrow{font-family:"Unbounded",sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tomato);margin:0}
+.eyebrow{font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tomato);margin:0}
 .copy h1.hero{font-size:clamp(38px,4.3vw,62px);line-height:1.02;letter-spacing:-.04em;margin:14px 0 18px}
 .lede{font-size:clamp(17px,1.35vw,19px);line-height:1.55;color:#34466a;margin:0 0 28px;max-width:34em}
 .ctas{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 36px}
-.cta{font-family:"Unbounded",sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:14px 22px;border-radius:14px;transition:transform .15s,box-shadow .15s,background .15s}
+.cta{font-family:var(--font-display);font-weight:700;font-size:14px;text-decoration:none;padding:14px 22px;border-radius:14px;transition:transform .15s,box-shadow .15s,background .15s}
 .cta.go{background:var(--tomato);color:#fff;box-shadow:0 4px 0 var(--tomato-lip)}
 .cta.go:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--tomato-lip)}
 .cta.go:active{transform:translateY(3px);box-shadow:0 1px 0 var(--tomato-lip)}
 .cta.alt{color:var(--navy);box-shadow:inset 0 0 0 2px var(--navy)}
 .cta.alt:hover{background:#fff;transform:translateY(-2px)}
 .cta.alt:active{transform:translateY(1px)}
-.section{display:flex;align-items:center;gap:14px;font-family:"Unbounded",sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);margin:48px 0 18px}
+.section{display:flex;align-items:center;gap:14px;font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);margin:48px 0 18px}
 .section::after{content:"";flex:1;height:1.5px;background:rgba(29,49,96,.14)}
 
 .nav{display:flex;justify-content:center;gap:clamp(6px,1.4vw,18px);padding:10px 16px 18px;overflow-x:auto;scrollbar-width:none}
@@ -132,7 +127,7 @@ html.intro .top,html.intro .nav,html.intro .tip,html.intro .copy,html.intro .dot
 .facts div{padding:18px 20px}
 .facts div:nth-child(odd){border-right:1px solid rgba(29,49,96,.09)}
 .facts div:nth-child(-n+2){border-bottom:1px solid rgba(29,49,96,.09)}
-.facts dt{font-family:"Unbounded",sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tomato);margin:0 0 7px}
+.facts dt{font-family:var(--font-display);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tomato);margin:0 0 7px}
 .facts dd{margin:0;line-height:1.5;font-size:15px}
 @container (max-width:400px){
   .facts{grid-template-columns:1fr}
@@ -148,7 +143,7 @@ html.intro .top,html.intro .nav,html.intro .tip,html.intro .copy,html.intro .dot
 .steps li::before{content:counter(s);grid-row:span 2;width:1.8em;height:1.8em;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--acc);color:#fff;font-size:.85em}
 
 .yr{margin:1.6em 0 0}
-.yr h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:20px;color:var(--navy);margin:0 0 .2em;letter-spacing:-.02em}
+.yr h2{font-family:var(--font-display);font-weight:800;font-size:20px;color:var(--navy);margin:0 0 .2em;letter-spacing:-.02em}
 /* each row: division, then written + team; the columns line up from row to row */
 .drow{display:grid;grid-template-columns:auto auto;justify-content:start;align-items:center;gap:.45em 1.6em;padding:.7em 0;border-bottom:1px solid rgba(23,35,64,.1)}
 .dn{grid-column:1/-1;font-weight:700}
@@ -166,7 +161,7 @@ html.intro .top,html.intro .nav,html.intro .tip,html.intro .copy,html.intro .dot
 .times li.hl span{font-weight:700}
 .times small{display:block;font-weight:400;font-size:.86em;color:var(--soft);margin-top:.3em;line-height:1.45}
 
-.group{font-family:"Unbounded",sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:1.4em 0 .4em}
+.group{font-family:var(--font-display);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:1.4em 0 .4em}
 .person{border-bottom:1px solid rgba(23,35,64,.1)}
 .person summary{list-style:none;display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:.55em 0;cursor:pointer;border-radius:10px}
 .person summary::-webkit-details-marker{display:none}
@@ -269,6 +264,7 @@ html.intro .top,html.intro .nav,html.intro .tip,html.intro .copy,html.intro .dot
   <nav class="nav" aria-label="Pages"></nav>
 </div>
 
+<script src="tangram.js"></script>
 <script>
 (() => {
 const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -428,18 +424,8 @@ function stepTweens(now) {
 
 const svg = $('.stage svg'), gS = $('#shadows'), gP = $('#pieces'), copy = $('.copy'), copyIn = $('.copy-in'), nav = $('.nav');
 const NS = 'http://www.w3.org/2000/svg';
-const IDS = ['LT1', 'LT2', 'MT', 'ST1', 'ST2', 'SQ', 'PG'];
-const COL = { LT1: '#1D3160', LT2: '#6FA8DC', MT: '#EE5A3C', ST1: '#F6B72B', ST2: '#23A07A', SQ: '#F3A6B8', PG: '#7A5AC8' };
-const TYPE = { LT1: 'tri', LT2: 'tri', MT: 'tri', ST1: 'tri', ST2: 'tri', SQ: 'sq', PG: 'pg' };
-const k2 = Math.SQRT1_2;
-const sq = { LT1: [[0,0],[4,0],[2,2]], LT2: [[0,0],[2,2],[0,4]], ST1: [[4,0],[4,2],[3,1]], SQ: [[2,2],[3,1],[4,2],[3,3]], ST2: [[2,2],[3,3],[1,3]], PG: [[0,4],[1,3],[3,3],[2,4]], MT: [[4,2],[4,4],[2,4]] };
-const RAW = {
-  square: Object.fromEntries(IDS.map(id => [id, sq[id].map(([x, y]) => [x * k2, y * k2])])),
-  house: { LT1: [[0,2],[2,2],[0,4]], LT2: [[2,2],[2,4],[0,4]], ST1: [[-1,2],[0,1],[0,2]], SQ: [[1,2],[0,2],[0,1],[1,1]], ST2: [[1,2],[1,1],[2,2]], PG: [[3,2],[2,2],[1,1],[2,1]], MT: [[0,1],[1,0],[2,1]] },
-  arrow: { LT1: [[2,2],[0,2],[2,0]], LT2: [[0,2],[0,0],[2,0]], ST1: [[3,2],[2,3],[2,2]], SQ: [[1,2],[2,2],[2,3],[1,3]], ST2: [[1,2],[1,3],[0,2]], PG: [[-1,2],[0,2],[1,3],[0,3]], MT: [[2,3],[1,4],[0,3]] },
-  hourglass: { ST1: [[3,0],[2,1],[2,0]], SQ: [[1,0],[2,0],[2,1],[1,1]], ST2: [[1,0],[1,1],[0,0]], PG: [[-1,0],[0,0],[1,1],[0,1]], MT: [[2,1],[1,2],[0,1]], LT1: [[1,2],[1,4],[-1,4]], LT2: [[1,2],[3,4],[1,4]] },
-  boat: { LT1: [[2,0],[2,2],[0,2]], LT2: [[2,0],[4,2],[2,2]], PG: [[-1,2],[0,2],[1,3],[0,3]], ST1: [[0,2],[1,2],[1,3]], SQ: [[1,2],[2,2],[2,3],[1,3]], ST2: [[2,2],[3,3],[2,3]], MT: [[2,2],[4,2],[3,3]] }
-};
+if (!window.JCMT_TANGRAM) throw new Error('tangram.js failed to load');
+const { IDS, COL, TYPE, RAW } = window.JCMT_TANGRAM;
 const A2 = v => { let s = 0; for (let i = 0; i < v.length; i++) { const a = v[i], b = v[(i + 1) % v.length]; s += a[0] * b[1] - b[0] * a[1]; } return s; };
 const cen = v => [v.reduce((s, p) => s + p[0], 0) / v.length, v.reduce((s, p) => s + p[1], 0) / v.length];
 function centerFig(f) {
