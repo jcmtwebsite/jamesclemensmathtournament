@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" data-page="schedule" style="--acc:#8F5B00">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The day · James Clemens Math Tournament</title>
+<meta name="description" content="How the day unfolds at the James Clemens Math Tournament on Saturday, January 23, 2027: check-in, the written round, the team round, lunch and awards in Madison, Alabama.">
+<meta property="og:title" content="The day · James Clemens Math Tournament">
+<meta property="og:description" content="How the day unfolds at the James Clemens Math Tournament on Saturday, January 23, 2027: check-in, the written round, the team round, lunch and awards in Madison, Alabama.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jcmathtournament.org/schedule/">
+<link rel="canonical" href="https://jcmathtournament.org/schedule/">
+<meta property="og:image" content="https://jcmathtournament.org/social-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="James Clemens Math Tournament with a tangram square">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#EDF2F8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/theme.css">
+
+<link rel="stylesheet" href="/site.css">
+<script>
+/* The opening animation plays on an empty screen, so the page content has to be hidden before the
+   first paint. The class is set here rather than in the stylesheet — with scripting off it is never
+   added and everything stays visible. Only the home page plays it, and not for reduced motion or a
+   repeat visit in the same session. */
+(function () {
+  try {
+    // Addresses shared before the site had real pages (/index.html#register) go to the real page.
+    var slug = location.hash.slice(1);
+    if (slug && slug !== 'home' && ['register', 'past-tests', 'schedule', 'committee'].indexOf(slug) >= 0) {
+      location.replace('/' + slug + '/');
+      return;
+    }
+    if (document.documentElement.dataset.page !== 'home') return;   // only the home page plays it
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (sessionStorage.getItem('jcmt-intro-seen')) return;
+    document.documentElement.classList.add('intro');
+    // Safety net: if app.js never runs, or throws partway, don't leave the page blank.
+    setTimeout(function () { document.documentElement.classList.remove('intro'); }, 3500);
+  } catch (e) {}
+})();
+</script>
+</head>
+<body data-fig="hourglass" data-shape="an hourglass">
+
+<div class="app">
+  <header class="top">
+    <a class="brand" href="/"><span>JCMT</span><small>James Clemens Math Tournament</small></a>
+    <div class="when">Sat · Jan 23 · 2027</div>
+    <a class="reg" href="/register/">Register</a>
+  </header>
+  <main class="main">
+    <div class="stage">
+      <svg viewBox="-3.6 -2.75 7.2 5.5" role="img" aria-label="Seven tangram pieces">
+        <defs>
+          <pattern id="dots" x="-.25" y="-.25" width=".5" height=".5" patternUnits="userSpaceOnUse"><circle cx=".25" cy=".25" r=".022" fill="#1D3160" opacity=".22"/></pattern>
+          <radialGradient id="fade"><stop offset=".35" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+          <mask id="dotmask"><rect x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#fade)"/></mask>
+        </defs>
+        <rect class="dotbg" x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#dots)" mask="url(#dotmask)"/>
+        <g id="shadows"></g>
+        <g id="pieces"></g>
+      </svg>
+      <p class="tip">Drag a piece to move it. Tap one to turn it. <button type="button" class="fix">Put them back</button></p>
+    </div>
+    <div class="copy"><div class="copy-in">
+      <p class="kick">The hourglass</p>
+      <h1>As it unfolds</h1>
+      <div class="sx">
+<p>Saturday, January 23, 2027, at <a href="https://www.google.com/maps/search/?api=1&query=James%20Clemens%20High%20School%2C%2011306%20County%20Line%20Rd%2C%20Madison%2C%20AL%2035756" target="_blank" rel="noopener">James Clemens High School</a> in Madison.</p>
+<ol class="times"><li><b>8:00–8:30</b><span>Students arrive, registration (coaches)</span></li><li><b>8:50</b><span>Students go to written exam testing rooms.</span></li><li class="hl"><b>9:00–10:30</b><span>Written exam<small>Note: 4th and 5th graders will return to the cafeteria at 10:00 because their exam takes only 1 hour.</small></span></li><li><b>10:30–11:00</b><span>Break</span></li><li><b>11:10</b><span>Students go to team exam testing rooms.</span></li><li class="hl"><b>11:20–12:20</b><span>Team exam</span></li><li><b>12:30–2:30</b><span>Lunch on your own</span></li><li class="hl"><b>2:30–3:00</b><span>Games</span></li><li class="hl"><b>3:00–4:00</b><span>Awards ceremony</span></li><li><b>4:00</b><span>Departure</span></li></ol></div>
+    </div></div>
+  </main>
+  <nav class="nav" aria-label="Pages">
+    <a href="/" data-fig="square"><span>Start here</span></a>
+    <a href="/register/" data-fig="house"><span>Register</span></a>
+    <a href="/past-tests/" data-fig="arrow"><span>Past tests</span></a>
+    <a href="/schedule/" data-fig="hourglass" aria-current="page"><span>The day</span></a>
+    <a href="/committee/" data-fig="boat"><span>The crew</span></a>
+  </nav>
+</div>
+
+<script src="/tangram.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

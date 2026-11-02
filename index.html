@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-page="home" style="--acc:#1D3160">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,181 +52,42 @@
 </script>
 <meta name="theme-color" content="#EDF2F8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="theme.css">
 
-<style>
-/* Palette, fonts and the font stacks live in theme.css. */
-*{box-sizing:border-box}
-[hidden]{display:none!important}
-html,body{height:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased;overflow:hidden}
-a{color:inherit}
-:focus-visible{outline:3px solid #F6B72B;outline-offset:3px;border-radius:4px}
-
-/* ---------- frame ---------- */
-.app{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto}
-.top{display:flex;align-items:center;gap:20px;padding:20px clamp(16px,4vw,44px) 4px}
-.brand{margin:0;font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--navy);display:flex;align-items:center;gap:14px;letter-spacing:-.02em;text-decoration:none}
-.brand small{font-family:var(--font-body);font-weight:700;font-size:13.5px;color:var(--soft);letter-spacing:0;padding-left:14px;border-left:1.5px solid rgba(29,49,96,.18);line-height:1.1}
-.when{margin-left:auto;font-family:var(--font-display);font-weight:500;font-size:13px;color:var(--navy);white-space:nowrap;padding:9px 14px;border-radius:999px;background:#fff;box-shadow:0 2px 10px rgba(29,49,96,.06)}
-.reg{font-family:var(--font-display);font-weight:700;font-size:13px;background:var(--tomato);color:#fff;text-decoration:none;padding:11px 18px;border-radius:12px;box-shadow:0 4px 0 var(--tomato-lip);transition:transform .15s,box-shadow .15s;white-space:nowrap}
-.reg:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--tomato-lip)}
-.reg:active{transform:translateY(3px);box-shadow:0 1px 0 var(--tomato-lip)}
-
-.main{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(16px,3vw,48px);padding-inline:clamp(16px,4vw,44px);min-height:0}
-.stage{position:relative;min-height:0}
-.stage svg{position:absolute;inset:0 0 30px 0;width:100%;height:calc(100% - 30px);overflow:visible;touch-action:none}
-.pc{cursor:grab;stroke:var(--paper);stroke-width:.05;stroke-linejoin:round}
-.pc:active{cursor:grabbing}
-.shp{fill:rgba(29,49,96,.16)}
-.tip{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:12.5px;color:#6f809b;margin:0}
-.tip button{font:inherit;border:0;background:none;color:var(--navy);font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:0 2px}
-
-/* copy column scrolls on its own so the art stays put */
-.copy{min-height:0;overflow-y:auto;display:flex;flex-direction:column;container-type:inline-size;scrollbar-width:thin;scrollbar-color:#c3cedd transparent;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 28px,#000 calc(100% - 36px),transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 28px,#000 calc(100% - 36px),transparent 100%)}
-.copy-in{margin-block:auto;padding-block:36px 48px;max-width:540px;font-size:16px}
-/* The opening animation runs against an empty screen: the frame, the copy and the stage's dotted
-   backdrop stay hidden until the pieces are in place. Gated on a class that only JavaScript adds,
-   and done with opacity so nothing reflows while the intro is measuring. When the class goes the
-   frame fades back in; the copy is left to revealCopy(), the same staggered reveal a page change
-   uses, so arriving either way looks the same. Only the frame fades, hence the short list. */
-html.intro .top,html.intro .nav,html.intro .tip,html.intro .copy,html.intro .dotbg{opacity:0;pointer-events:none}
-.top,.nav,.tip,.dotbg{transition:opacity .5s ease}
-.kick{font-family:var(--font-display);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:0}
-.copy h1{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,2.7vw,36px);line-height:1.1;margin:12px 0 20px;color:var(--navy);letter-spacing:-.03em;text-wrap:balance}
-
-/* home: a real welcome, not just another page */
-.eyebrow{font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tomato);margin:0}
-.copy h1.hero{font-size:clamp(38px,4.3vw,62px);line-height:1.02;letter-spacing:-.04em;margin:14px 0 18px}
-.lede{font-size:clamp(17px,1.35vw,19px);line-height:1.55;color:#34466a;margin:0 0 28px;max-width:34em}
-.ctas{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 36px}
-.cta{font-family:var(--font-display);font-weight:700;font-size:14px;text-decoration:none;padding:14px 22px;border-radius:14px;transition:transform .15s,box-shadow .15s,background .15s}
-.cta.go{background:var(--tomato);color:#fff;box-shadow:0 4px 0 var(--tomato-lip)}
-.cta.go:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--tomato-lip)}
-.cta.go:active{transform:translateY(3px);box-shadow:0 1px 0 var(--tomato-lip)}
-.cta.alt{color:var(--navy);box-shadow:inset 0 0 0 2px var(--navy)}
-.cta.alt:hover{background:#fff;transform:translateY(-2px)}
-.cta.alt:active{transform:translateY(1px)}
-.section{display:flex;align-items:center;gap:14px;font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);margin:48px 0 18px}
-.section::after{content:"";flex:1;height:1.5px;background:rgba(29,49,96,.14)}
-
-.nav{display:flex;justify-content:center;gap:clamp(6px,1.4vw,18px);padding:10px 16px 18px;overflow-x:auto;scrollbar-width:none}
-.nav a{display:grid;justify-items:center;gap:6px;padding:10px 14px 9px;border-radius:16px;color:#6b7d99;min-width:94px;flex:none;text-decoration:none;transition:background .15s,color .15s,transform .15s}
-.nav a:hover{background:#fff;color:var(--navy);transform:translateY(-2px)}
-.nav a[aria-current="page"]{background:#fff;color:var(--acc);box-shadow:0 6px 18px rgba(29,49,96,.1)}
-.nav svg{width:52px;height:42px}
-.nav polygon{fill:currentColor;stroke:var(--paper);stroke-width:.09;stroke-linejoin:round}
-.nav a:hover polygon,.nav a[aria-current="page"] polygon{stroke:#fff}
-.nav span{font-size:12.5px;font-weight:700}
-
-/* ---------- page content ---------- */
-.sx p{margin:0 0 1.05em;line-height:1.65}
-.sx a{text-underline-offset:3px}
-.sx a[href^="mailto:"]{overflow-wrap:anywhere}
-.facts{display:grid;grid-template-columns:1fr 1fr;margin:0;background:#fff;border-radius:18px;box-shadow:0 6px 24px rgba(29,49,96,.07);overflow:hidden}
-.facts div{padding:18px 20px}
-.facts div:nth-child(odd){border-right:1px solid rgba(29,49,96,.09)}
-.facts div:nth-child(-n+2){border-bottom:1px solid rgba(29,49,96,.09)}
-.facts dt{font-family:var(--font-display);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tomato);margin:0 0 7px}
-.facts dd{margin:0;line-height:1.5;font-size:15px}
-@container (max-width:400px){
-  .facts{grid-template-columns:1fr}
-  .facts div:nth-child(odd){border-right:0}
-  .facts div:not(:last-child){border-bottom:1px solid rgba(29,49,96,.09)}
-}
-.fine{font-size:.88em;color:var(--soft);line-height:1.55}
-.btn{display:inline-block;text-decoration:none;font-weight:700;padding:.8em 1.3em;border-radius:999px;background:var(--acc);color:#fff!important;transition:transform .15s;margin:.3em 0 1em}
-.btn:hover{transform:translateY(-2px)}
-.btn:active{transform:scale(.97)}
-.steps{margin:0 0 1.2em;padding:0;list-style:none;counter-reset:s;display:grid;gap:.85em}
-.steps li{counter-increment:s;display:grid;grid-template-columns:2.1em 1fr;column-gap:.6em;line-height:1.5}
-.steps li::before{content:counter(s);grid-row:span 2;width:1.8em;height:1.8em;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--acc);color:#fff;font-size:.85em}
-
-.yr{margin:1.6em 0 0}
-.yr h2{font-family:var(--font-display);font-weight:800;font-size:20px;color:var(--navy);margin:0 0 .2em;letter-spacing:-.02em}
-/* each row: division, then written + team; the columns line up from row to row */
-.drow{display:grid;grid-template-columns:auto auto;justify-content:start;align-items:center;gap:.45em 1.6em;padding:.7em 0;border-bottom:1px solid rgba(23,35,64,.1)}
-.dn{grid-column:1/-1;font-weight:700}
-@container (min-width:470px){.drow{grid-template-columns:8.4em auto auto}.dn{grid-column:auto}}
-.grp{display:flex;align-items:center;gap:.35em}
-.gl{font-size:.78em;font-weight:700;color:var(--soft);min-width:3.9em}
-.grp a{font-size:.84em;font-weight:700;text-decoration:none;padding:.28em .8em;border-radius:999px;border:1.5px solid rgba(23,35,64,.3);transition:background .15s,border-color .15s,transform .15s}
-.grp a:hover{border-color:var(--acc);transform:translateY(-1px)}
-.grp a.k{background:var(--acc);border-color:var(--acc);color:#fff}
-
-.times{list-style:none;margin:0 0 1.2em;padding:0}
-.times li{display:grid;grid-template-columns:6.4em 1fr;gap:.9em;padding:.6em 0;border-bottom:1px solid rgba(23,35,64,.1);line-height:1.45}
-.times b{font-variant-numeric:tabular-nums;color:var(--soft);font-weight:700}
-.times li.hl b{color:var(--acc)}
-.times li.hl span{font-weight:700}
-.times small{display:block;font-weight:400;font-size:.86em;color:var(--soft);margin-top:.3em;line-height:1.45}
-
-.group{font-family:var(--font-display);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin:1.4em 0 .4em}
-.person{border-bottom:1px solid rgba(23,35,64,.1)}
-.person summary{list-style:none;display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:.55em 0;cursor:pointer;border-radius:10px}
-.person summary::-webkit-details-marker{display:none}
-.person img{width:52px;height:52px;border-radius:50%;object-fit:cover;display:block;background:#dde5ef}
-.person b{display:block;line-height:1.2}
-.person .role{font-size:.85em;color:var(--soft)}
-.person summary::after{content:"";width:9px;height:9px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg);margin-right:6px;transition:transform .2s}
-.person[open] summary::after{transform:rotate(225deg)}
-.person summary:hover b{color:var(--acc)}
-.person ul{margin:0 0 .9em;padding:0 0 0 64px;list-style:none;display:grid;gap:.3em;font-size:.93em;line-height:1.45}
-.person ul li{position:relative;padding-left:1em}
-.person ul li::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:1px;background:var(--acc);transform:rotate(45deg)}
-.person[open] ul{animation:drop .3s ease-out}
-@keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-
-/* ---------- phones ---------- */
-@media (max-width:780px){
-  body{overflow:auto}
-  .app{display:block;height:auto;min-height:100%}
-  .main{grid-template-columns:1fr}
-  .stage{height:44vh;min-height:270px}
-  .copy{overflow:visible;-webkit-mask-image:none;mask-image:none}
-  .copy-in{padding-block:8px 28px}
-  .copy h1.hero{font-size:clamp(34px,10vw,44px)}
-  .ctas{margin-bottom:28px}
-  .cta{flex:1 1 auto;text-align:center}
-  .section{margin-top:40px}
-  .when,.brand small{display:none}
-  .top{justify-content:space-between}
-  .nav{justify-content:stretch;gap:2px;padding:6px 8px 10px;position:sticky;bottom:0;background:var(--paper);box-shadow:0 -8px 20px rgba(237,242,248,.9)}
-  .nav a{min-width:0;flex:1 1 0;padding:8px 2px 6px}
-  .nav svg{width:40px;height:34px}
-  .nav span{font-size:11px;white-space:nowrap}
-}
-@media (prefers-reduced-motion:reduce){
-  *{transition-duration:.01ms!important;animation:none!important}
-}
-</style>
+<link rel="stylesheet" href="site.css">
 <script>
 /* The opening animation plays on an empty screen, so the page content has to be hidden before the
    first paint. The class is set here rather than in the stylesheet — with scripting off it is never
-   added and everything stays visible. Skipped for reduced motion, deep links, and repeat visits in
-   the same session. */
+   added and everything stays visible. Only the home page plays it, and not for reduced motion or a
+   repeat visit in the same session. */
 (function () {
   try {
+    // Addresses shared before the site had real pages (/index.html#register) go to the real page.
+    var slug = location.hash.slice(1);
+    if (slug && slug !== 'home' && ['register', 'past-tests', 'schedule', 'committee'].indexOf(slug) >= 0) {
+      location.replace('/' + slug + '/');
+      return;
+    }
+    if (document.documentElement.dataset.page !== 'home') return;   // only the home page plays it
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (location.hash && location.hash !== '#home') return;
     if (sessionStorage.getItem('jcmt-intro-seen')) return;
     document.documentElement.classList.add('intro');
-    // Safety net: if the main script never runs, or throws partway, don't leave the page blank.
+    // Safety net: if app.js never runs, or throws partway, don't leave the page blank.
     setTimeout(function () { document.documentElement.classList.remove('intro'); }, 3500);
   } catch (e) {}
 })();
 </script>
 </head>
-<body>
+<body data-fig="square" data-shape="a square">
 
 <div class="app">
   <header class="top">
-    <a class="brand" href="#home"><span>JCMT</span><small>James Clemens Math Tournament</small></a>
+    <a class="brand" href="/"><span>JCMT</span><small>James Clemens Math Tournament</small></a>
     <div class="when">Sat · Jan 23 · 2027</div>
-    <a class="reg" href="#register">Register</a>
+    <a class="reg" href="/register/">Register</a>
   </header>
   <main class="main">
     <div class="stage">
@@ -243,12 +104,11 @@ html.intro .top,html.intro .nav,html.intro .tip,html.intro .copy,html.intro .dot
       <p class="tip">Drag a piece to move it. Tap one to turn it. <button type="button" class="fix">Put them back</button></p>
     </div>
     <div class="copy"><div class="copy-in">
-      <!-- The home page text lives here so search engines and link previews can read it without
-           running any JavaScript. The script reuses this markup when you return to "Start here". -->
+      <!-- The home page text is plain markup so search engines read it without running JavaScript. -->
       <p class="eyebrow">James Clemens Math Tournament</p>
       <h1 class="hero">Welcome to the JCMT</h1>
       <p class="lede">A math tournament for elementary and middle school students, held at James Clemens High School in Madison, Alabama.</p>
-      <div class="ctas"><a class="cta go" href="#register">Register your school</a><a class="cta alt" href="#past-tests">Practice with past tests</a></div>
+      <div class="ctas"><a class="cta go" href="/register/">Register your school</a><a class="cta alt" href="/past-tests/">Practice with past tests</a></div>
       <div class="sx">
         <dl class="facts">
           <div><dt>When</dt><dd>Saturday, January 23, 2027<br>8:00 to 4:00</dd></div>
@@ -264,366 +124,16 @@ html.intro .top,html.intro .nav,html.intro .tip,html.intro .copy,html.intro .dot
       </div>
     </div></div>
   </main>
-  <nav class="nav" aria-label="Pages"></nav>
+  <nav class="nav" aria-label="Pages">
+    <a href="/" data-fig="square" aria-current="page"><span>Start here</span></a>
+    <a href="/register/" data-fig="house"><span>Register</span></a>
+    <a href="/past-tests/" data-fig="arrow"><span>Past tests</span></a>
+    <a href="/schedule/" data-fig="hourglass"><span>The day</span></a>
+    <a href="/committee/" data-fig="boat"><span>The crew</span></a>
+  </nav>
 </div>
 
 <script src="tangram.js"></script>
-<script>
-(() => {
-const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-const $ = (s, r = document) => r.querySelector(s);
-const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-
-/* =========================================================
-   CONTENT
-   ========================================================= */
-const EMAIL = 'jamesclemensmathtournament@gmail.com';
-const FORM = 'https://forms.gle/i9eco9i8UjwBpwqg8';
-const ADDRESS = 'James Clemens High School, 11306 County Line Rd, Madison, AL 35756';
-const MAP = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(ADDRESS);
-const mail = `<a href="mailto:${EMAIL}">${EMAIL}</a>`;
-
-// The event dates. Change them here and the register/day copy below follows along. The same dates are
-// typed into the <head>, the header chip and the home facts list, which JavaScript can't rewrite -
-// verifyEvent() checks those against this object and names any that are stale.
-const EVENT = { date: '2027-01-23', regDue: '2027-01-08' };
-const pretty = iso => {
-  const d = new Date(iso + 'T12:00:00');
-  return {
-    long: d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }),
-    chip: d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).replace(', ', ' · ') + ' · ' + iso.slice(0, 4)
-  };
-};
-const onDay = pretty(EVENT.date), dueDay = pretty(EVENT.regDue);
-
-function verifyEvent() {
-  const bad = [];
-  const meta = s => ($(s) || {}).content || '';
-  const dd = $$('.facts dd');
-  const ld = JSON.parse($('script[type="application/ld+json"]').textContent);
-  const chk = (what, ok) => { if (!ok) bad.push(what); };
-  chk('meta description', meta('meta[name="description"]').includes(onDay.long));
-  chk('og:description', meta('meta[property="og:description"]').includes(onDay.long));
-  chk('og:image:alt (the year must come out of it)', !/\d{4}/.test(meta('meta[property="og:image:alt"]')));
-  chk('JSON-LD name', ld.name.includes(EVENT.date.slice(0, 4)));
-  chk('JSON-LD description', ld.description.includes(dueDay.long));
-  chk('JSON-LD startDate', ld.startDate.startsWith(EVENT.date));
-  chk('JSON-LD endDate', ld.endDate.startsWith(EVENT.date));
-  chk('header date chip', $('.when').textContent.trim() === onDay.chip);
-  chk('home facts "When"', !!dd[0] && dd[0].textContent.includes(onDay.long));
-  chk('home facts "Register by"', !!dd[1] && dd[1].textContent.includes(dueDay.long));
-  if (bad.length) console.warn(`JCMT: EVENT is set to ${EVENT.date}. These still need changing by hand:`, bad);
-}
-
-// The home page's text is written directly in the HTML above (inside .copy-in), not here.
-const HOME = document.querySelector('.copy-in').innerHTML;
-
-const REGISTER = `
-<p>Teachers and coaches register their school as a sponsor using our registration form.</p>
-<ol class="steps">
-  <li><b>Fill out the registration form.</b><span>You'll need your school's name, address, and phone number, and how many students from each grade (4th through 8th) will compete.</span></li>
-  <li><b>Watch for our email.</b><span>We'll confirm your school's spot. Then send your student roster to ${mail} by ${dueDay.long}.</span></li>
-  <li><b>Check in on tournament day.</b><span>Coach registration is from 8:00 to 8:30 on ${onDay.long}.</span></li>
-</ol>
-<a class="btn" href="${FORM}" target="_blank" rel="noopener">Open the registration form ↗</a>
-<p class="fine">Registration is due <b>${dueDay.long}</b>.<br>Questions? Email ${mail}</p>`;
-
-// Past tests live in tests/<year>/<division>-<written|team>[-key].pdf.
-// To add a year: put its PDFs in tests/<year>/ with those names and add a line at the top of TESTS.
-const DIVISIONS = { '4th-grade': '4th grade', '5th-grade': '5th grade', '6th-grade': '6th grade', 'pre-algebra': 'Pre-Algebra', 'algebra-1': 'Algebra I' };
-// A division that isn't in DIVISIONS would print the word "undefined" on the page, so skip it and say so.
-const TESTS = [
-  { year: 2026, divisions: ['4th-grade', '5th-grade', '6th-grade', 'pre-algebra', 'algebra-1'] },
-  { year: 2025, divisions: ['5th-grade', '6th-grade', 'pre-algebra', 'algebra-1'] },
-  { year: 2024, divisions: ['6th-grade', 'pre-algebra', 'algebra-1'] }
-].map(t => ({ ...t, divisions: t.divisions.filter(d => {
-  if (d in DIVISIONS) return true;
-  console.warn(`JCMT: TESTS lists "${d}" for ${t.year}, which isn't in DIVISIONS. Skipping it.`);
-  return false;
-}) }));
-const pdf = (href, label, what) => `<a href="${href}" target="_blank" rel="noopener"${label === 'Key' ? ' class="k"' : ''} aria-label="${what} ${label === 'Key' ? 'answer key' : 'test'} (PDF)">${label}</a>`;
-const group = (year, div, kind) => {
-  const base = `tests/${year}/${div}-${kind}`, what = `${year} ${DIVISIONS[div]} ${kind}`;
-  return `<span class="grp"><span class="gl">${kind === 'written' ? 'Written' : 'Team'}</span>${pdf(base + '.pdf', 'Test', what)}${pdf(base + '-key.pdf', 'Key', what)}</span>`;
-};
-const PAST = `
-<p>Every written and team test from past tournaments, with answer keys. Each one opens as a PDF.</p>
-${TESTS.map(t => `<section class="yr"><h2>${t.year}</h2>${t.divisions.map(d => `<div class="drow"><span class="dn">${DIVISIONS[d]}</span>${group(t.year, d, 'written')}${group(t.year, d, 'team')}</div>`).join('')}</section>`).join('')}`;
-
-const SCHEDULE = [
-  ['8:00–8:30', 'Students arrive, registration (coaches)'],
-  ['8:50', 'Students go to written exam testing rooms.'],
-  ['9:00–10:30', 'Written exam', 'Note: 4th and 5th graders will return to the cafeteria at 10:00 because their exam takes only 1 hour.'],
-  ['10:30–11:00', 'Break'],
-  ['11:10', 'Students go to team exam testing rooms.'],
-  ['11:20–12:20', 'Team exam'],
-  ['12:30–2:30', 'Lunch on your own'],
-  ['2:30–3:00', 'Games'],
-  ['3:00–4:00', 'Awards ceremony'],
-  ['4:00', 'Departure']
-];
-const KEY_EVENTS = ['Written exam', 'Team exam', 'Games', 'Awards ceremony'];
-const DAY = `
-<p>${onDay.long}, at <a href="${MAP}" target="_blank" rel="noopener">James Clemens High School</a> in Madison.</p>
-<ol class="times">${SCHEDULE.map(([t, e, note]) => `<li${KEY_EVENTS.includes(e) ? ' class="hl"' : ''}><b>${t}</b><span>${e}${note ? `<small>${note}</small>` : ''}</span></li>`).join('')}</ol>`;
-
-// Each person is [name, role, [bio lines]]. The photo is img/<slug>.jpg, where the slug is derived
-// from the name - add a fourth element only when the name doesn't reduce to the photo file you have.
-const CREW_GROUPS = [
-  ['Faculty sponsor', [
-    ['Kristin Hartland', 'Faculty Sponsor', ['PhD in Mathematics Education - MTSU', 'Masters in Mathematics- UMASS Lowell', 'Bachelor in Science in Mathematics, Minors in Physics & Secondary Education - UTEP', 'Avid Bowler for 26+ years, National Competitor', 'JCHS Head Bowling Coach', '2 Children, 1 at James Clemens HS and 1 at Liberty MS']]
-  ]],
-  ['Directors', [
-    ['Jeffrey Duan', 'Director', ['Sophomore at James Clemens High School', 'Enjoys playing piano', '1-time American Invitational Mathematics Examination qualifier', '1-time National MATHCOUNTS qualifier']],
-    ['Eddie Wen', 'Director', ['Sophomore at James Clemens High School', 'Enjoys watching anime and playing anime music', 'Has participated in math tournaments since 3rd grade', '2x Alabama State MATHCOUNTS Participant', 'Avid tennis player for 4-5 years and varsity State qualifier']]
-  ]],
-  ['Problem writers', [
-    ['Kriti Akarapu', 'Problem Writer', ['Freshman at James Clemens High School', 'Has participated in math tournaments since 3rd grade', '2x Alabama State MATHCOUNTS Participant', 'Enjoys music and singing', 'Loves reading, anime, dancing, goofing around, and watching movies']],
-    ['Harshtha Chander', 'Problem Writer', ['Sophomore at James Clemens High School', 'Has participated in math tournaments since 3rd grade', '2024 AMC 8 Honor Roll', '2025 Alabama Statewide Math Contest 1st Place in Geometry', 'Avid Indian Classical Dancer for around 6 years', 'Enjoys reading and listening to music']],
-    ['Laya Gowder', 'Problem Writer', ['Sophomore at James Clemens High School', 'Participated in Math Tournaments since 3rd grade', 'Avid dancer for more than 10 years', 'Loves art and fashion', '2024 James Clemens Math Tournament 4th Place', 'James Clemens Math Tournament Member for 2 years']],
-    ['Heidi Leonard', 'Problem Writer', ['Sophomore at James Clemens High School', 'Has participated in math tournaments since 8th grade', 'She loves reading, snow skiing, travel, and biology', 'Placed in local math competitions as both a middle and high school student']],
-    ['Jonah Yang', 'Problem Writer', ['Sophomore at James Clemens High School', '1x Alabama State MATHCOUNTS qualifier', 'Likes math, computer science, anime, and tennis', 'Has been playing piano for 8 years']]
-  ]],
-  ['Alumni', [
-    ['Erik Wu', 'Founder', ['Stanford Class of 2029', 'Participated in Math Tournaments since 2nd grade', 'Avid Tennis Player for around 2 - 3 years', 'Loves playing piano and Korean pop music', '3x American Invitational Mathematics Examination Qualifier', '3rd Place Alabama Statewide High School Math Competition']],
-    ['Neyan Sezhian', 'Co-Founder', ['Cornell Class of 2029', 'Participated in Math Tournaments since 1st grade', 'Avid Golf Player for around 6 years', 'Loves playing piano and going to the gym', '2x American Invitational Mathematics Examination Qualifier', 'Nickname is Nyan, the flying toaster pastry cat']],
-    ['Vineet Vadrevu', 'Former Problem Writer', ['Junior at James Clemens High School', '3 years of competitive math team experience', '5 years of experience playing flute', 'Enjoys playing Badminton', 'AMC 10 Participant and 2 year Beast Academy instructor']]
-  ]]
-];
-const slug = n => n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-const CREW = `
-<p>The people behind the JCMT. Tap a name to read more.</p>
-${CREW_GROUPS.map(([g, people]) => `<p class="group">${g}</p>${people.map(([name, role, bio, photo]) => `<details class="person"><summary><img src="img/${photo || slug(name)}.jpg" alt="" width="52" height="52" loading="lazy"><span><b>${name}</b><span class="role">${role}</span></span></summary><ul>${bio.map(b => `<li>${b}</li>`).join('')}</ul></details>`).join('')}`).join('')}`;
-
-const PAGES = [
-  { slug: 'home',       fig: 'square',    shape: 'a square',          label: 'Start here', kick: 'The square',         acc: '#1D3160', title: 'Welcome to the JCMT',                     markup: HOME },
-  { slug: 'register',   fig: 'house',     shape: 'a schoolhouse',     label: 'Register',   kick: 'The schoolhouse',    acc: '#B83A1F', title: 'Register your school',                    html: REGISTER },
-  { slug: 'past-tests', fig: 'arrow',     shape: 'a download arrow',  label: 'Past tests', kick: 'The download arrow', acc: '#17735A', title: 'Past tests and answer keys',              html: PAST },
-  { slug: 'schedule',   fig: 'hourglass', shape: 'an hourglass',      label: 'The day',    kick: 'The hourglass',      acc: '#8F5B00', title: 'As it unfolds',                   html: DAY },
-  { slug: 'committee',  fig: 'boat',      shape: 'a sailboat',        label: 'The crew',   kick: 'The sailboat',       acc: '#6A4BBE', title: 'Meet the organizing committee',                html: CREW }
-];
-
-/* =========================================================
-   TANGRAM ENGINE
-   ========================================================= */
-const E = {
-  inOut: p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
-  out: p => 1 - Math.pow(1 - p, 3),
-  back: p => { const c1 = 1.4, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); }
-};
-const tweens = [];
-const tween = o => { o.t0 = performance.now() + (reduce ? 0 : (o.delay || 0)); tweens.push(o); };
-function stepTweens(now) {
-  const finished = [];                                  // a done callback may empty `tweens`
-  for (let i = tweens.length - 1; i >= 0; i--) {         // (finishIntro does), so collect them
-    const o = tweens[i], d = reduce ? 0 : o.dur;         // and run them after the walk
-    if (now < o.t0) continue;
-    const p = d ? Math.min(1, (now - o.t0) / d) : 1;
-    o.set(o.from + (o.to - o.from) * (o.ease || E.inOut)(p), p);
-    if (p >= 1) { tweens.splice(i, 1); if (o.done) finished.push(o); }
-  }
-  finished.forEach(o => o.done());
-}
-
-const svg = $('.stage svg'), gS = $('#shadows'), gP = $('#pieces'), copy = $('.copy'), copyIn = $('.copy-in'), nav = $('.nav');
-const NS = 'http://www.w3.org/2000/svg';
-if (!window.JCMT_TANGRAM) throw new Error('tangram.js failed to load');
-const { IDS, COL, TYPE, RAW } = window.JCMT_TANGRAM;
-const A2 = v => { let s = 0; for (let i = 0; i < v.length; i++) { const a = v[i], b = v[(i + 1) % v.length]; s += a[0] * b[1] - b[0] * a[1]; } return s; };
-const cen = v => [v.reduce((s, p) => s + p[0], 0) / v.length, v.reduce((s, p) => s + p[1], 0) / v.length];
-function centerFig(f) {
-  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
-  IDS.forEach(id => f[id].forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }));
-  const mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
-  return Object.fromEntries(IDS.map(id => [id, f[id].map(([x, y]) => [x - mx, y - my])]));
-}
-function norm(type, v) {
-  v = v.map(p => p.slice());
-  if (type !== 'pg' && A2(v) < 0) v.reverse();
-  const rot = i => v.slice(i).concat(v.slice(0, i));
-  if (type === 'tri') for (let i = 0; i < 3; i++) {
-    const p = v[i], a = v[(i + 1) % 3], b = v[(i + 2) % 3];
-    if (Math.abs((a[0] - p[0]) * (b[0] - p[0]) + (a[1] - p[1]) * (b[1] - p[1])) < 1e-6) { v = rot(i); break; }
-  }
-  if (type === 'pg') { const L = i => Math.hypot(v[(i + 1) % 4][0] - v[i][0], v[(i + 1) % 4][1] - v[i][1]); if (L(0) > L(1) + 1e-6) v = rot(1); }
-  return v;
-}
-const FIG = Object.fromEntries(Object.keys(RAW).map(k => [k, centerFig(RAW[k])]));
-const BASE = Object.fromEntries(IDS.map(id => { const v = norm(TYPE[id], RAW.house[id]), c = cen(v); return [id, v.map(([x, y]) => [x - c[0], y - c[1]])]; }));
-function pose(id, target) {
-  const tv = norm(TYPE[id], target); let b = BASE[id], s = 1;
-  if (TYPE[id] === 'pg' && Math.sign(A2(b)) !== Math.sign(A2(tv))) { s = -1; b = b.map(([x, y]) => [-x, y]); }
-  const a1 = Math.atan2(b[1][1] - b[0][1], b[1][0] - b[0][0]), a2 = Math.atan2(tv[1][1] - tv[0][1], tv[1][0] - tv[0][0]);
-  const c = cen(tv);
-  return { x: c[0], y: c[1], r: (a2 - a1) * 180 / Math.PI, s };
-}
-const POSE = Object.fromEntries(Object.keys(FIG).map(f => [f, Object.fromEntries(IDS.map(id => [id, pose(id, FIG[f][id])]))]));
-
-const P = {};
-IDS.forEach(id => {
-  const pts = BASE[id].map(p => p.map(n => +n.toFixed(4)).join(',')).join(' ');
-  const sh = document.createElementNS(NS, 'polygon'); sh.setAttribute('points', pts); sh.setAttribute('class', 'shp'); gS.appendChild(sh);
-  const pg = document.createElementNS(NS, 'polygon'); pg.setAttribute('points', pts); pg.setAttribute('class', 'pc'); pg.setAttribute('fill', COL[id]); pg.dataset.id = id; gP.appendChild(pg);
-  P[id] = { sh, pg, x: (Math.random() * 2 - 1) * 2.9, y: (Math.random() * 2 - 1) * 2, r: Math.random() * 360, s: 1, lift: 0 };
-});
-
-let cur = -1, breathe = 0, breatheOn = false, dragP = null, copyTok = 0, camX = 0, camY = 0;
-function draw(t) {
-  breathe += ((breatheOn && !reduce ? 1 : 0) - breathe) * .06;
-  const br = breathe * (.5 - .5 * Math.cos(t * 1.3)) * .045;
-  IDS.forEach(id => {
-    const p = P[id], bx = p.x * (1 + br) + camX, by = p.y * (1 + br) + camY, sc = 1 + p.lift * .07, o = .05 + p.lift * .2;
-    p.pg.setAttribute('transform', `translate(${bx.toFixed(4)} ${by.toFixed(4)}) rotate(${p.r.toFixed(3)}) scale(${(p.s * sc).toFixed(4)} ${sc.toFixed(4)})`);
-    p.sh.setAttribute('transform', `translate(${(bx + o).toFixed(4)} ${(by + o * 1.3).toFixed(4)}) rotate(${p.r.toFixed(3)}) scale(${p.s.toFixed(4)} 1)`);
-  });
-}
-function morph(fig, onDone) {
-  breatheOn = false;
-  IDS.forEach((id, j) => {
-    const p = P[id], q = POSE[fig][id];
-    const fx = p.x, fy = p.y, fr = p.r, fs = p.s, dr = ((q.r - p.r) % 360 + 540) % 360 - 180;
-    tween({ from: 0, to: 1, dur: 950, delay: j * 70,
-      set: (v, pp) => { p.x = fx + (q.x - fx) * v; p.y = fy + (q.y - fy) * v; p.r = fr + dr * v; p.s = fs + (q.s - fs) * v; p.lift = Math.sin(Math.PI * pp); },
-      done: j === IDS.length - 1 ? () => { breatheOn = true; if (onDone) onDone(); } : null });
-  });
-}
-function setCopy(pg, instant) {
-  const tok = ++copyTok;
-  const html = pg.markup || `<p class="kick">${pg.kick}</p><h1>${pg.title}</h1><div class="sx">${pg.html}</div>`;
-  if (reduce || instant) { copyIn.innerHTML = html; copy.scrollTop = 0; return; }
-  const out = copyIn.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-8px)' }], { duration: 180, easing: 'ease-in', fill: 'forwards' });
-  let swapped = false;
-  const swap = () => {
-    if (swapped || tok !== copyTok) return;
-    swapped = true;
-    out.cancel();
-    copyIn.innerHTML = html; copy.scrollTop = 0;
-    revealCopy();
-  };
-  out.onfinish = swap;
-  setTimeout(swap, 260);
-}
-// Line-by-line fade-and-lift for the copy. Shared by a page change and by the end of the intro, so
-// arriving on a page looks the same however you got there. `fill:'backwards'` matters: without it
-// each child would sit visible through its own delay and pop rather than reveal.
-function revealCopy() {
-  const ins = Array.from(copyIn.children).map((el, i) => el.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 440, delay: 60 + i * 70, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
-  // Never leave the text hidden if the browser pauses animations (background tabs, battery saver).
-  setTimeout(() => ins.forEach(a => a.finish()), 1300);
-}
-function show(i, first, skipMorph) {
-  if (i === cur) return;
-  cur = i;
-  const pg = PAGES[i];
-  document.documentElement.style.setProperty('--acc', pg.acc);
-  svg.setAttribute('aria-label', `Seven tangram pieces arranged as ${pg.shape}`);
-  $$('a', nav).forEach((a, j) => { if (j === i) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
-  document.title = i === 0 ? 'James Clemens Math Tournament' : `${pg.label} · James Clemens Math Tournament`;
-  setCopy(pg, first);
-  if (!skipMorph) { if (first) setTimeout(() => morph(pg.fig), reduce ? 0 : 450); else morph(pg.fig); }
-  if (!first && innerWidth <= 780) scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-}
-const pageFromHash = () => Math.max(0, PAGES.findIndex(p => p.slug === decodeURIComponent(location.hash.slice(1))));
-
-/* Opening animation. Nothing else is on screen while it plays: the pieces start scattered across
-   the whole viewport, gather into the square at the centre of the screen, then slide into place in
-   the stage, at which point the frame fades back in and the copy reveals line by line. `camX/camY`
-   is a camera offset added to every piece in draw(), which lets the square form anywhere on screen
-   and still settle at the origin in the end. The stacked layout has no "side" to slide to, so it
-   converges in place and skips the slide. */
-let introActive = document.documentElement.classList.contains('intro');
-function runIntro() {
-  const centre = toSvgPt(innerWidth / 2, innerHeight / 2);
-  const stacked = innerWidth <= 780;
-  camX = stacked ? 0 : centre.x;
-  camY = stacked ? 0 : centre.y;
-  const a = toSvgPt(0, 0), b = toSvgPt(innerWidth, innerHeight);
-  const x0 = Math.min(a.x, b.x), x1 = Math.max(a.x, b.x), y0 = Math.min(a.y, b.y), y1 = Math.max(a.y, b.y);
-  const mx = (x1 - x0) * .18, my = (y1 - y0) * .18;   // let a few pieces start just off-screen
-  IDS.forEach(id => {
-    const p = P[id];
-    p.x = x0 - mx + Math.random() * (x1 - x0 + 2 * mx) - camX;
-    p.y = y0 - my + Math.random() * (y1 - y0 + 2 * my) - camY;
-    p.r = Math.random() * 360; p.s = 1; p.lift = 0;
-  });
-  try { sessionStorage.setItem('jcmt-intro-seen', '1'); } catch (e) {}
-  setTimeout(() => morph('square', () => {
-    if (!introActive) return;
-    if (stacked) { finishIntro(); return; }
-    tween({ from: 0, to: 1, dur: 650, ease: E.inOut,
-      set: v => { camX = centre.x * (1 - v); camY = centre.y * (1 - v); },
-      done: () => finishIntro() });
-  }), 250);
-}
-function finishIntro() {
-  if (!introActive) return;
-  introActive = false;
-  tweens.length = 0;                                  // on a cold load only the intro is in flight
-  IDS.forEach(id => { const p = P[id], q = POSE.square[id]; p.x = q.x; p.y = q.y; p.r = q.r; p.s = q.s; p.lift = 0; });
-  camX = 0; camY = 0; breatheOn = true;
-  // Removing the class fades the frame back in; the copy gets its own reveal, the same one a page
-  // change uses, rather than a fade that would race it.
-  document.documentElement.classList.remove('intro');
-  revealCopy();
-}
-// Only a deliberate keypress or click skips it - not a scroll, which a trackpad nudge can fire.
-['keydown', 'click'].forEach(ev => window.addEventListener(ev, () => finishIntro(), { passive: true, once: true }));
-
-PAGES.forEach(pg => {
-  const a = document.createElement('a'); a.href = '#' + pg.slug;
-  const F = FIG[pg.fig];
-  a.innerHTML = `<svg viewBox="-2.7 -2.25 5.4 4.5" aria-hidden="true">${IDS.map(id => `<polygon points="${F[id].map(p => p.map(n => +n.toFixed(3)).join(',')).join(' ')}"/>`).join('')}</svg><span>${pg.label}</span>`;
-  nav.appendChild(a);
-});
-// Links switch pages directly; the #slug in the address is kept in sync so pages can be shared and the back button works.
-document.addEventListener('click', e => {
-  const a = e.target.closest('a[href^="#"]'); if (!a) return;
-  const i = PAGES.findIndex(p => '#' + p.slug === a.getAttribute('href')); if (i < 0) return;
-  e.preventDefault();
-  if (introActive) finishIntro();
-  if (i === cur) { morph(PAGES[i].fig); return; }
-  show(i);
-  try { history.pushState(null, '', '#' + PAGES[i].slug); } catch (err) {}
-});
-window.addEventListener('popstate', () => show(pageFromHash()));
-window.addEventListener('hashchange', () => show(pageFromHash()));
-$('.fix').addEventListener('click', () => { if (introActive) { finishIntro(); return; } morph(PAGES[Math.max(0, cur)].fig); });
-
-/* drag a piece, tap to turn it */
-function toSvgPt(x, y) { const pt = svg.createSVGPoint(); pt.x = x; pt.y = y; const m = pt.matrixTransform(svg.getScreenCTM().inverse()); return { x: m.x, y: m.y }; }
-const toSvg = e => toSvgPt(e.clientX, e.clientY);
-gP.addEventListener('pointerdown', e => {
-  if (introActive) { finishIntro(); return; }
-  const id = e.target.dataset && e.target.dataset.id; if (!id) return;
-  e.preventDefault();
-  const p = P[id]; gS.appendChild(p.sh); gP.appendChild(p.pg);
-  const m = toSvg(e); breatheOn = false; breathe = 0;
-  dragP = { id, dx: p.x - m.x, dy: p.y - m.y, moved: 0 };
-  p.lift = 1; e.target.setPointerCapture(e.pointerId);
-});
-gP.addEventListener('pointermove', e => {
-  if (!dragP) return;
-  const m = toSvg(e), p = P[dragP.id], nx = m.x + dragP.dx, ny = m.y + dragP.dy;
-  dragP.moved += Math.abs(nx - p.x) + Math.abs(ny - p.y);
-  p.x = nx; p.y = ny;
-});
-const endDrag = () => {
-  if (!dragP) return;
-  const p = P[dragP.id];
-  if (dragP.moved < .05) { const r0 = p.r; tween({ from: 0, to: 1, dur: 380, ease: E.back, set: v => p.r = r0 + 45 * v }); }
-  tween({ from: 1, to: 0, dur: 260, ease: E.out, set: v => p.lift = v });
-  dragP = null;
-};
-gP.addEventListener('pointerup', endDrag);
-gP.addEventListener('pointercancel', endDrag);
-
-function loop(now) { stepTweens(now); draw(now / 1000); requestAnimationFrame(loop); }
-draw(0);
-if (introActive) { show(0, true, true); runIntro(); }
-else show(pageFromHash(), true);
-verifyEvent();
-requestAnimationFrame(loop);
-})();
-</script>
+<script src="app.js"></script>
 </body>
 </html>

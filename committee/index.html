@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" data-page="committee" style="--acc:#6A4BBE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meet the organizing committee · James Clemens Math Tournament</title>
+<meta name="description" content="Meet the students who organize the James Clemens Math Tournament, held Saturday, January 23, 2027 at James Clemens High School in Madison, Alabama.">
+<meta property="og:title" content="Meet the organizing committee · James Clemens Math Tournament">
+<meta property="og:description" content="Meet the students who organize the James Clemens Math Tournament, held Saturday, January 23, 2027 at James Clemens High School in Madison, Alabama.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jcmathtournament.org/committee/">
+<link rel="canonical" href="https://jcmathtournament.org/committee/">
+<meta property="og:image" content="https://jcmathtournament.org/social-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="James Clemens Math Tournament with a tangram square">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#EDF2F8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/theme.css">
+
+<link rel="stylesheet" href="/site.css">
+<script>
+/* The opening animation plays on an empty screen, so the page content has to be hidden before the
+   first paint. The class is set here rather than in the stylesheet — with scripting off it is never
+   added and everything stays visible. Only the home page plays it, and not for reduced motion or a
+   repeat visit in the same session. */
+(function () {
+  try {
+    // Addresses shared before the site had real pages (/index.html#register) go to the real page.
+    var slug = location.hash.slice(1);
+    if (slug && slug !== 'home' && ['register', 'past-tests', 'schedule', 'committee'].indexOf(slug) >= 0) {
+      location.replace('/' + slug + '/');
+      return;
+    }
+    if (document.documentElement.dataset.page !== 'home') return;   // only the home page plays it
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (sessionStorage.getItem('jcmt-intro-seen')) return;
+    document.documentElement.classList.add('intro');
+    // Safety net: if app.js never runs, or throws partway, don't leave the page blank.
+    setTimeout(function () { document.documentElement.classList.remove('intro'); }, 3500);
+  } catch (e) {}
+})();
+</script>
+</head>
+<body data-fig="boat" data-shape="a sailboat">
+
+<div class="app">
+  <header class="top">
+    <a class="brand" href="/"><span>JCMT</span><small>James Clemens Math Tournament</small></a>
+    <div class="when">Sat · Jan 23 · 2027</div>
+    <a class="reg" href="/register/">Register</a>
+  </header>
+  <main class="main">
+    <div class="stage">
+      <svg viewBox="-3.6 -2.75 7.2 5.5" role="img" aria-label="Seven tangram pieces">
+        <defs>
+          <pattern id="dots" x="-.25" y="-.25" width=".5" height=".5" patternUnits="userSpaceOnUse"><circle cx=".25" cy=".25" r=".022" fill="#1D3160" opacity=".22"/></pattern>
+          <radialGradient id="fade"><stop offset=".35" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+          <mask id="dotmask"><rect x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#fade)"/></mask>
+        </defs>
+        <rect class="dotbg" x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#dots)" mask="url(#dotmask)"/>
+        <g id="shadows"></g>
+        <g id="pieces"></g>
+      </svg>
+      <p class="tip">Drag a piece to move it. Tap one to turn it. <button type="button" class="fix">Put them back</button></p>
+    </div>
+    <div class="copy"><div class="copy-in">
+      <p class="kick">The sailboat</p>
+      <h1>Meet the organizing committee</h1>
+      <div class="sx">
+<p>The people behind the JCMT. Tap a name to read more.</p>
+<p class="group">Faculty sponsor</p><details class="person"><summary><img src="/img/kristin-hartland.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Kristin Hartland</b><span class="role">Faculty Sponsor</span></span></summary><ul><li>PhD in Mathematics Education - MTSU</li><li>Masters in Mathematics- UMASS Lowell</li><li>Bachelor in Science in Mathematics, Minors in Physics & Secondary Education - UTEP</li><li>Avid Bowler for 26+ years, National Competitor</li><li>JCHS Head Bowling Coach</li><li>2 Children, 1 at James Clemens HS and 1 at Liberty MS</li></ul></details><p class="group">Directors</p><details class="person"><summary><img src="/img/jeffrey-duan.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Jeffrey Duan</b><span class="role">Director</span></span></summary><ul><li>Sophomore at James Clemens High School</li><li>Enjoys playing piano</li><li>1-time American Invitational Mathematics Examination qualifier</li><li>1-time National MATHCOUNTS qualifier</li></ul></details><details class="person"><summary><img src="/img/eddie-wen.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Eddie Wen</b><span class="role">Director</span></span></summary><ul><li>Sophomore at James Clemens High School</li><li>Enjoys watching anime and playing anime music</li><li>Has participated in math tournaments since 3rd grade</li><li>2x Alabama State MATHCOUNTS Participant</li><li>Avid tennis player for 4-5 years and varsity State qualifier</li></ul></details><p class="group">Problem writers</p><details class="person"><summary><img src="/img/kriti-akarapu.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Kriti Akarapu</b><span class="role">Problem Writer</span></span></summary><ul><li>Freshman at James Clemens High School</li><li>Has participated in math tournaments since 3rd grade</li><li>2x Alabama State MATHCOUNTS Participant</li><li>Enjoys music and singing</li><li>Loves reading, anime, dancing, goofing around, and watching movies</li></ul></details><details class="person"><summary><img src="/img/harshtha-chander.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Harshtha Chander</b><span class="role">Problem Writer</span></span></summary><ul><li>Sophomore at James Clemens High School</li><li>Has participated in math tournaments since 3rd grade</li><li>2024 AMC 8 Honor Roll</li><li>2025 Alabama Statewide Math Contest 1st Place in Geometry</li><li>Avid Indian Classical Dancer for around 6 years</li><li>Enjoys reading and listening to music</li></ul></details><details class="person"><summary><img src="/img/laya-gowder.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Laya Gowder</b><span class="role">Problem Writer</span></span></summary><ul><li>Sophomore at James Clemens High School</li><li>Participated in Math Tournaments since 3rd grade</li><li>Avid dancer for more than 10 years</li><li>Loves art and fashion</li><li>2024 James Clemens Math Tournament 4th Place</li><li>James Clemens Math Tournament Member for 2 years</li></ul></details><details class="person"><summary><img src="/img/heidi-leonard.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Heidi Leonard</b><span class="role">Problem Writer</span></span></summary><ul><li>Sophomore at James Clemens High School</li><li>Has participated in math tournaments since 8th grade</li><li>She loves reading, snow skiing, travel, and biology</li><li>Placed in local math competitions as both a middle and high school student</li></ul></details><details class="person"><summary><img src="/img/jonah-yang.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Jonah Yang</b><span class="role">Problem Writer</span></span></summary><ul><li>Sophomore at James Clemens High School</li><li>1x Alabama State MATHCOUNTS qualifier</li><li>Likes math, computer science, anime, and tennis</li><li>Has been playing piano for 8 years</li></ul></details><p class="group">Alumni</p><details class="person"><summary><img src="/img/erik-wu.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Erik Wu</b><span class="role">Founder</span></span></summary><ul><li>Stanford Class of 2029</li><li>Participated in Math Tournaments since 2nd grade</li><li>Avid Tennis Player for around 2 - 3 years</li><li>Loves playing piano and Korean pop music</li><li>3x American Invitational Mathematics Examination Qualifier</li><li>3rd Place Alabama Statewide High School Math Competition</li></ul></details><details class="person"><summary><img src="/img/neyan-sezhian.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Neyan Sezhian</b><span class="role">Co-Founder</span></span></summary><ul><li>Cornell Class of 2029</li><li>Participated in Math Tournaments since 1st grade</li><li>Avid Golf Player for around 6 years</li><li>Loves playing piano and going to the gym</li><li>2x American Invitational Mathematics Examination Qualifier</li><li>Nickname is Nyan, the flying toaster pastry cat</li></ul></details><details class="person"><summary><img src="/img/vineet-vadrevu.jpg" alt="" width="52" height="52" loading="lazy"><span><b>Vineet Vadrevu</b><span class="role">Former Problem Writer</span></span></summary><ul><li>Junior at James Clemens High School</li><li>3 years of competitive math team experience</li><li>5 years of experience playing flute</li><li>Enjoys playing Badminton</li><li>AMC 10 Participant and 2 year Beast Academy instructor</li></ul></details></div>
+    </div></div>
+  </main>
+  <nav class="nav" aria-label="Pages">
+    <a href="/" data-fig="square"><span>Start here</span></a>
+    <a href="/register/" data-fig="house"><span>Register</span></a>
+    <a href="/past-tests/" data-fig="arrow"><span>Past tests</span></a>
+    <a href="/schedule/" data-fig="hourglass"><span>The day</span></a>
+    <a href="/committee/" data-fig="boat" aria-current="page"><span>The crew</span></a>
+  </nav>
+</div>
+
+<script src="/tangram.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

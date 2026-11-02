@@ -1,47 +1,36 @@
 # James Clemens Math Tournament website
 
-A single-page site: `index.html` holds all the text, and each page (home, register, past tests,
-the day, the crew) is drawn from the same seven tangram pieces.
+A site with real pages: `index.html` is home, and `register/`, `past-tests/`, `schedule/`, `committee/` each have their own document. Every page draws its figure from the same seven tangram pieces using the shared engine in `app.js`.
 
 ## Files
-- `index.html`: the whole site. All wording is in the `CONTENT` section of the script near the bottom,
-   **except the home page's text**, which sits in the static HTML inside `.copy-in` so search engines can
-   read it without JavaScript. The script snapshots that markup into the `HOME` constant and reuses it
-   whenever you navigate back. Edit the HTML, not `HOME`.
-- `theme.css`: fonts (the Google Fonts `@import`), colour tokens, and the two font stacks. Change a
-   font or a colour here, not in the pages.
-- `tangram.js`: the shared tangram geometry and piece colours, used by both `index.html` and `404.html`.
+- `index.html`: the home page (static copy in `.copy-in` for search engines, tangram stage, nav).
+- `register/`, `past-tests/`, `schedule/`, `committee/`: the four interior pages, each with static content that matches what the site used to render from JavaScript. The nav is shared across all five.
+- `site.css`: the site layout and component styles (extracted from the former inline stylesheet).
+- `theme.css`: fonts (the Google Fonts `@import`), colour tokens, and the two font stacks (`--font-display`, `--font-body`). Change a font or a colour here, not in the pages.
+- `app.js`: the tangram engine and per-page boot (draws the figure named by `<body data-fig>`, runs the home intro, drag/`Put them back`, `verifyEvent()`).
+- `tangram.js`: the shared tangram geometry and piece colours, used by `app.js` and `404.html`.
 - `tests/<year>/`: past tests and answer keys as PDFs.
 - `img/`: committee photos (square JPEGs, about 400×400).
-- `404.html`: the page shown for any address that doesn't exist — on GitHub Pages. The local dev
-   server has its own plain 404 instead; preview ours at `http://localhost:8000/404.html`.
+- `404.html`: the page shown for any address that doesn't exist — on GitHub Pages. The local dev server has its own plain 404 instead; preview ours at `http://localhost:8000/404.html`.
 - `social-preview.png`: the image shown when the link is shared in a text, email, or post (1200×630).
 - `favicon.svg`: the browser-tab icon.
+- `apple-touch-icon.png`: the iOS home-screen icon.
+- `robots.txt`, `sitemap.xml`: crawl hints for search engines.
 - `.nojekyll`: tells GitHub Pages to publish the files as-is.
 
 ## Adding a year's tests
-1. Put the PDFs in `tests/<year>/`, named `<division>-<written|team>.pdf` and
-   `<division>-<written|team>-key.pdf`. Divisions: `4th-grade`, `5th-grade`, `6th-grade`,
-   `pre-algebra`, `algebra-1`. Example: `tests/2027/pre-algebra-team-key.pdf`.
-2. In `index.html`, add a line at the top of `TESTS`, e.g.
-   `{ year: 2027, divisions: ['4th-grade', '5th-grade', '6th-grade', 'pre-algebra', 'algebra-1'] },`
+1. Put the PDFs in `tests/<year>/`, named `<division>-<written|team>.pdf` and `<division>-<written|team>-key.pdf`. Divisions: `4th-grade`, `5th-grade`, `6th-grade`, `pre-algebra`, `algebra-1`. Example: `tests/2027/pre-algebra-team-key.pdf`.
+2. Edit `past-tests/index.html` and add the new year's links at the **top** of its table (newest first), using the same pattern as the existing rows. Nothing validates that the PDFs exist, so double-check the filenames.
 
 ## Updating the dates each year
-Set `EVENT` near the top of the script in `index.html` — the tournament date and the roster deadline.
-The register and day pages follow from it automatically. The same dates are also typed into the
-`<head>` and the home page, which JavaScript can't rewrite, so those still need editing by hand:
-open the console and `verifyEvent()` names any that are stale.
+Set `EVENT` in `app.js` — the tournament date and the roster deadline. Each page also carries the dates in static HTML (the header `.when` chip, and on home the facts list and `<head>` metadata); `verifyEvent()` runs on every page and logs any that are stale to the console.
 
 ## Updating the committee
-Edit `CREW_GROUPS` in `index.html`. Each person is `[name, role, [bio lines]]`, and their photo is
-`img/<name>.jpg` with the name lowercased and every run of non-alphanumerics turned into a dash —
-"Kristin Hartland" looks for `img/kristin-hartland.jpg`. A name with an apostrophe or an accent won't
-reduce to the file name you have, so add the file name as a fourth element:
-`['Name', 'Role', [bio lines], 'photo-slug']`.
+Edit `committee/index.html`. Each person is a `<details class="person">` block with their name, role, photo (`/img/<slug>.jpg` derived from the name, ASCII-only) and bio paragraphs. A name with an apostrophe or accent that doesn't reduce cleanly needs an image with the right slug on disk.
 
 ## Testing locally
 Open a terminal in this folder and run `python -m http.server 8000`, then visit http://localhost:8000.
-(Opening `index.html` directly works too, but PDFs and photos behave most like the real site on a server.)
+(Opening `index.html` directly works for the home page in many browsers, but the interior pages use root-absolute asset paths and the dev server is the most realistic way to check routing.)
 
 ## Publishing
 Push to GitHub and turn on Pages (Settings → Pages → Deploy from a branch → `main`, folder `/ (root)`).
@@ -63,12 +52,6 @@ The steps are kept for the DNS/Pages setup, or in case the domain ever changes.
    "Enforce HTTPS" on the same Pages settings screen.
 4. **Protect the domain:** in your GitHub account (not the repo) go to Settings → Pages →
    "Add a verified domain" and follow the steps, so nobody else can claim it on GitHub.
-5. **Link previews:** `index.html` carries the full
-   `<meta property="og:url" content="https://jcmathtournament.org/">`,
-   `<link rel="canonical" href="https://jcmathtournament.org/">`, and
-   `content="https://jcmathtournament.org/social-preview.png"` for `og:image`; the JSON-LD block
-   repeats the domain in `url` and `image`. All five need changing if the domain does.
-
-6. **`404.html`'s paths:** GitHub Pages serves that file at the *requested* URL, so a relative
-   path would resolve against the missing page. Its links are therefore root-absolute:
-   `href="/"`, `/theme.css` and `/tangram.js`.
+5. **Link previews:** every page carries its own `<meta property="og:url">`, `<link rel="canonical">`,
+   and `og:image`; `index.html` keeps the JSON-LD `Event` block with the full address. All need changing if the domain does.
+6. **`404.html`'s paths:** GitHub Pages serves that file at the *requested* URL, so a relative path would resolve against the missing page. Its links are therefore root-absolute: `href="/"`, `/theme.css` and `/tangram.js`.

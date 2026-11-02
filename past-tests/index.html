@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" data-page="past-tests" style="--acc:#17735A">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Past tests and answer keys · James Clemens Math Tournament</title>
+<meta name="description" content="Past James Clemens Math Tournament tests and answer keys, from 4th grade through Algebra I. The next tournament is Saturday, January 23, 2027, in Madison, Alabama.">
+<meta property="og:title" content="Past tests and answer keys · James Clemens Math Tournament">
+<meta property="og:description" content="Past James Clemens Math Tournament tests and answer keys, from 4th grade through Algebra I. The next tournament is Saturday, January 23, 2027, in Madison, Alabama.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jcmathtournament.org/past-tests/">
+<link rel="canonical" href="https://jcmathtournament.org/past-tests/">
+<meta property="og:image" content="https://jcmathtournament.org/social-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="James Clemens Math Tournament with a tangram square">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#EDF2F8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/theme.css">
+
+<link rel="stylesheet" href="/site.css">
+<script>
+/* The opening animation plays on an empty screen, so the page content has to be hidden before the
+   first paint. The class is set here rather than in the stylesheet — with scripting off it is never
+   added and everything stays visible. Only the home page plays it, and not for reduced motion or a
+   repeat visit in the same session. */
+(function () {
+  try {
+    // Addresses shared before the site had real pages (/index.html#register) go to the real page.
+    var slug = location.hash.slice(1);
+    if (slug && slug !== 'home' && ['register', 'past-tests', 'schedule', 'committee'].indexOf(slug) >= 0) {
+      location.replace('/' + slug + '/');
+      return;
+    }
+    if (document.documentElement.dataset.page !== 'home') return;   // only the home page plays it
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (sessionStorage.getItem('jcmt-intro-seen')) return;
+    document.documentElement.classList.add('intro');
+    // Safety net: if app.js never runs, or throws partway, don't leave the page blank.
+    setTimeout(function () { document.documentElement.classList.remove('intro'); }, 3500);
+  } catch (e) {}
+})();
+</script>
+</head>
+<body data-fig="arrow" data-shape="a download arrow">
+
+<div class="app">
+  <header class="top">
+    <a class="brand" href="/"><span>JCMT</span><small>James Clemens Math Tournament</small></a>
+    <div class="when">Sat · Jan 23 · 2027</div>
+    <a class="reg" href="/register/">Register</a>
+  </header>
+  <main class="main">
+    <div class="stage">
+      <svg viewBox="-3.6 -2.75 7.2 5.5" role="img" aria-label="Seven tangram pieces">
+        <defs>
+          <pattern id="dots" x="-.25" y="-.25" width=".5" height=".5" patternUnits="userSpaceOnUse"><circle cx=".25" cy=".25" r=".022" fill="#1D3160" opacity=".22"/></pattern>
+          <radialGradient id="fade"><stop offset=".35" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+          <mask id="dotmask"><rect x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#fade)"/></mask>
+        </defs>
+        <rect class="dotbg" x="-3.6" y="-2.75" width="7.2" height="5.5" fill="url(#dots)" mask="url(#dotmask)"/>
+        <g id="shadows"></g>
+        <g id="pieces"></g>
+      </svg>
+      <p class="tip">Drag a piece to move it. Tap one to turn it. <button type="button" class="fix">Put them back</button></p>
+    </div>
+    <div class="copy"><div class="copy-in">
+      <p class="kick">The download arrow</p>
+      <h1>Past tests and answer keys</h1>
+      <div class="sx">
+<p>Every written and team test from past tournaments, with answer keys. Each one opens as a PDF.</p>
+<section class="yr"><h2>2026</h2><div class="drow"><span class="dn">4th grade</span><span class="grp"><span class="gl">Written</span><a href="/tests/2026/4th-grade-written.pdf" target="_blank" rel="noopener" aria-label="2026 4th grade written test (PDF)">Test</a><a href="/tests/2026/4th-grade-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2026 4th grade written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2026/4th-grade-team.pdf" target="_blank" rel="noopener" aria-label="2026 4th grade team test (PDF)">Test</a><a href="/tests/2026/4th-grade-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2026 4th grade team answer key (PDF)">Key</a></span></div><div class="drow"><span class="dn">5th grade</span><span class="grp"><span class="gl">Written</span><a href="/tests/2026/5th-grade-written.pdf" target="_blank" rel="noopener" aria-label="2026 5th grade written test (PDF)">Test</a><a href="/tests/2026/5th-grade-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2026 5th grade written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2026/5th-grade-team.pdf" target="_blank" rel="noopener" aria-label="2026 5th grade team test (PDF)">Test</a><a href="/tests/2026/5th-grade-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2026 5th grade team answer key (PDF)">Key</a></span></div><div class="drow"><span class="dn">6th grade</span><span class="grp"><span class="gl">Written</span><a href="/tests/2026/6th-grade-written.pdf" target="_blank" rel="noopener" aria-label="2026 6th grade written test (PDF)">Test</a><a href="/tests/2026/6th-grade-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2026 6th grade written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2026/6th-grade-team.pdf" target="_blank" rel="noopener" aria-label="2026 6th grade team test (PDF)">Test</a><a href="/tests/2026/6th-grade-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2026 6th grade team answer key (PDF)">Key</a></span></div><div class="drow"><span class="dn">Pre-Algebra</span><span class="grp"><span class="gl">Written</span><a href="/tests/2026/pre-algebra-written.pdf" target="_blank" rel="noopener" aria-label="2026 Pre-Algebra written test (PDF)">Test</a><a href="/tests/2026/pre-algebra-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2026 Pre-Algebra written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2026/pre-algebra-team.pdf" target="_blank" rel="noopener" aria-label="2026 Pre-Algebra team test (PDF)">Test</a><a href="/tests/2026/pre-algebra-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2026 Pre-Algebra team answer key (PDF)">Key</a></span></div><div class="drow"><span class="dn">Algebra I</span><span class="grp"><span class="gl">Written</span><a href="/tests/2026/algebra-1-written.pdf" target="_blank" rel="noopener" aria-label="2026 Algebra I written test (PDF)">Test</a><a href="/tests/2026/algebra-1-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2026 Algebra I written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2026/algebra-1-team.pdf" target="_blank" rel="noopener" aria-label="2026 Algebra I team test (PDF)">Test</a><a href="/tests/2026/algebra-1-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2026 Algebra I team answer key (PDF)">Key</a></span></div></section><section class="yr"><h2>2025</h2><div class="drow"><span class="dn">5th grade</span><span class="grp"><span class="gl">Written</span><a href="/tests/2025/5th-grade-written.pdf" target="_blank" rel="noopener" aria-label="2025 5th grade written test (PDF)">Test</a><a href="/tests/2025/5th-grade-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2025 5th grade written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2025/5th-grade-team.pdf" target="_blank" rel="noopener" aria-label="2025 5th grade team test (PDF)">Test</a><a href="/tests/2025/5th-grade-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2025 5th grade team answer key (PDF)">Key</a></span></div><div class="drow"><span class="dn">6th grade</span><span class="grp"><span class="gl">Written</span><a href="/tests/2025/6th-grade-written.pdf" target="_blank" rel="noopener" aria-label="2025 6th grade written test (PDF)">Test</a><a href="/tests/2025/6th-grade-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2025 6th grade written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2025/6th-grade-team.pdf" target="_blank" rel="noopener" aria-label="2025 6th grade team test (PDF)">Test</a><a href="/tests/2025/6th-grade-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2025 6th grade team answer key (PDF)">Key</a></span></div><div class="drow"><span class="dn">Pre-Algebra</span><span class="grp"><span class="gl">Written</span><a href="/tests/2025/pre-algebra-written.pdf" target="_blank" rel="noopener" aria-label="2025 Pre-Algebra written test (PDF)">Test</a><a href="/tests/2025/pre-algebra-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2025 Pre-Algebra written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2025/pre-algebra-team.pdf" target="_blank" rel="noopener" aria-label="2025 Pre-Algebra team test (PDF)">Test</a><a href="/tests/2025/pre-algebra-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2025 Pre-Algebra team answer key (PDF)">Key</a></span></div><div class="drow"><span class="dn">Algebra I</span><span class="grp"><span class="gl">Written</span><a href="/tests/2025/algebra-1-written.pdf" target="_blank" rel="noopener" aria-label="2025 Algebra I written test (PDF)">Test</a><a href="/tests/2025/algebra-1-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2025 Algebra I written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2025/algebra-1-team.pdf" target="_blank" rel="noopener" aria-label="2025 Algebra I team test (PDF)">Test</a><a href="/tests/2025/algebra-1-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2025 Algebra I team answer key (PDF)">Key</a></span></div></section><section class="yr"><h2>2024</h2><div class="drow"><span class="dn">6th grade</span><span class="grp"><span class="gl">Written</span><a href="/tests/2024/6th-grade-written.pdf" target="_blank" rel="noopener" aria-label="2024 6th grade written test (PDF)">Test</a><a href="/tests/2024/6th-grade-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2024 6th grade written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2024/6th-grade-team.pdf" target="_blank" rel="noopener" aria-label="2024 6th grade team test (PDF)">Test</a><a href="/tests/2024/6th-grade-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2024 6th grade team answer key (PDF)">Key</a></span></div><div class="drow"><span class="dn">Pre-Algebra</span><span class="grp"><span class="gl">Written</span><a href="/tests/2024/pre-algebra-written.pdf" target="_blank" rel="noopener" aria-label="2024 Pre-Algebra written test (PDF)">Test</a><a href="/tests/2024/pre-algebra-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2024 Pre-Algebra written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2024/pre-algebra-team.pdf" target="_blank" rel="noopener" aria-label="2024 Pre-Algebra team test (PDF)">Test</a><a href="/tests/2024/pre-algebra-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2024 Pre-Algebra team answer key (PDF)">Key</a></span></div><div class="drow"><span class="dn">Algebra I</span><span class="grp"><span class="gl">Written</span><a href="/tests/2024/algebra-1-written.pdf" target="_blank" rel="noopener" aria-label="2024 Algebra I written test (PDF)">Test</a><a href="/tests/2024/algebra-1-written-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2024 Algebra I written answer key (PDF)">Key</a></span><span class="grp"><span class="gl">Team</span><a href="/tests/2024/algebra-1-team.pdf" target="_blank" rel="noopener" aria-label="2024 Algebra I team test (PDF)">Test</a><a href="/tests/2024/algebra-1-team-key.pdf" target="_blank" rel="noopener" class="k" aria-label="2024 Algebra I team answer key (PDF)">Key</a></span></div></section></div>
+    </div></div>
+  </main>
+  <nav class="nav" aria-label="Pages">
+    <a href="/" data-fig="square"><span>Start here</span></a>
+    <a href="/register/" data-fig="house"><span>Register</span></a>
+    <a href="/past-tests/" data-fig="arrow" aria-current="page"><span>Past tests</span></a>
+    <a href="/schedule/" data-fig="hourglass"><span>The day</span></a>
+    <a href="/committee/" data-fig="boat"><span>The crew</span></a>
+  </nav>
+</div>
+
+<script src="/tangram.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
