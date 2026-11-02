@@ -37,8 +37,8 @@ Shared files, so there is one source of truth for the things that used to be cop
 - `tangram.js` — sets `window.JCMT_TANGRAM` (`IDS`, `COL`, `TYPE`, `sq`, `RAW`). `app.js`
   destructures it; `404.html` draws its single figure from it.
 - `app.js` — the engine plus per-page boot: reads `<body data-fig>` / `data-shape`, draws and
-  morphs that figure, runs the home intro, the drag interactions, `revealCopy()`, and
-  `verifyEvent()`.
+  morphs that figure, runs the home intro, the drag interactions, `revealCopy()`, `verifyEvent()`,
+  and the click upgrade that morphs between pages without a reload (`enhanceNavigation()`).
 
 Each page carries its own `<head>` metadata, header, nav and copy. That duplication is the price
 of having no build step, so **the header and the five nav links are repeated in all five

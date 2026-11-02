@@ -71,7 +71,7 @@ function stepTweens(now) {
   finished.forEach(o => o.done());
 }
 
-const svg = $('.stage svg'), gS = $('#shadows'), gP = $('#pieces'), copyIn = $('.copy-in'), nav = $('.nav');
+const svg = $('.stage svg'), gS = $('#shadows'), gP = $('#pieces'), copy = $('.copy'), copyIn = $('.copy-in'), nav = $('.nav');
 const NS = 'http://www.w3.org/2000/svg';
 if (!window.JCMT_TANGRAM) throw new Error('tangram.js failed to load');
 const { IDS, COL, TYPE, RAW } = window.JCMT_TANGRAM;
@@ -105,10 +105,18 @@ function pose(id, target) {
 }
 const POSE = Object.fromEntries(Object.keys(FIG).map(f => [f, Object.fromEntries(IDS.map(id => [id, pose(id, FIG[f][id])]))]));
 
-// The figure this page shows, named on <body>. Unknown values fall back to the square.
-const fig = POSE[document.body.dataset.fig] ? document.body.dataset.fig : 'square';
-const shape = document.body.dataset.shape || 'a square';
-svg.setAttribute('aria-label', `Seven tangram pieces arranged as ${shape}`);
+// The figure this page shows, named on <body>. Unknown values fall back to the square. The pair is
+// reassigned when a navigation is upgraded to an in-place page change (see enhanceNavigation).
+let fig = document.body.dataset.fig;
+// One place to change the figure, its spoken description, and the body attributes that record them.
+function setFigure(name, label) {
+  fig = POSE[name] ? name : 'square';
+  label = label || 'a square';
+  document.body.dataset.fig = fig;
+  document.body.dataset.shape = label;
+  svg.setAttribute('aria-label', `Seven tangram pieces arranged as ${label}`);
+}
+setFigure(fig, document.body.dataset.shape);
 
 const P = {};
 IDS.forEach(id => {
@@ -229,10 +237,130 @@ const endDrag = () => {
 gP.addEventListener('pointerup', endDrag);
 gP.addEventListener('pointercancel', endDrag);
 
+/* ---------- in-place navigation ----------
+   The five pages are ordinary documents so crawlers, link previews and visitors without JavaScript
+   get a real page at a real URL. This upgrades a plain left-click on one of them: it fetches the
+   target document, fades the copy, swaps it, updates the address bar and morphs the pieces — the
+   way the site behaved when it was a single page. Anything unexpected (no `fetch`, an offline
+   visitor, a modified click, a link that isn't one of the five) falls through to a normal page
+   load, and the link keeps working. */
+function enhanceNavigation() {
+  if (!nav || !copyIn || !window.fetch || !window.DOMParser || !history.pushState) return;
+
+  const norm = p => p.replace(/\/index\.html$/, '/');
+  const here = () => norm(location.pathname);
+  const routes = new Map();                 // pathname -> { anchor, href }
+  $$('a', nav).forEach(a => {
+    try {
+      const u = new URL(a.getAttribute('href'), location.href);
+      routes.set(norm(u.pathname), { a, href: u.href });
+    } catch (e) {}
+  });
+  if (!routes.size) return;
+
+  const cache = new Map();                  // pathname -> page record
+  let seq = 0;                              // bumps on every navigation; stale swaps bail out
+
+  const record = () => ({
+    html: copyIn.innerHTML, title: document.title,
+    acc: document.documentElement.style.getPropertyValue('--acc'),
+    fig, shape: document.body.dataset.shape
+  });
+  cache.set(here(), record());
+
+  const load = async href => {
+    const res = await fetch(href, { credentials: 'same-origin' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+    const col = doc.querySelector('.copy-in'), body = doc.body;
+    if (!col || !body) throw new Error('not one of our pages');
+    return {
+      html: col.innerHTML, title: doc.title,
+      acc: doc.documentElement.style.getPropertyValue('--acc'),
+      fig: body.dataset.fig || 'square', shape: body.dataset.shape || 'a square'
+    };
+  };
+
+  // The five nav anchors are static, so the current one is marked here rather than in the markup.
+  function markCurrent() {
+    const h = here();
+    routes.forEach((r, path) => {
+      if (path === h) r.a.setAttribute('aria-current', 'page');
+      else r.a.removeAttribute('aria-current');
+    });
+  }
+
+  function apply(rec, path, push, mine) {
+    setFigure(rec.fig, rec.shape);          // the pieces start moving straight away
+    morph(fig);
+    let out = null;
+    const commit = () => {
+      if (mine !== seq) return;             // a newer navigation won
+      if (out) out.cancel();
+      copyIn.innerHTML = rec.html;
+      if (copy) copy.scrollTop = 0;
+      document.title = rec.title;
+      if (rec.acc) document.documentElement.style.setProperty('--acc', rec.acc);
+      if (push) { try { history.pushState({ path }, '', path); } catch (e) {} }
+      markCurrent();
+      revealCopy();
+    };
+    if (reduce) { commit(); return; }
+    out = copyIn.animate(
+      [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-8px)' }],
+      { duration: 180, easing: 'ease-in', fill: 'forwards' });
+    out.onfinish = commit;
+    setTimeout(commit, 260);                // in case the animation is paused in a background tab
+  }
+
+  async function go(href, path, push) {
+    const mine = ++seq;
+    let rec = cache.get(path);
+    if (!rec) {
+      try { rec = await load(href); } catch (e) { location.assign(href); return; }
+      if (mine !== seq) return;
+      cache.set(path, rec);
+    }
+    apply(rec, path, push, mine);
+  }
+
+  document.addEventListener('click', e => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target && e.target.closest && e.target.closest('a[href]');
+    if (!a || a.target || a.hasAttribute('download')) return;
+    let u; try { u = new URL(a.getAttribute('href'), location.href); } catch (er) { return; }
+    if (u.origin !== location.origin || u.hash) return;
+    const path = norm(u.pathname), route = routes.get(path);
+    if (!route) return;
+    e.preventDefault();
+    if (introActive) finishIntro();
+    if (path === here()) { morph(fig); return; }     // already here: just re-form the figure
+    go(route.href, path, true).catch(() => location.assign(route.href));
+  });
+
+  window.addEventListener('popstate', () => {
+    const path = here(), route = routes.get(path);
+    if (!route) return;
+    const rec = cache.get(path);
+    if (rec) { apply(rec, path, false, ++seq); return; }
+    load(route.href).then(r => { cache.set(path, r); apply(r, path, false, ++seq); },
+                         () => location.reload());
+  });
+
+  // Warm the other four pages while the browser is idle, so the first click morphs immediately.
+  const warm = () => routes.forEach((r, path) => {
+    if (path === here() || cache.has(path)) return;
+    load(r.href).then(rec => cache.set(path, rec), () => {});
+  });
+  if (window.requestIdleCallback) window.requestIdleCallback(warm, { timeout: 3000 });
+  else setTimeout(warm, 1500);
+}
+
 function loop(now) { stepTweens(now); draw(now / 1000); requestAnimationFrame(loop); }
 draw(0);
 if (introActive) { runIntro(); }
 else { revealCopy(); setTimeout(() => morph(fig), reduce ? 0 : 250); }
 verifyEvent();
+enhanceNavigation();
 requestAnimationFrame(loop);
 })();
