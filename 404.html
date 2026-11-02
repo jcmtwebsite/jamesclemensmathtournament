@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Palette and fonts come from theme.css; pieces come from tangram.js.
-     Both are relative for local preview — see AGENTS.md before changing. -->
-<link rel="stylesheet" href="theme.css">
+     Root-absolute because GitHub Pages serves this file at the requested URL. -->
+<link rel="stylesheet" href="/theme.css">
 <style>
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -36,12 +36,11 @@ a:focus-visible{outline:3px solid #F6B72B;outline-offset:3px}
   <h1>404 = 2² × 101</h1>
   <p>That's all we could find here. This page doesn't exist.</p>
   
-  <!-- CHANGE BACK TO "/" ONCE THE SITE HAS ITS OWN DOMAIN -->
-  <a href="index.html">Back to the home page</a>
+  <a href="/">Back to the home page</a>
   <!-- --------------------------------------------------- -->
 
 </main>
-<script src="tangram.js"></script>
+<script src="/tangram.js"></script>
 <script>
 (function () {
   var T = window.JCMT_TANGRAM;

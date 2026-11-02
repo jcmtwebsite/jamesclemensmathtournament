@@ -47,8 +47,12 @@ Open a terminal in this folder and run `python -m http.server 8000`, then visit 
 Push to GitHub and turn on Pages (Settings → Pages → Deploy from a branch → `main`, folder `/ (root)`).
 
 ## Connecting the custom domain
-1. **Add the domain in GitHub:** Settings → Pages → Custom domain → type the domain (for example
-   `example.org`) → Save. GitHub adds a `CNAME` file to the repo; keep it.
+
+The site is on `jcmathtournament.org`, and the code side (steps 5 and 6) is already applied.
+The steps are kept for the DNS/Pages setup, or in case the domain ever changes.
+
+1. **Add the domain in GitHub:** Settings → Pages → Custom domain → type the domain (`jcmathtournament.org`)
+   → Save. GitHub adds a `CNAME` file to the repo; keep it.
 2. **Point the domain at GitHub** in your domain registrar's DNS settings:
    - Four `A` records for the bare domain (`@`): `185.199.108.153`, `185.199.109.153`,
      `185.199.110.153`, `185.199.111.153`
@@ -59,12 +63,12 @@ Push to GitHub and turn on Pages (Settings → Pages → Deploy from a branch �
    "Enforce HTTPS" on the same Pages settings screen.
 4. **Protect the domain:** in your GitHub account (not the repo) go to Settings → Pages →
    "Add a verified domain" and follow the steps, so nobody else can claim it on GitHub.
-5. **Finish the link previews:** in `index.html`, change `content="social-preview.png"` to the full
-   address (`https://example.org/social-preview.png`), and add these two lines next to it:
-   `<meta property="og:url" content="https://example.org/">` and
-   `<link rel="canonical" href="https://example.org/">`.
+5. **Link previews:** `index.html` carries the full
+   `<meta property="og:url" content="https://jcmathtournament.org/">`,
+   `<link rel="canonical" href="https://jcmathtournament.org/">`, and
+   `content="https://jcmathtournament.org/social-preview.png"` for `og:image`; the JSON-LD block
+   repeats the domain in `url` and `image`. All five need changing if the domain does.
 
-6. **Fix `404.html`'s relative paths:** GitHub Pages serves that file at the *requested* URL, so
-   `href="index.html"`, `href="theme.css"` and `src="tangram.js"` all resolve against the missing
-   page instead of the site root. Once the site is on its own domain, switch them to
-   `/`, `/theme.css` and `/tangram.js`.
+6. **`404.html`'s paths:** GitHub Pages serves that file at the *requested* URL, so a relative
+   path would resolve against the missing page. Its links are therefore root-absolute:
+   `href="/"`, `/theme.css` and `/tangram.js`.

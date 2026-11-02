@@ -69,26 +69,19 @@ JS can't rewrite, so they stay hand-edited — but `verifyEvent()` compares all 
 and logs the stale ones, so a year rollover can't half-land. `og:image:alt` deliberately carries no
 year; don't put one back. The "third edition" wording in the home copy is still manual.
 
-**Leave the custom-domain TODOs alone** unless the site is actually on its own domain.
-Marked spots: `404.html`'s `href="index.html"` plus its relative `theme.css` and `tangram.js`,
-`og:image` in `index.html` (relative), and the missing `og:url` + `<link rel="canonical">`.
-The 404 ones are not cosmetic — GitHub Pages serves `404.html` at the *requested* URL, so a
-relative path resolves against the missing page: a deep 404 loads no stylesheet and no geometry
-(it still reads, but unstyled and figureless). `index.html` is always at the root, so its
-relative `theme.css` / `tangram.js` links are correct as they are. `README.md` has the full
-cutover steps.
+**The site is on its own domain now (`jcmathtournament.org`).** `index.html`'s `og:image`,
+`og:url`, `<link rel="canonical">` and the JSON-LD `url` / `image` all carry the full address, and
+`404.html` uses root-absolute `/`, `/theme.css` and `/tangram.js`. That last part is not cosmetic:
+GitHub Pages serves `404.html` at the *requested* URL, so a relative path resolves against the
+missing page and a deep 404 would load no stylesheet and no geometry. `index.html` is always at
+the root, so its own relative `theme.css` / `tangram.js` links are fine as they are. If the domain
+ever changes, grep for the hostname and for `404.html`'s three paths.
 
-## Pending: once the site has a real domain
+## Pending
 
-The cutover edits already live in `README.md` → "Connecting the custom domain": make
-`og:image` an absolute address, add `og:url` + `<link rel="canonical">`, and switch
-`404.html`'s three relative paths (`index.html`, `theme.css`, `tangram.js`) to root-absolute.
-Don't duplicate them here. Everything below was found while reviewing the site and is recorded
-nowhere else:
+Everything below was found while reviewing the site and is recorded nowhere else. None of it is
+cutover work.
 
-- **Link previews are broken until that cutover, on purpose.** With a relative `og:image`,
-  Slack, iMessage and Discord render a bare text row with no image. Highest-impact item —
-  sharing is how parents hear about this tournament — and it resolves in the cutover above.
 - **`social-preview.png` is date-free by design.** It used to carry the event date painted
   top-left in the tomato red; that was removed, so the image no longer needs regenerating each
   year. Keep it that way — `verifyEvent()` only reads HTML, so a date baked back into pixels
@@ -103,7 +96,7 @@ nowhere else:
   at runtime, so search engines never see them. The structured data covers the date but not
   the schedule or the registration deadline. The fix is to move those four pages into static
   HTML and have JavaScript enhance rather than generate — a real architectural change,
-  deliberately parked, not cutover work.
+  deliberately parked.
 - **No touch icon.** `favicon.svg` is the only icon, so iOS adds no home-screen image.
   Cosmetic; skip unless asked.
 
